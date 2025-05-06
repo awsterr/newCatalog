@@ -658,16 +658,21 @@
       line-height: 20px;
       font-weight: normal;
       color: $blue;
-      padding: 4px 16px 4px 32px;
+      padding: 4px 16px 4px 16px;
       background-color: #E9F0FC;
       border-radius: 30px;
+
+      svg {
+         margin-right: 8px;
+      }
    }
 }
 
 .table1 {
    .thead {
       display: grid;
-      grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+      // grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+      grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69% 15.25% 10.58%;
       max-width: 1456px;
       width: 90%;
       margin: 0 auto;
@@ -695,20 +700,151 @@
 
    .tbody {
       display: grid;
-      grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+      // grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+      grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69% 15.25% 10.58%;
       max-width: 1456px;
       width: 90%;
       margin: 0 auto;
-      // padding: 10px 0;
+      border-radius: 8px;
+      position: relative;
+
+      .hover-effect {
+         position: absolute;
+         background: #fff;
+         width: 100%;
+         height: 100%;
+         transition: transform .3s;
+         border-radius: 8px;
+      }
+
+      &:hover .hover-effect {
+         transform: scaleX(1.02);
+         outline: 2px solid $blue;
+      }
+
+      &.special {
+         border-top: 1px solid #1A913C;
+         border-top-right-radius: 0;
+         border-top-left-radius: 0;
+
+         &::before {
+            content: 'Спецпредложение';
+            position: absolute;
+            top: -10px;
+            left: 14px;
+            width: 120px;
+            height: 20px;
+            z-index: 2;
+            font-size: 12px;
+            color: #fff;
+            background-color: #009861;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+         .tdata:nth-child(2) {
+            border-top-left-radius: 0;
+         }
+
+         .tdata:last-child {
+            border-top-right-radius: 0;
+         }
+
+         .hover-effect {
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            outline-color: #1A913C;
+         }
+      }
+
+      &.no-sub {
+         .metallbase {
+            background-image: url('../img/metallbase-blur.svg');
+            padding: 0;
+            margin: 10px;
+            margin-right: 30%;
+
+            &__get-sub {
+               position: relative;
+               display: block;
+               width: 100%;
+               height: 100%;
+
+               &:hover .metallbase-info {
+                  visibility: visible;
+                  scale: 1;
+               }
+
+               .metallbase-info {
+                  position: absolute;
+                  z-index: 1;
+                  top: 32px;
+                  left: 0;
+                  background: #000000CC;
+                  color: #fff;
+                  font-size: 12px;
+                  line-height: 16px;
+                  padding: 8px;
+                  border-radius: 6px;
+                  visibility: hidden;
+                  scale: .7;
+                  transition: scale .3s;
+
+                  svg {
+                     margin-right: 3px;
+                  }
+               }
+
+
+            }
+         }
+
+         .btns {
+            .gradient-btn {
+               font-size: 14px;
+               line-height: 20px;
+               font-weight: normal;
+               color: $text-color;
+               padding: 2px;
+               border-radius: 6px;
+               background: linear-gradient(90deg, #D20F62 0%, #2C62DD 100%);
+
+               div {
+                  width: 100%;
+                  height: 100%;
+                  background-color: #fff;
+                  border-radius: 5px;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0 10px;
+                  transition: all .3s;
+               }
+
+               &:hover {
+                  div {
+                     background-color: inherit;
+                     color: #fff;
+                  }
+               }
+            }
+         }
+      }
 
       .tdata {
-         display: block;
+         display: flex;
+         align-items: center;
          background-color: #fff;
          padding: 12px 14px;
          font-size: 14px;
          line-height: 20px;
+         white-space: nowrap;
+         transition: padding 0s;
+         position: relative;
 
-         &:first-child {
+         &:nth-child(2) {
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
          }
@@ -717,6 +853,425 @@
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
          }
+
+         &.info {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+
+            svg {
+               transition: all .3s;
+               cursor: help;
+            }
+
+            svg:hover {
+               color: $blue;
+
+               &+.info-modal {
+                  visibility: visible;
+                  scale: 1;
+               }
+            }
+
+            .info-modal {
+               position: absolute;
+               width: 350px;
+               border-radius: 12px;
+               font-size: 12px;
+               line-height: 16px;
+               box-shadow: 0px 8px 20px 0px #00000033;
+               visibility: hidden;
+               top: 34px;
+               left: 22px;
+               z-index: 2;
+               scale: .7;
+               transition: scale .3s;
+
+
+               &__header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 6px 12px;
+                  background-color: #FDF3E7;
+                  font-weight: 600;
+                  border-top-right-radius: 12px;
+                  border-top-left-radius: 12px;
+
+                  span {
+                     color: #1A913C;
+                     font-weight: normal;
+                  }
+               }
+
+               &__body {
+                  background-color: #fff;
+                  border-bottom-left-radius: 12px;
+                  border-bottom-right-radius: 12px;
+                  display: grid;
+                  grid-template-columns: auto auto;
+                  gap: 8px 4px;
+                  padding: 8px 12px 12px;
+               }
+            }
+         }
+
+         &.metallbase {
+            color: $blue;
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 8px;
+            align-items: center;
+
+            .score {
+               display: inline-block;
+               font-size: 11px;
+               line-height: 100%;
+               color: #279C0A;
+               background-image: url('../img/metallbase-score.png');
+               background-size: cover;
+               width: 27px;
+               height: 18px;
+               padding: 3px 8px 1px 6px;
+               text-align: center;
+            }
+
+            a:visited {
+               color: inherit;
+            }
+         }
+
+         &.price {
+
+            position: relative;
+
+            .tdvalue {
+               text-decoration: underline;
+               text-decoration-style: dotted;
+               text-underline-offset: 4px;
+               text-decoration-color: #8c8e90;
+               cursor: context-menu;
+
+               &:hover {
+                  color: $blue;
+                  text-decoration-color: #93b1ef;
+
+                  &+.price-modal {
+                     visibility: visible;
+                     scale: 1;
+                  }
+               }
+
+            }
+
+
+            .price-modal {
+               position: absolute;
+               width: 350px;
+               border-radius: 12px;
+               font-size: 12px;
+               line-height: 16px;
+               box-shadow: 0px 8px 20px 0px #00000033;
+               visibility: hidden;
+               top: -96px;
+               left: 10px;
+               z-index: 2;
+               scale: .7;
+               transition: scale .3s;
+
+
+               &__header {
+                  padding: 6px 12px;
+                  background-color: #FDF3E7;
+                  font-weight: 600;
+                  border-top-right-radius: 12px;
+                  border-top-left-radius: 12px;
+               }
+
+               &__body {
+                  background-color: #fff;
+                  border-bottom-left-radius: 12px;
+                  border-bottom-right-radius: 12px;
+                  padding: 8px 12px 12px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4px;
+               }
+            }
+
+         }
+
+         &.btns {
+            display: flex;
+            gap: 18px;
+            flex-wrap: nowrap;
+            padding: 8px;
+            justify-content: flex-end;
+
+            .new-catalog__position-more {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               border-radius: 4px;
+               gap: 3px;
+               width: 28px;
+               height: 28px;
+               cursor: pointer;
+               position: relative;
+               background-color: #fff;
+               transition: background-color .3s;
+
+               &:hover {
+                  background-color: #E3E3E3;
+
+               }
+
+               // fix visible bug
+               &>svg {
+                  display: inline-block;
+               }
+
+               // TODO script togle 
+               .more-modal {
+                  box-shadow: 0px 8px 20px 0px #00000033;
+                  background-color: #fff;
+                  border-radius: 12px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4px;
+                  padding: 10px 12px;
+                  position: absolute;
+                  top: 30px;
+                  right: 0;
+                  font-size: 14px;
+                  line-height: 20px;
+                  visibility: hidden;
+                  scale: .7;
+                  transition: scale .3s;
+
+                  &__option {
+                     height: 36px;
+                     display: flex;
+                     align-items: center;
+                     gap: 8px;
+                     padding-left: 13px;
+                     padding-right: 18px;
+                     cursor: pointer;
+                     border-radius: 5px;
+                     color: inherit;
+
+                     &:visited {
+                        color: inherit;
+                     }
+
+                     &:hover {
+                        background-color: #F5F5F5;
+                     }
+
+                     &.red {
+                        color: #C3094F;
+                     }
+                  }
+
+                  &.visible {
+                     visibility: visible;
+                     scale: 1;
+                  }
+               }
+            }
+         }
       }
    }
+}
+
+.primary-btn {
+   background-color: $blue;
+   color: #fff;
+   border-radius: 6px;
+   display: inline-flex;
+   justify-content: center;
+   align-items: center;
+   padding: 0 10px;
+   height: 28px;
+   cursor: pointer;
+   transition: all .3s;
+   white-space: nowrap;
+
+   &:hover {
+      background-color: #3473f4;
+   }
+
+   &:active {
+      background-color: #104cc4;
+   }
+}
+
+// remove
+.new-table {
+   display: grid;
+   grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69%;
+
+   &__header {
+      display: contents;
+      background-color: red;
+   }
+
+   &__headerdata {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      border-top: 1px solid #000000;
+   }
+
+   .info {
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      svg {
+         transition: all .3s;
+         cursor: help;
+      }
+
+      svg:hover {
+         color: $blue;
+
+         &+.info-modal {
+            visibility: visible;
+            scale: 1;
+         }
+      }
+
+      .info-modal {
+         position: absolute;
+         width: 350px;
+         border-radius: 12px;
+         font-size: 12px;
+         line-height: 16px;
+         box-shadow: 0px 8px 20px 0px #00000033;
+         visibility: hidden;
+         top: 34px;
+         left: 22px;
+         z-index: 2;
+         scale: .7;
+         transition: scale .3s;
+
+
+         &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: #FDF3E7;
+            font-weight: 600;
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+
+            span {
+               color: #1A913C;
+               font-weight: normal;
+            }
+         }
+
+         &__body {
+            background-color: #fff;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 8px 4px;
+            padding: 8px 12px 12px;
+         }
+      }
+   }
+
+   .price {
+
+      position: relative;
+
+      .tdvalue {
+         text-decoration: underline;
+         text-decoration-style: dotted;
+         text-underline-offset: 4px;
+         text-decoration-color: #8c8e90;
+         cursor: context-menu;
+
+         &:hover {
+            color: $blue;
+            text-decoration-color: #93b1ef;
+
+            &+.price-modal {
+               visibility: visible;
+               scale: 1;
+            }
+         }
+
+      }
+
+
+      .price-modal {
+         position: absolute;
+         width: 350px;
+         border-radius: 12px;
+         font-size: 12px;
+         line-height: 16px;
+         box-shadow: 0px 8px 20px 0px #00000033;
+         visibility: hidden;
+         top: -96px;
+         left: 10px;
+         z-index: 2;
+         scale: .7;
+         transition: scale .3s;
+
+
+         &__header {
+            padding: 6px 12px;
+            background-color: #FDF3E7;
+            font-weight: 600;
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+         }
+
+         &__body {
+            background-color: #fff;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            padding: 8px 12px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+         }
+      }
+
+   }
+
+   .metallbase {
+      color: $blue;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      align-items: center;
+
+      .score {
+         display: inline-block;
+         font-size: 11px;
+         line-height: 100%;
+         color: #279C0A;
+         background-image: url('../img/metallbase-score.png');
+         background-size: cover;
+         width: 27px;
+         height: 18px;
+         padding: 3px 8px 1px 6px;
+         text-align: center;
+      }
+
+      a:visited {
+         color: inherit;
+      }
+   }
+
 }

@@ -6324,14 +6324,17 @@ a {
   line-height: 20px;
   font-weight: normal;
   color: #2764E0;
-  padding: 4px 16px 4px 32px;
+  padding: 4px 16px 4px 16px;
   background-color: #E9F0FC;
   border-radius: 30px;
+}
+.new-catalogResults__header__info svg {
+  margin-right: 8px;
 }
 
 .table1 .thead {
   display: grid;
-  grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+  grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69% 15.25% 10.58%;
   max-width: 1456px;
   width: 90%;
   margin: 0 auto;
@@ -6355,25 +6358,485 @@ a {
 }
 .table1 .tbody {
   display: grid;
-  grid-template-columns: minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(59.8181818182px, 1fr) minmax(7.55%, 110px) 32px minmax(9.1%, 118px) minmax(15.59%, 227px) minmax(13.19%, 192px) 1fr;
+  grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69% 15.25% 10.58%;
   max-width: 1456px;
   width: 90%;
   margin: 0 auto;
+  border-radius: 8px;
+  position: relative;
+}
+.table1 .tbody .hover-effect {
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s;
+  border-radius: 8px;
+}
+.table1 .tbody:hover .hover-effect {
+  transform: scaleX(1.02);
+  outline: 2px solid #2764E0;
+}
+.table1 .tbody.special {
+  border-top: 1px solid #1A913C;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.table1 .tbody.special::before {
+  content: "Спецпредложение";
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  width: 120px;
+  height: 20px;
+  z-index: 2;
+  font-size: 12px;
+  color: #fff;
+  background-color: #009861;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table1 .tbody.special .tdata:nth-child(2) {
+  border-top-left-radius: 0;
+}
+.table1 .tbody.special .tdata:last-child {
+  border-top-right-radius: 0;
+}
+.table1 .tbody.special .hover-effect {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  outline-color: #1A913C;
+}
+.table1 .tbody.no-sub .metallbase {
+  background-image: url("../img/metallbase-blur.svg");
+  padding: 0;
+  margin: 10px;
+  margin-right: 30%;
+}
+.table1 .tbody.no-sub .metallbase__get-sub {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.table1 .tbody.no-sub .metallbase__get-sub:hover .metallbase-info {
+  visibility: visible;
+  scale: 1;
+}
+.table1 .tbody.no-sub .metallbase__get-sub .metallbase-info {
+  position: absolute;
+  z-index: 1;
+  top: 32px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 8px;
+  border-radius: 6px;
+  visibility: hidden;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.table1 .tbody.no-sub .metallbase__get-sub .metallbase-info svg {
+  margin-right: 3px;
+}
+.table1 .tbody.no-sub .btns .gradient-btn {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+  color: #212529;
+  padding: 2px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #D20F62 0%, #2C62DD 100%);
+}
+.table1 .tbody.no-sub .btns .gradient-btn div {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  transition: all 0.3s;
+}
+.table1 .tbody.no-sub .btns .gradient-btn:hover div {
+  background-color: inherit;
+  color: #fff;
 }
 .table1 .tbody .tdata {
-  display: block;
+  display: flex;
+  align-items: center;
   background-color: #fff;
   padding: 12px 14px;
   font-size: 14px;
   line-height: 20px;
+  white-space: nowrap;
+  transition: padding 0s;
+  position: relative;
 }
-.table1 .tbody .tdata:first-child {
+.table1 .tbody .tdata:nth-child(2) {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 .table1 .tbody .tdata:last-child {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+.table1 .tbody .tdata.info {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.table1 .tbody .tdata.info svg {
+  transition: all 0.3s;
+  cursor: help;
+}
+.table1 .tbody .tdata.info svg:hover {
+  color: #2764E0;
+}
+.table1 .tbody .tdata.info svg:hover + .info-modal {
+  visibility: visible;
+  scale: 1;
+}
+.table1 .tbody .tdata.info .info-modal {
+  position: absolute;
+  width: 350px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+  top: 34px;
+  left: 22px;
+  z-index: 2;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.table1 .tbody .tdata.info .info-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #FDF3E7;
+  font-weight: 600;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.table1 .tbody .tdata.info .info-modal__header span {
+  color: #1A913C;
+  font-weight: normal;
+}
+.table1 .tbody .tdata.info .info-modal__body {
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px 4px;
+  padding: 8px 12px 12px;
+}
+.table1 .tbody .tdata.metallbase {
+  color: #2764E0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+}
+.table1 .tbody .tdata.metallbase .score {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 100%;
+  color: #279C0A;
+  background-image: url("../img/metallbase-score.png");
+  background-size: cover;
+  width: 27px;
+  height: 18px;
+  padding: 3px 8px 1px 6px;
+  text-align: center;
+}
+.table1 .tbody .tdata.metallbase a:visited {
+  color: inherit;
+}
+.table1 .tbody .tdata.price {
+  position: relative;
+}
+.table1 .tbody .tdata.price .tdvalue {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #8c8e90;
+  cursor: context-menu;
+}
+.table1 .tbody .tdata.price .tdvalue:hover {
+  color: #2764E0;
+  text-decoration-color: #93b1ef;
+}
+.table1 .tbody .tdata.price .tdvalue:hover + .price-modal {
+  visibility: visible;
+  scale: 1;
+}
+.table1 .tbody .tdata.price .price-modal {
+  position: absolute;
+  width: 350px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+  top: -96px;
+  left: 10px;
+  z-index: 2;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.table1 .tbody .tdata.price .price-modal__header {
+  padding: 6px 12px;
+  background-color: #FDF3E7;
+  font-weight: 600;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.table1 .tbody .tdata.price .price-modal__body {
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 8px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.table1 .tbody .tdata.btns {
+  display: flex;
+  gap: 18px;
+  flex-wrap: nowrap;
+  padding: 8px;
+  justify-content: flex-end;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  gap: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  position: relative;
+  background-color: #fff;
+  transition: background-color 0.3s;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more:hover {
+  background-color: #E3E3E3;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more > svg {
+  display: inline-block;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal {
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  font-size: 14px;
+  line-height: 20px;
+  visibility: hidden;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal__option {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 13px;
+  padding-right: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: inherit;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal__option:visited {
+  color: inherit;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal__option:hover {
+  background-color: #F5F5F5;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal__option.red {
+  color: #C3094F;
+}
+.table1 .tbody .tdata.btns .new-catalog__position-more .more-modal.visible {
+  visibility: visible;
+  scale: 1;
+}
+
+.primary-btn {
+  background-color: #2764E0;
+  color: #fff;
+  border-radius: 6px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.primary-btn:hover {
+  background-color: #3473f4;
+}
+.primary-btn:active {
+  background-color: #104cc4;
+}
+
+.new-table {
+  display: grid;
+  grid-template-columns: 10.03% 5.84% 8.04% 9.89% 7.76% 5.01% 2.47% 8.45% 16.69%;
+}
+.new-table__header {
+  display: contents;
+  background-color: red;
+}
+.new-table__headerdata {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #000000;
+}
+.new-table .info {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.new-table .info svg {
+  transition: all 0.3s;
+  cursor: help;
+}
+.new-table .info svg:hover {
+  color: #2764E0;
+}
+.new-table .info svg:hover + .info-modal {
+  visibility: visible;
+  scale: 1;
+}
+.new-table .info .info-modal {
+  position: absolute;
+  width: 350px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+  top: 34px;
+  left: 22px;
+  z-index: 2;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.new-table .info .info-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: #FDF3E7;
+  font-weight: 600;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.new-table .info .info-modal__header span {
+  color: #1A913C;
+  font-weight: normal;
+}
+.new-table .info .info-modal__body {
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 8px 4px;
+  padding: 8px 12px 12px;
+}
+.new-table .price {
+  position: relative;
+}
+.new-table .price .tdvalue {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 4px;
+  text-decoration-color: #8c8e90;
+  cursor: context-menu;
+}
+.new-table .price .tdvalue:hover {
+  color: #2764E0;
+  text-decoration-color: #93b1ef;
+}
+.new-table .price .tdvalue:hover + .price-modal {
+  visibility: visible;
+  scale: 1;
+}
+.new-table .price .price-modal {
+  position: absolute;
+  width: 350px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.2);
+  visibility: hidden;
+  top: -96px;
+  left: 10px;
+  z-index: 2;
+  scale: 0.7;
+  transition: scale 0.3s;
+}
+.new-table .price .price-modal__header {
+  padding: 6px 12px;
+  background-color: #FDF3E7;
+  font-weight: 600;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+.new-table .price .price-modal__body {
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 8px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.new-table .metallbase {
+  color: #2764E0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+}
+.new-table .metallbase .score {
+  display: inline-block;
+  font-size: 11px;
+  line-height: 100%;
+  color: #279C0A;
+  background-image: url("../img/metallbase-score.png");
+  background-size: cover;
+  width: 27px;
+  height: 18px;
+  padding: 3px 8px 1px 6px;
+  text-align: center;
+}
+.new-table .metallbase a:visited {
+  color: inherit;
 }
 
 @media screen and (max-width: 1670px) {
