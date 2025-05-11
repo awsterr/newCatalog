@@ -6486,6 +6486,9 @@ body {
   line-height: 20px;
   padding: 27px 0 35px;
 }
+.table1 .temp .pagination .secondary-btn {
+  display: none;
+}
 .table1 .temp .pagination__controls {
   display: flex;
   justify-content: center;
@@ -7538,6 +7541,9 @@ body {
     gap: 24px;
     width: 100%;
     margin: 0;
+  }
+  main .new-catalogResults .table1 .temp .pagination > .primary-btn {
+    display: flex;
   }
   main .new-catalogResults .table1 .temp .pagination .pagination__shortcut {
     display: none;
