@@ -2694,4 +2694,86 @@ function inputValueFormat (str){
 }
 
 
+// Логика звезд
+document.addEventListener("DOMContentLoaded", () => {
+  const rating = document.querySelector(".rating");
+  const stars = rating.querySelectorAll(".star");
+  const statBlock = document.querySelector(".catalog-footer__rating__stat__text");
+  const globalValue = parseFloat(rating.dataset.value);
+  let selectedValue = 0;
+  let isRated = localStorage.getItem("userRated") === "true";
 
+  function updateStars(value) {
+    stars.forEach((star, index) => {
+      star.classList.remove("filled", "half-filled");
+      if (index + 1 <= Math.floor(value)) {
+        star.classList.add("filled");
+      } else if (index < value) {
+        star.classList.add("half-filled");
+      }
+    });
+  }
+
+  function updateStatBlock(newRating, newVotes) {
+    if (!statBlock) return;
+    const spans = statBlock.querySelectorAll(".fw_600");
+    if (spans.length >= 2) {
+      spans[0].textContent = newRating.toFixed(1);
+      spans[1].textContent = newVotes;
+    }
+  }
+
+  updateStars(isRated ? parseFloat(localStorage.getItem("userRating")) || globalValue : globalValue);
+
+  stars.forEach((star, index) => {
+    star.addEventListener("mouseover", () => {
+      if (isRated) return;
+      updateStars(index + 1);
+    });
+
+    star.addEventListener("mouseout", () => {
+      if (isRated) return;
+      updateStars(selectedValue || globalValue);
+    });
+
+    star.addEventListener("click", () => {
+      if (isRated) return;
+
+      selectedValue = index + 1;
+      updateStars(selectedValue);
+
+      fetch('/rate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating: selectedValue })
+      })
+        .then(res => {
+          if (!res.ok) throw new Error('Failed to submit rating');
+          return res.json();
+        })
+        .then(data => {
+          // Примерный ответ от сервера:
+          // { newAverage: 4.7, newVotes: 9 }
+          console.log('Rating submitted:', data);
+          isRated = true;
+          localStorage.setItem("userRated", "true");
+          localStorage.setItem("userRating", selectedValue);
+          updateStatBlock(data.newAverage, data.newVotes);
+        })
+        .catch(err => {
+          console.error(err);
+          selectedValue = 0;
+          updateStars(globalValue);
+        });
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const block = document.querySelector('.new-catalogForm__loader'); // Замените 'your-block-id' на ID вашего блока
+        if (block) {
+            block.style.display = 'none';
+        }
+    }, 3000); // 10000 миллисекунд = 10 секунд
+});
