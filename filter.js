@@ -1,7 +1,3 @@
-
-
-
-
 const generetingFilterContainer = document.querySelector('.new-catalogForm__generated-filters')
 
 
@@ -2578,8 +2574,9 @@ function getFilterData(params) {
 
 }
 const filterData = getFilterData()
-console.dir(filterData)
+// console.dir(filterData)
 
+// Генерация фильтров
 filterData.data.filters.forEach((filter)=>{
    // generetingFilterContainer.innerHTML += `<div class="new-catalogForm__filter">
    //                   <p class="new-catalogForm__filter__title">${filter.filter_name}</p>
@@ -2609,16 +2606,51 @@ filterData.data.filters.forEach((filter)=>{
 
    const inputEl = document.createElement('input')
    inputEl.classList.add('new-catalogForm__filter__input')
+  //  inputEl.type = 'text'
    inputEl.placeholder = filter.placeholder
+   inputEl.dataset.placeholder = filter.placeholder
+   inputEl.dataset.filter = JSON.stringify({range:'',list:[]})
+   inputEl.dataset.unit = filter.unit
+   inputEl.name = filter.filter_code
    uiDiv.append(inputEl)
    
    const wrapper = document.createElement('div')
    wrapper.classList.add('wrapper1')
    uiDiv.append(wrapper)
 
+    if(filter.range[0]==='yes'){
+        wrapper.classList.add('ranged')
+        const range = document.createElement('div')
+        range.innerHTML =   `<div class="new-catalogForm__filter__range__text">
+                                <p class="new-catalogForm__filter__range__title">
+                                    Диапазон
+                                </p>
+                                <p class="new-catalogForm__filter__range__reset">
+                                    Сбросить
+                                </p>
+                            </div>
+                            <div class="new-catalogForm__filter__range__inputs">
+                                <input class="new-catalogForm__filter__range__input" placeholder="От">
+                                <input class="new-catalogForm__filter__range__input" placeholder="До">
+                            </div>`
+        range.classList.add('new-catalogForm__filter__range')
+        wrapper.append(range)
+    }
+
    const select = document.createElement('div')
    select.classList.add('new-catalogForm__filter__select')
    wrapper.append(select)
+
+   
+
+   const commonSearch = document.createElement('div')
+   commonSearch.classList.add('new-catalogForm__filter__select__status')
+   commonSearch.innerHTML = ` <div class='status_placeholder'>Часто ищут</div>
+                              <div class='status_active hidden'>
+                                <div class='status_active__counter'>Выбрано:</div>
+                                <div class='status_active__reset'>Сбросить</div>
+                              </div>`
+   select.append(commonSearch)
 
    
    const filterHelp = document.createElement('p')
@@ -2632,66 +2664,117 @@ filterData.data.filters.forEach((filter)=>{
       option.dataset.value = value
       option.classList.add('new-catalogForm__filter__select__option')
       option.innerHTML = value 
+
+    //Убрать когда поменяют бек
       if (index === 0){
-         option.dataset.value = filter.placeholder
-         option.innerText = filter.placeholder 
+         option.dataset.value = "temp"
+         option.innerText = "temp" 
       }
+
       select.append(option)
    })
    filterDiv.append(filterHelp)
 })
 
 
-const filters = document.querySelectorAll('.new-catalogForm__filter__input')
-filters.forEach((filter)=>{
-   filter.addEventListener('click',()=>{
-      console.dir(filter.parentElement.querySelector('.wrapper1').classList.toggle('open'))
-   })
-//    filter.addEventListener('input',(event)=>{
-    //   const options = filter.parentElement.querySelectorAll('.new-catalogForm__filter__select__option')
-    //   console.dir(event.target.value.toLowerCase())
-    //   options.forEach((option)=>{
-    //      console.log(option.innerText)
-    //      // if (option.innerText == event.target.value.toLowerCase()){
-    //      //    console.log('Da')
-    //      // }
-    //   })
-    //   console.dir(options)
-//    })
-})
+// document.addEventListener('DOMContentLoaded', function() {
+//   const filterInputs = document.querySelectorAll('.new-catalogForm__filter__input');
+//   let isDocumentListenerActive = false;
 
-const options = document.querySelectorAll('.new-catalogForm__filter__select__option')
-options.forEach((option)=>{
-    option.addEventListener('click',(event)=>{
-        let inputValue = option.closest('.new-catalogForm__filter__ui').querySelector('input')
+//   // Проверяем, можно ли закрывать окно при клике на input (по placeholder)
+//   function canCloseOnInputClick(input) {
+//     if (!input) return true; // если input не найден, разрешаем закрытие (на всякий случай)
+//     const placeholder = input.getAttribute('placeholder') || '';
+//     const allowedPlaceholders = ['Любой', 'Любая', 'Любые', 'Любое'];
+//     return allowedPlaceholders.includes(placeholder.trim());
+//   }
+
+//   // Закрывает все .wrapper1
+//   function closeAllWrappers() {
+//     document.querySelectorAll('.wrapper1.open').forEach(wrapper => {
+//       wrapper.classList.remove('open');
+//     });
+
+//     // Удаляем обработчик, если больше нет открытых окон
+//     if (isDocumentListenerActive) {
+//       document.removeEventListener('click', handleDocumentClick);
+//       isDocumentListenerActive = false;
+//     }
+//   }
+
+//   // Обработчик клика по документу (закрытие при клике вне)
+//   function handleDocumentClick(e) {
+//     const isClickInside = Array.from(document.querySelectorAll('.wrapper1.open')).some(wrapper => {
+//       return wrapper.contains(e.target);
+//     });
+
+//     if (!isClickInside) {
+//       closeAllWrappers();
+//     }
+//   }
+
+//   // Обработчик клика по триггеру (.new-catalogForm__filter__input)
+//   function handleInputClick(e) {
+//     e.stopPropagation();
+//     const wrapper = this.parentElement.querySelector('.wrapper1');
+//     if (!wrapper) return;
+
+//     // Если окно уже открыто, проверяем placeholder перед закрытием
+//     if (wrapper.classList.contains('open')) {
+//       if (canCloseOnInputClick(this)) { // Закрываем только если placeholder разрешает
+//         closeAllWrappers();
+//       }
+//       return;
+//     }
+
+//     // Закрываем все остальные окна перед открытием нового
+//     closeAllWrappers();
+//     wrapper.classList.add('open');
+
+//     // Добавляем обработчик на документ, если его еще нет
+//     if (!isDocumentListenerActive) {
+//       document.addEventListener('click', handleDocumentClick);
+//       isDocumentListenerActive = true;
+//     }
+//   }
+
+//   // Назначаем обработчики на все триггеры
+//   filterInputs.forEach(input => {
+//     input.addEventListener('click', handleInputClick);
+//   });
+
+//   // Запрещаем закрытие при клике внутри .wrapper1
+//   document.querySelectorAll('.wrapper1').forEach(wrapper => {
+//     wrapper.addEventListener('click', function(e) {
+//       e.stopPropagation();
+//     });
+//   });
+// });
+
+// const options = document.querySelectorAll('.new-catalogForm__generated-filters .new-catalogForm__filter__select__option')
+// options.forEach((option)=>{
+//     option.addEventListener('click',()=>{
+//         let input = option.closest('.new-catalogForm__filter__ui').querySelector('input')
         
-        if (option.classList.contains('active')){
-            option.classList.toggle('active')
-            inputValue.value = inputValue.value.split('|').filter((elem)=>elem !== option.innerText).join('|')
-            
-        } else {
-            if (inputValue.value === '') {
-                inputValue.value = option.innerText
-            } else {
-                inputValue.value += '|' + option.innerText
-            }
-            option.classList.toggle('active')
-        }
-        if (option.parentElement.firstChild === option){
-            inputValue.value = ''
-            option.parentElement.querySelectorAll('.new-catalogForm__filter__select__option').forEach(newOpt=>{
-                newOpt.classList.remove('active')
-            })
-        }
-    })
-})
-function inputValueFormat (str){
-    // str.forEach((char,index)=>{
-    //     if (char === '|'){
-    //         if 
-    //     }
-    // })
-}
+//         if (option.classList.contains('active')){
+//             option.classList.toggle('active')
+//             input.placeholder = input.placeholder.split(', ').filter((elem)=>elem !== option.innerText).join(', ')
+//         } else {
+//             if (input.placeholder === '' || input.placeholder === 'Любой' || input.placeholder === 'Любая' || input.placeholder === 'Любое' || input.placeholder === 'Любые') {
+//                 input.placeholder = option.innerText
+//             } else {
+//                 input.placeholder += ', ' + option.innerText
+//             }
+//             option.classList.toggle('active')
+//         }
+//         if (option.parentElement.firstChild === option){
+//             input.placeholder = ''
+//             option.parentElement.querySelectorAll('.new-catalogForm__filter__select__option').forEach(newOpt=>{
+//                 newOpt.classList.remove('active')
+//             })
+//         }
+//     })
+// })
 
 
 // Логика звезд
@@ -2769,11 +2852,519 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+//блюр фильтров при загрузке
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
         const block = document.querySelector('.new-catalogForm__loader'); // Замените 'your-block-id' на ID вашего блока
         if (block) {
             block.style.display = 'none';
         }
-    }, 3000); // 10000 миллисекунд = 10 секунд
+    }, 0);
 });
+
+
+function moreBtnsLogic(){
+    const posMoreBtns = document.querySelectorAll('.new-catalog__position-more');
+
+    function handleOutsideClick(event) {
+        let clickedInside = false;
+        
+        posMoreBtns.forEach(btn => {
+            if (btn.contains(event.target)) {
+                clickedInside = true;
+            }
+        });
+        
+        if (!clickedInside) {
+            closeAllModals();
+            document.removeEventListener('click', handleOutsideClick);
+        }
+    }
+
+    function closeAllModals() {
+        document.querySelectorAll('.more-modal.opened').forEach(modal => {
+            modal.classList.remove('opened');
+        });
+    }
+
+    posMoreBtns.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+            if (event.target === btn || btn.contains(event.target)) {
+                if (event.target !== btn) event.stopPropagation();
+                
+                const moreModal = btn.querySelector('.more-modal');
+                const isOpening = !moreModal.classList.contains('opened');
+                
+                closeAllModals();
+                
+                if (isOpening) {
+                    moreModal.classList.add('opened');
+                    document.addEventListener('click', handleOutsideClick);
+                }
+            }
+        });
+    });
+
+    document.querySelectorAll('.more-modal').forEach(modal => {
+        modal.addEventListener('click', (event) => event.stopPropagation());
+    });
+}
+moreBtnsLogic()
+
+
+/**
+ * Универсальная функция для управления модальными окнами
+ * @param {Object} options - Настройки
+ * @param {string} options.triggerSelector - Селектор элемента-триггера
+ * @param {string} options.modalSelector - Селектор модального окна (ищется относительно триггера)
+ * @param {string} [options.activeClass='opened'] - Класс активности
+ * @param {boolean} [options.closeOnOutsideClick=true] - Закрывать при клике вне
+ * @param {boolean} [options.closeOtherModals=true] - Закрывать другие модалки
+ */
+function toggleModals(options) {
+    const {
+        triggerSelector,
+        modalSelector,
+        activeClass = 'opened',
+        closeOnOutsideClick = true,
+        closeOtherModals = true,
+    } = options;
+
+    const triggers = document.querySelectorAll(triggerSelector);
+
+    function closeAllModals() {
+        document.querySelectorAll(`${modalSelector}.${activeClass}`).forEach(modal => {
+            modal.classList.remove(activeClass);
+        });
+    }
+
+    // Находит модальное окно, связанное с триггером
+    function findModal(trigger) {
+        // 1. Ищем внутри триггера
+        const innerModal = trigger.querySelector(modalSelector);
+        if (innerModal) return innerModal;
+
+        // 2. Ищем в родительской структуре через closest()
+        const parentContainer = trigger.parentElement.closest('*');
+        if (parentContainer) {
+            return parentContainer.querySelector(modalSelector);
+        }
+
+        // 3. Fallback: глобальный поиск (если не нашли выше)
+        return document.querySelector(modalSelector);
+    }
+
+    function handleTriggerClick(event) {
+        const trigger = event.target.closest(triggerSelector);
+        if (!trigger) return;
+
+        const modal = findModal(trigger);
+        if (!modal) {
+            console.warn(`Modal not found for trigger:`, trigger);
+            return;
+        }
+
+        event.stopPropagation();
+        const isOpening = !modal.classList.contains(activeClass);
+
+        if (closeOtherModals) {
+            closeAllModals();
+        }
+
+        modal.classList.toggle(activeClass, isOpening);
+    }
+
+    function handleOutsideClick(event) {
+        const clickedOnTrigger = event.target.closest(triggerSelector);
+        const clickedOnModal = event.target.closest(modalSelector);
+
+        if (!clickedOnTrigger && !clickedOnModal) {
+            closeAllModals();
+        }
+    }
+
+    // Инициализация
+    triggers.forEach(trigger => {
+        trigger.addEventListener('click', handleTriggerClick);
+    });
+
+    document.querySelectorAll(modalSelector).forEach(modal => {
+        modal.addEventListener('click', e => e.stopPropagation());
+    });
+
+    if (closeOnOutsideClick) {
+        document.addEventListener('click', handleOutsideClick);
+    }
+
+    return {
+        closeAllModals,
+    };
+}
+toggleModals({
+    triggerSelector: ".tdmobile__numbers .tdmobile__amount .hint-icon",  // Клик по SVG внутри .position__amount
+    modalSelector: ".tdmobile__more__backdrop",             // Открывает ближайшее .more-modal
+});
+toggleModals({
+    triggerSelector: ".tdmobile__numbers .tdmobile__price .hint-icon",  // Клик по SVG внутри .position__amount
+    modalSelector: ".tdmobile__more__backdrop",             // Открывает ближайшее .more-modal
+});
+toggleModals({
+    triggerSelector: ".tdmobile__more",  // Клик по SVG внутри .position__amount
+    modalSelector: ".tdmobile__more__backdrop",             // Открывает ближайшее .more-modal
+});
+
+
+
+
+document.querySelectorAll('.tdmobile__more__modal__close').forEach((closeIcon)=>{
+    closeIcon.addEventListener('click',()=>{
+        closeIcon.parentElement.parentElement.classList.remove('opened')
+    })
+})
+
+const modalBackdrops = document.querySelectorAll('.tdmobile__more__backdrop');
+modalBackdrops.forEach(backdrop => {
+  backdrop.addEventListener('click', (event) => {
+    // Проверяем, был ли клик непосредственно по фону (а не по потомкам)
+    if (event.target === backdrop) {
+      backdrop.classList.remove('opened');
+    }
+  });
+});
+
+document.querySelectorAll('.modal-backdrop .modal-close').forEach((closeIcon)=>{
+    closeIcon.addEventListener('click',()=>{
+        closeIcon.parentElement.classList.remove('opened')
+        closeIcon.parentElement.parentElement.classList.remove('opened')
+    })
+})
+// Блок модалок
+const backdrop = document.querySelector('.modal-backdrop')
+
+backdrop.addEventListener('click', (event) => {
+    // Проверяем, был ли клик непосредственно по фону (а не по потомкам)
+    if (event.target === backdrop) {
+      backdrop.classList.remove('opened');
+    }
+});
+
+function openModal(selector){
+    backdrop.classList.add('opened')
+    backdrop.querySelector(`.modal-body.${selector}`).classList.add('opened')
+}
+
+// Модалка "преимущества подписки"
+document.querySelector('.new-catalogForm__controls__submit__sub').addEventListener('click',(event)=>{
+    event.preventDefault()
+    openModal('subscribe-adv')
+})
+
+// Модалка "Больше предложений металлопроката"
+document.querySelectorAll('.metallbase__get-sub').forEach((blur)=>{
+    blur.addEventListener('click',(event)=>{
+        event.preventDefault()
+        openModal('metallbase')
+    })
+})
+
+
+const brilliantAnimationBtn = backdrop.querySelector('.modal-body.metallbase .primary-btn')
+
+brilliantAnimationBtn.addEventListener('click',(event)=>{
+    event.preventDefault()
+    brilliantAnimationBtn.parentElement.querySelector('.metallbase__img div').classList.add('active')
+})
+
+document.querySelectorAll('.tdmobile__cart.gradient-btn').forEach((btn)=>{
+    btn.addEventListener('click',(event)=>{
+        event.preventDefault()
+        openModal('subscribe-adv')
+    })
+})
+
+// Открытие деталки на фильтрах
+document.querySelectorAll('.new-catalogForm__filter__ui').forEach((filter)=>{
+  document.removeEventListener("click", handleDocumentClick)
+  
+  // Закрывает все .wrapper1
+  function closeAllWrappers() {
+    document.querySelectorAll('.wrapper1.open').forEach(wrapper => {
+      wrapper.classList.remove('open');
+    });
+  }
+  // Открытие деталки
+  filter.addEventListener('click',()=>{
+    closeAllWrappers()
+    filter.querySelector('.wrapper1').classList.add('open')
+    document.addEventListener('click',handleDocumentClick)
+  })
+
+  // Обработчик клика по документу (закрытие при клике вне)
+  function handleDocumentClick(e) {
+    e.stopPropagation()
+    const isClickInside = Array.from(document.querySelectorAll('.new-catalogForm__filter__ui')).some(wrapper => {
+      return wrapper.contains(e.target);
+    });
+
+    if (!isClickInside) {
+      const input = filter.querySelector('.new-catalogForm__filter__input')
+      if(input.value !== '' && input.value !== ' '){
+        const newData = JSON.parse(input.dataset.filter);
+        newData.list.push(input.value)
+        input.dataset.filter = JSON.stringify(newData)
+        refreshPlaceholder(input)
+        input.value=''
+      }
+      
+      // input.dataset.
+      closeAllWrappers();
+      document.removeEventListener("click", handleDocumentClick)
+    }
+  }
+})
+
+function refreshPlaceholder(mainInput){
+  // Какие аргументы передавать? Нужно ли опять заводить filterData 
+  const filterData = JSON.parse(mainInput.dataset.filter)
+  const separator = mainInput.dataset.unit ? ` ${mainInput.dataset.unit}, ` : ', '
+  
+  filterData.range && filterData.list.unshift(filterData.range)
+  mainInput.placeholder = filterData.list.length ? filterData.list.join(separator) + ` ${mainInput.dataset.unit}` : mainInput.dataset.placeholder
+}
+
+// Выбор фильтров
+// function handleFilters(){
+  const containerList = document.querySelectorAll('.new-catalogForm__generated-filters .new-catalogForm__filter__ui')
+  containerList.forEach((container)=>{
+    const mainInput = container.querySelector('.new-catalogForm__filter__input')
+    const detailContainer = container.querySelector('.wrapper1')
+    const optionList = detailContainer.querySelectorAll('.new-catalogForm__filter__select__option')
+    const [rangeMin,rangeMax] = detailContainer.querySelectorAll('.new-catalogForm__filter__range__input')
+    const resetRange = detailContainer.querySelector('.new-catalogForm__filter__range__reset')
+    const status = detailContainer.querySelector('.new-catalogForm__filter__select__status')
+
+    
+    
+    
+    const filterData = JSON.parse(mainInput.dataset.filter);
+    
+    // mainInput.dataset.filter = JSON.stringify(filterData)
+
+    mainInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Отменяем стандартное поведение
+        const filterData = JSON.parse(mainInput.dataset.filter);
+        console.log("Введён текст:", mainInput.value);
+        // Ваша логика (например, поиск, фильтрация...)
+        filterData.list.push(mainInput.value)
+        console.dir(filterData.list)
+        mainInput.value = ''
+        mainInput.dataset.filter = JSON.stringify(filterData)
+        refreshPlaceholder(mainInput)
+        optionList.forEach(option=>{
+          option.style.display = 'flex'
+        })
+        applyRange()
+        // applyInput()
+      }
+    });
+
+
+
+    
+
+
+    // Выбор опции
+    optionList.forEach((option)=>{
+      option.addEventListener('click',()=>{
+        const newData = JSON.parse(mainInput.dataset.filter)
+        if (option.classList.contains('active')) {
+          newData.list = newData.list.filter((element)=>element !== option.dataset.value)
+          option.classList.remove('active')
+        } else{
+          newData.list.push(option.dataset.value)
+          option.classList.add('active')
+        }
+        mainInput.dataset.filter = JSON.stringify(newData)
+        console.dir(newData.list)
+        refreshPlaceholder(mainInput)
+      })
+    })
+    
+    // Выбор диапазона
+    // Оптимизировать
+    function applyRange() {
+      if (rangeMin && rangeMax){
+
+
+
+        function applyFilters(){
+          optionList.forEach((option)=>{
+            option.style.display = 'flex'
+            // показываем все
+          })
+          applyInput()
+
+          optionList.forEach((option)=>{
+            if(parseFloat(option.dataset.value) > parseFloat(rangeMax.value) || parseFloat(option.dataset.value) < parseFloat(rangeMin.value)){
+              option.style.display = 'none'
+              // скрываем ненужные
+            }
+          })
+        }
+
+        applyFilters()
+
+        rangeMin.addEventListener('input',()=>{
+          applyFilters()
+
+          optionList.forEach((option)=>{
+            if(parseFloat(option.dataset.value) < parseFloat(rangeMin.value)){
+              option.style.display = 'none'
+              // скрываем ненужные
+
+            }
+          })
+
+          const newData = JSON.parse(mainInput.dataset.filter)
+          temp = newData.range.split('-')
+          temp[0] = rangeMin.value
+          newData.range = !temp[0] && !temp[1] ? '' : temp.join('-')
+          mainInput.dataset.filter = JSON.stringify(newData)
+
+          refreshPlaceholder(mainInput)
+          newData.range ? resetRange.classList.add('visible') : resetRange.classList.remove('visible')
+        })
+        rangeMax.addEventListener('input',(event)=>{
+
+          applyFilters()
+
+
+          optionList.forEach((option)=>{
+            // Невключительно
+            if(parseFloat(option.dataset.value) >= parseFloat(rangeMax.value)){
+              option.style.display = 'none'
+              // скрываем ненужные
+            }
+          })
+
+
+          const newData = JSON.parse(mainInput.dataset.filter)
+          temp = newData.range.split('-')
+          // if(temp[1])
+          // newData.range = 
+          temp[1] = rangeMax.value
+          newData.range = !temp[0] && !temp[1] ? '' : temp.join('-')
+          mainInput.dataset.filter = JSON.stringify(newData)
+          // console.dir(temp)
+          refreshPlaceholder(mainInput)
+
+          newData.range ? resetRange.classList.add('visible') : resetRange.classList.remove('visible')
+          
+        })
+
+        resetRange.addEventListener('click',()=>{
+          const newData = JSON.parse(mainInput.dataset.filter)
+          newData.range = ''
+          mainInput.dataset.filter = JSON.stringify(newData)
+          rangeMax.value = ''
+          rangeMin.value= ''
+          refreshPlaceholder(mainInput)
+          applyFilters()
+          applyInput()
+
+        })
+        }
+    }
+    
+    applyRange()
+    
+    function applyInput(){
+      // status.innerHTML = 'Найдено'
+      const formated = mainInput.value.toLowerCase().trim().replaceAll('.',',')
+      optionList.forEach((option)=>{
+        !option.dataset.value.toLowerCase().includes(formated) && (option.style.display = 'none')
+      })
+    }
+
+    mainInput.addEventListener('input',(event)=>{
+      // event.preventDefault()
+      // event.stopImmediatePropagation()
+      // const str = mainInput.value.toLowerCase().trim()
+
+      optionList.forEach(option => {
+        option.style.display = 'flex'
+      })
+
+      applyRange()
+
+      applyInput()
+      // optionList.forEach((option)=>{
+      //   !option.dataset.value.toLowerCase().includes(str) && (option.style.display = 'none')
+      // })
+    })
+
+  })
+// }
+// Отключение Enter для формы
+
+document.querySelector('.new-catalogForm').addEventListener('submit', (e) => {
+    const submitter = e.submitter; // Элемент, вызвавший submit
+    if (submitter && submitter.type === 'submit') {
+      console.log('Форма отправлена через кнопку submit!');
+      // Ваш код обработки формы
+    } else {
+      e.preventDefault(); // Отменить отправку
+    }
+  });
+// document.querySelector('.new-catalogForm').addEventListener('submit',(event)=>{
+//   console.dir(event)
+//   event.preventDefault()
+// })
+// handleFilters()
+
+// item_steel_mark=1ПС|1СП
+
+
+// Функция умной сортировки 
+function customSort(a, b) {
+  // Извлекаем числовую часть (для всех типов значений)
+  const getNumberPart = (val) => {
+    const num = parseFloat(val) || parseFloat(val.toString().match(/^\d+/)?.[0]);
+    return isNaN(num) ? -Infinity : num; // Возвращаем -Infinity если нет числовой части
+  };
+
+  // Извлекаем "дробную" часть для значений типа 15Х1М1Ф
+  const getFractionalPart = (val) => {
+    if (typeof val !== 'string') return 0;
+    const match = val.match(/^\d+([^\d]+.*)?$/);
+    return match && match[1] ? match[1].length : 0;
+  };
+
+  const numA = getNumberPart(a);
+  const numB = getNumberPart(b);
+
+  // Сначала сравниваем числовые части
+  if (numA !== numB) {
+    return numA - numB;
+  }
+
+  // Если числовые части равны, применяем специальную логику
+  const isPureNumberA = !isNaN(a);
+  const isPureNumberB = !isNaN(b);
+  
+  // Чистые числа идут перед смешанными значениями
+  if (isPureNumberA && !isPureNumberB) return -1;
+  if (!isPureNumberA && isPureNumberB) return 1;
+  
+  // Для смешанных значений с одинаковым числом
+  const fracA = getFractionalPart(a.toString());
+  const fracB = getFractionalPart(b.toString());
+  
+  if (fracA !== fracB) {
+    return fracA - fracB;
+  }
+  
+  // Если все равно не определили порядок - лексикографическое сравнение
+  return a.toString().localeCompare(b.toString());
+}
