@@ -190,18 +190,28 @@ body {
                   }
                }
 
+               // &:has(.wrapper1:not(.open)) .new-catalogForm__filter__input {
+               //    border-color: #8EB1ED;
+               //    background-color: #E9F0FC;
+
+               //    ::placeholder {
+               //       color: $text-color;
+               //    }
+               // }
+
                .new-catalogForm__filter__input {
                   cursor: pointer;
                   height: 38px;
                   width: 100%;
                   border: 1px solid #ddd;
                   border-radius: 6px;
-                  padding: 16px;
+                  padding: 4px 16px;
                   background-image: url('../img/form_arrow.svg');
                   background-repeat: no-repeat;
-                  background-position: right 16px center;
+                  background-position: right 12px center;
 
-                  &:focus {
+                  &:focus,
+                  &:hover {
                      outline: none;
 
                      border-color: $blue;
@@ -210,9 +220,18 @@ body {
                   &.active {
                      border-color: #8EB1ED;
                      background-color: #E9F0FC;
+
+                     &::placeholder {
+                        color: $text-color;
+                     }
+
+                     &:focus,
+                     &:hover {
+                        outline: none;
+
+                        border-color: $blue;
+                     }
                   }
-
-
                }
 
                .wrapper1 {
@@ -322,9 +341,14 @@ body {
                      .status_placeholder {
                         color: #B4B4B4;
                         display: none;
+                        font-weight: 600;
+
                         // &.hidden {
                         //    display: none;
                         // }
+                        &.black {
+                           color: $text-color;
+                        }
                      }
 
                      .status_active {

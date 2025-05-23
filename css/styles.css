@@ -5946,18 +5946,28 @@ body {
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 16px;
+  padding: 4px 16px;
   background-image: url("../img/form_arrow.svg");
   background-repeat: no-repeat;
-  background-position: right 16px center;
+  background-position: right 12px center;
 }
-.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input:focus {
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input:focus, .new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input:hover {
   outline: none;
   border-color: #2764E0;
 }
 .new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input.active {
   border-color: #8EB1ED;
   background-color: #E9F0FC;
+}
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input.active::-moz-placeholder {
+  color: #212529;
+}
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input.active::placeholder {
+  color: #212529;
+}
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input.active:focus, .new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__input.active:hover {
+  outline: none;
+  border-color: #2764E0;
 }
 .new-catalog .new-catalog__main .new-catalogForm__filter__ui .wrapper1 {
   padding: 16px 0;
@@ -6049,6 +6059,10 @@ body {
 .new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__select__status .status_placeholder {
   color: #B4B4B4;
   display: none;
+  font-weight: 600;
+}
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__select__status .status_placeholder.black {
+  color: #212529;
 }
 .new-catalog .new-catalog__main .new-catalogForm__filter__ui .new-catalogForm__filter__select__status .status_active {
   display: flex;
