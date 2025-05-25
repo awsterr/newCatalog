@@ -2585,6 +2585,20 @@ filterData.data.filters.forEach((filter) => {
   filterDiv.classList.add("new-catalogForm__filter");
   generetingFilterContainer.append(filterDiv);
 
+  const mobileHeader = document.createElement("div");
+  mobileHeader.classList.add("new-catalogForm__filter__mobile-header");
+  mobileHeader.innerHTML = `<div class="new-catalogForm__filter__mobile-header__close">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18"
+                                 fill="none">
+                                 <path
+                                    d="M8.57073 0.277911C8.95198 -0.0926369 9.57012 -0.0926369 9.95138 0.277911C10.3326 0.648458 10.3326 1.24923 9.95138 1.61978L3.33414 8.05112H19.0237C19.5629 8.05112 20 8.47593 20 8.99996C20 9.52399 19.5629 9.9488 19.0237 9.9488H3.33319L9.9505 16.3802C10.3318 16.7508 10.3318 17.3515 9.9505 17.7221C9.56925 18.0926 8.95111 18.0926 8.56985 17.7221L0.285943 9.67089C-0.0953145 9.30035 -0.0953145 8.69957 0.285943 8.32903C0.294632 8.32059 0.303443 8.31233 0.31237 8.30427L8.57073 0.277911Z"
+                                    fill="#212529" />
+                              </svg>
+                            </div>
+                            <p class="new-catalogForm__filter__mobile-header__title">${filter.filter_name}</p>
+                            <a href="" class="new-catalogForm__filter__mobile-header__reset">Сбросить</a>`;
+  filterDiv.append(mobileHeader);
+
   const filterName = document.createElement("p");
   filterName.classList.add("new-catalogForm__filter__title");
   filterName.innerHTML = filter.filter_name;
@@ -2603,6 +2617,22 @@ filterData.data.filters.forEach((filter) => {
   inputEl.dataset.unit = filter.unit;
   inputEl.name = filter.filter_code;
   uiDiv.append(inputEl);
+
+  const mobileClear = document.createElement("div");
+  mobileClear.classList.add("mobile-clear");
+  mobileClear.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+<circle cx="10" cy="10" r="10" fill="#6C757D"/>
+<path d="M6.48535 6.48535L13.9999 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 6.48535L6.48541 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+  mobileClear.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    mobileClear
+      .closest(".new-catalogForm__filter__ui")
+      .querySelector(".new-catalogForm__filter__input").value = "";
+  });
+  uiDiv.append(mobileClear);
 
   const wrapper = document.createElement("div");
   wrapper.classList.add("wrapper1");
@@ -2996,8 +3026,6 @@ function closeAllWrappers() {
 document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   document.removeEventListener("click", handleDocumentClick);
 
-  // Закрывает все .wrapper1
-
   // Открытие деталки
   filter
     .querySelector(".new-catalogForm__filter__input")
@@ -3017,8 +3045,10 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
     });
 
     if (!isClickInside) {
-      const input = filter.querySelector(".new-catalogForm__filter__input");
-      if (input.value !== "" && input.value !== " ") {
+      const input = filter.querySelector(
+        ".new-catalogForm__generated-filters .new-catalogForm__filter__input"
+      );
+      if (input && input.value !== "" && input.value !== " ") {
         const newData = JSON.parse(input.dataset.filter);
         newData.list.push(input.value);
         input.dataset.filter = JSON.stringify(newData);
@@ -3103,25 +3133,29 @@ containerList.forEach((container) => {
     ".new-catalogForm__filter__range__reset"
   );
 
-  const statusCounter = detailContainer.querySelector(
-    ".status_active__counter"
+  const statusBlock = detailContainer.querySelector(
+    ".new-catalogForm__filter__select__status"
   );
-  const searchStatus = detailContainer.querySelector(".status_placeholder");
 
-  const resetOptions = detailContainer.querySelector(".status_active__reset");
+  const statusCounter = statusBlock.querySelector(".status_active__counter");
+  const searchStatus = statusBlock.querySelector(".status_placeholder");
+
+  const resetOptions = statusBlock.querySelector(".status_active__reset");
 
   resetOptions.addEventListener("click", () => {
     optionList.forEach((option) => {
       option.classList.remove("active");
       option.style.display = "flex";
     });
-    sortOptions();
+    // sortOptions();
     mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
     refreshPlaceholder(mainInput);
     mainInput.value = "";
     statusCounter.innerHTML = "Выбрано: ";
     searchStatus.innerText = "Часто ищут";
     searchStatus.classList.remove("black");
+    statusBlock.querySelector(".status_active").classList.add("hidden");
+    searchStatus.style.display = "block";
   });
 
   const filterData = JSON.parse(mainInput.dataset.filter);
@@ -3170,7 +3204,7 @@ containerList.forEach((container) => {
           mainInput.dataset.filter = JSON.stringify(newData);
           refreshPlaceholder(mainInput);
           statusCounter.innerHTML = "Выбрано: " + newData.list.length;
-          sortOptions(); // пересортировать
+          // sortOptions(); // пересортировать
         });
 
         detailContainer
@@ -3188,7 +3222,9 @@ containerList.forEach((container) => {
       optionList.forEach((option) => {
         option.style.display = "flex";
       });
-      sortOptions(); // сортировка после добавления
+      // sortOptions(); // сортировка после добавления
+      statusBlock.querySelector(".status_active").classList.remove("hidden");
+      searchStatus.style.display = "none";
     }
   });
 
@@ -3205,35 +3241,45 @@ containerList.forEach((container) => {
         newData.list.push(option.dataset.value);
         option.classList.add("active");
       }
+
       statusCounter.innerHTML = "Выбрано: " + newData.list.length;
       mainInput.dataset.filter = JSON.stringify(newData);
       refreshPlaceholder(mainInput);
       mainInput.value = "";
-      sortOptions();
+      // sortOptions();
+      optionList.forEach((option) => {
+        option.style.display = "flex";
+      });
+      statusBlock.querySelector(".status_active").classList.remove("hidden");
+      searchStatus.style.display = "none";
+      if (!newData.list.length) {
+        statusBlock.querySelector(".status_active").classList.add("hidden");
+        searchStatus.style.display = "block";
+      }
     });
   });
-  function sortOptions() {
-    const optionsArray = Array.from(optionList);
+  // function sortOptions() {
+  //   const optionsArray = Array.from(optionList);
 
-    optionsArray.sort((a, b) => {
-      const aIsActive = a.classList.contains("active");
-      const bIsActive = b.classList.contains("active");
+  //   optionsArray.sort((a, b) => {
+  //     const aIsActive = a.classList.contains("active");
+  //     const bIsActive = b.classList.contains("active");
 
-      // Сначала активные
-      if (aIsActive && !bIsActive) return -1;
-      if (!aIsActive && bIsActive) return 1;
+  //     // Сначала активные
+  //     if (aIsActive && !bIsActive) return -1;
+  //     if (!aIsActive && bIsActive) return 1;
 
-      // Если оба активны или оба неактивны — сортировать по customSort
-      return customSort(a.dataset.value, b.dataset.value);
-    });
+  //     // Если оба активны или оба неактивны — сортировать по customSort
+  //     return customSort(a.dataset.value, b.dataset.value);
+  //   });
 
-    const container = detailContainer.querySelector(
-      ".new-catalogForm__filter__select"
-    );
-    optionsArray.forEach((option) => {
-      container.appendChild(option); // меняем порядок в DOM
-    });
-  }
+  //   const container = detailContainer.querySelector(
+  //     ".new-catalogForm__filter__select"
+  //   );
+  //   optionsArray.forEach((option) => {
+  //     container.appendChild(option); // меняем порядок в DOM
+  //   });
+  // }
 
   // Выбор диапазона
   // Оптимизировать
@@ -3359,18 +3405,11 @@ document.querySelector(".new-catalogForm").addEventListener("submit", (e) => {
   const submitter = e.submitter; // Элемент, вызвавший submit
   if (submitter && submitter.type === "submit") {
     console.log("Форма отправлена через кнопку submit!");
-    // Ваш код обработки формы
+    // Код обработки формы
   } else {
     e.preventDefault(); // Отменить отправку
   }
 });
-// document.querySelector('.new-catalogForm').addEventListener('submit',(event)=>{
-//   console.dir(event)
-//   event.preventDefault()
-// })
-// handleFilters()
-
-// item_steel_mark=1ПС|1СП
 
 // Функция умной сортировки
 function customSort(a, b) {
@@ -3415,3 +3454,144 @@ function customSort(a, b) {
   // Если все равно не определили порядок - лексикографическое сравнение
   return a.toString().localeCompare(b.toString());
 }
+
+const handleDocumentClick = (e, modal, btn) => {
+  if (!modal.contains(e.target) && e.target !== btn) {
+    modal.style.display = "none";
+    document.removeEventListener("click", handleDocumentClick);
+    // Обновлять корзину
+  }
+};
+
+const cartBtnList = document.querySelectorAll(".btns .cart");
+// Оптимизировать
+cartBtnList.forEach((btn) => {
+  btn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const modal = btn.closest(".btns").querySelector(".amount-modal");
+    modal.style.display = "flex";
+    btn.classList.add("inactive");
+    btn.innerText = "Изменить";
+
+    document.addEventListener("click", (event) =>
+      handleDocumentClick(event, modal, btn)
+    );
+  });
+});
+
+document.querySelectorAll(".btns .amount-modal").forEach((modal) => {
+  const deleteCartBtn = modal.querySelector(".amount-modal__delete");
+
+  deleteCartBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    modal.style.display = "none";
+    document.removeEventListener("click", handleDocumentClick);
+    const cartBtn = modal.closest(".btns").querySelector(".cart");
+    cartBtn.classList.remove("inactive");
+    cartBtn.innerText = "В корзину";
+    // Удалить из корзины
+    console.log("Из корзины удалено");
+  });
+
+  const cartModalAmount = modal.querySelector(".amount-modal__amount-value");
+  const cartModalPlus = modal.querySelector(".amount-modal__plus");
+  const cartModalMinus = modal.querySelector(".amount-modal__minus");
+  cartModalPlus.addEventListener("click", () => {
+    let value = getCartModalValue();
+    updateCartModalValue(value + 1);
+  });
+  cartModalMinus.addEventListener("click", () => {
+    let value = getCartModalValue();
+    updateCartModalValue(Math.max(0, value - 1));
+  });
+  // cartModalAmount.addEventListener("input", () => {
+  //   let value = cartModalAmount.value.replace(",", ".");
+  //   if (!/^\d+(\.\d{0,2})?$/.test(value)) {
+  //     // cartModalAmount.value = getCartModalValue().toFixed(2).replace(".", ",");
+  //   }
+  // });
+
+  function getCartModalValue() {
+    let rawValue = cartModalAmount.value.replace(",", ".");
+    let parsedValue = parseFloat(rawValue);
+    return isNaN(parsedValue) ? 0 : parsedValue;
+  }
+
+  function updateCartModalValue(value) {
+    cartModalAmount.value = value.toFixed(2).replace(".", ",");
+  }
+});
+const isDesktop = () => window.innerWidth > 768;
+
+// 1-3
+document
+  .querySelectorAll(".new-catalogForm__filter__input")
+  .forEach((input) => {
+    console.log(input.name);
+    if (input.name === "item_steel_mark") {
+      input
+        .closest(".new-catalogForm__filter__ui")
+        .querySelectorAll(".new-catalogForm__filter__select__option")
+        .forEach((option) => {
+          if (option.dataset.value === "1-3") {
+            option.innerHTML += `<svg class="hint-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                       <circle cx="9" cy="9" r="8.5" stroke="#212529"></circle>
+                                       <path d="M8.76141 11.3807H8.76764C9.14714 11.3807 9.45669 11.075 9.45946 10.6938L9.46223 10.3811C9.51487 9.93823 9.82546 9.63145 10.3223 9.17266C10.5218 8.98879 10.7278 8.79835 10.9207 8.5809C11.6149 7.79766 11.7468 6.76408 11.2652 5.8832C10.6866 4.82538 9.36874 4.29665 8.06023 4.59547C7.08794 4.81811 6.37188 5.5366 6.09591 6.56741C5.99723 6.93687 6.21641 7.31671 6.58587 7.41574C6.95533 7.51442 7.33517 7.29524 7.4342 6.92579C7.51592 6.62108 7.74583 6.08819 8.36979 5.94553C8.96709 5.80876 9.73578 5.97185 10.0505 6.54802C10.3237 7.04698 10.064 7.46041 9.88502 7.66228C9.74006 7.82604 9.57013 7.98304 9.39054 8.14896L9.38363 8.15535C8.84589 8.65154 8.17727 9.26892 8.08136 10.2762C8.07928 10.2959 8.07824 10.316 8.07824 10.3357L8.07512 10.682C8.07166 11.0646 8.37914 11.3773 8.76141 11.3807Z" fill="#212529"></path>
+                                       <path d="M8.27949 13.2561C8.4076 13.3842 8.58766 13.4569 8.76771 13.4569C8.95123 13.4569 9.12782 13.3842 9.2594 13.2561C9.38751 13.1245 9.46023 12.9479 9.46023 12.7644C9.46023 12.5843 9.38751 12.4043 9.25594 12.2762C8.9997 12.0199 8.53572 12.0199 8.27949 12.2762C8.14791 12.4043 8.0752 12.5843 8.0752 12.7644C8.0752 12.9479 8.14791 13.128 8.27949 13.2561Z" fill="#212529"></path>
+
+                                    </svg>
+                                    `;
+            const svg = option.querySelector("svg");
+            const hint = document.querySelector(
+              ".hint-text.onhover-modal.steel-hint"
+            );
+            svg.addEventListener("mouseenter", () => {
+              // Позиционирование hint относительно SVG
+              if (!isDesktop()) return;
+              const svgRect = svg.getBoundingClientRect();
+              hint.style.left = `${svgRect.right + 8}px`; // 8px справа от SVG
+              hint.style.top = `${svgRect.top}px`; // Top как у SVG
+
+              hint.style.display = "block";
+            });
+            svg.addEventListener("click", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              hint.style.display = "block";
+              // document.addEventListener()
+            });
+
+            svg.addEventListener("mouseleave", () => {
+              if (!isDesktop()) return;
+              hint.style.display = "none";
+            });
+          }
+        });
+    }
+  });
+
+const showFiltersMobile = document.querySelector(".open-filters");
+showFiltersMobile.addEventListener("click", (event) => {
+  event.preventDefault();
+  document.querySelector(".new-catalogForm").classList.add("mobile_visible");
+});
+
+document
+  .querySelector(".new-catalogForm__mobile-header__close")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+    document
+      .querySelector(".new-catalogForm")
+      .classList.remove("mobile_visible");
+  });
+
+const saveBtn = document.querySelector(
+  ".new-catalogForm__controls__search__save"
+);
+
+saveBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  saveBtn.classList.add("active");
+  saveBtn.querySelector("span").innerText = "Поиск сохранен";
+});
