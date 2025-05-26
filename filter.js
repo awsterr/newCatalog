@@ -2621,13 +2621,11 @@ filterData.data.filters.forEach((filter) => {
   const mobileClear = document.createElement("div");
   mobileClear.classList.add("mobile-clear");
   mobileClear.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-<circle cx="10" cy="10" r="10" fill="#6C757D"/>
-<path d="M6.48535 6.48535L13.9999 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M14 6.48535L6.48541 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>`;
+                            <circle cx="10" cy="10" r="10" fill="#6C757D"/>
+                            <path d="M6.48535 6.48535L13.9999 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 6.48535L6.48541 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>`;
   mobileClear.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
     mobileClear
       .closest(".new-catalogForm__filter__ui")
       .querySelector(".new-catalogForm__filter__input").value = "";
@@ -2966,6 +2964,9 @@ backdrop.addEventListener("click", (event) => {
   // Проверяем, был ли клик непосредственно по фону (а не по потомкам)
   if (event.target === backdrop) {
     backdrop.classList.remove("opened");
+    backdrop.querySelectorAll(".modal-body").forEach((modal) => {
+      modal.classList.remove("opened");
+    });
   }
 });
 
@@ -3556,9 +3557,13 @@ document
               hint.style.display = "block";
             });
             svg.addEventListener("click", (event) => {
+              if (isDesktop()) return;
               event.preventDefault();
               event.stopPropagation();
-              hint.style.display = "block";
+              // hint.style.display = "block";
+              const backdrop = document.querySelector(".modal-backdrop");
+              backdrop.classList.add("opened");
+              backdrop.querySelector(".steel-hint").classList.add("opened");
               // document.addEventListener()
             });
 
@@ -3594,4 +3599,190 @@ saveBtn.addEventListener("click", (event) => {
   event.preventDefault();
   saveBtn.classList.add("active");
   saveBtn.querySelector("span").innerText = "Поиск сохранен";
+});
+
+[
+  document.querySelector(
+    ".new-catalogForm__sub-filters .new-catalogForm__filter__ui"
+  ),
+].forEach((container) => {
+  const mainInput = container.querySelector(".new-catalogForm__filter__input");
+  const detailContainer = container.querySelector(".wrapper1");
+  const optionList = detailContainer.querySelectorAll(
+    ".new-catalogForm__filter__select__option"
+  );
+
+  const statusBlock = detailContainer.querySelector(
+    ".new-catalogForm__filter__select__status"
+  );
+
+  const statusCounter = statusBlock.querySelector(".status_active__counter");
+  const searchStatus = statusBlock.querySelector(".status_placeholder");
+
+  const resetOptions = statusBlock.querySelector(".status_active__reset");
+
+  function handleResetOptions() {
+    optionList.forEach((option) => {
+      option.classList.remove("active");
+      option.style.display = "flex";
+    });
+    // sortOptions();
+    mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
+    refreshPlaceholder(mainInput);
+    mainInput.value = "";
+    statusCounter.innerHTML = "Выбрано: ";
+    searchStatus.innerText = "Часто ищут";
+    searchStatus.classList.remove("black");
+    statusBlock.querySelector(".status_active").classList.add("hidden");
+    searchStatus.style.display = "block";
+  }
+
+  resetOptions.addEventListener("click", handleResetOptions);
+
+  mainInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const value = mainInput.value.trim();
+      if (!value) return;
+
+      const filterData = JSON.parse(mainInput.dataset.filter);
+
+      // Добавить в список, если ещё не было
+      if (!filterData.list.includes(value)) {
+        filterData.list.push(value);
+      }
+
+      // Обновить dataset и плейсхолдер
+      mainInput.dataset.filter = JSON.stringify(filterData);
+      statusCounter.innerHTML = "Выбрано: " + filterData.list.length;
+      refreshPlaceholder(mainInput);
+
+      // Проверить, существует ли уже такая опция
+      let existingOption = Array.from(optionList).find(
+        (opt) => opt.dataset.value === value
+      );
+
+      // Если нет — создать новую
+      if (!existingOption) {
+        const newOption = document.createElement("div");
+        newOption.className = "new-catalogForm__filter__select__option active";
+        newOption.dataset.value = value;
+        newOption.textContent = value;
+        newOption.style.display = "flex";
+
+        // Повесить обработчик клика
+        newOption.addEventListener("click", () => {
+          const newData = JSON.parse(mainInput.dataset.filter);
+          if (newOption.classList.contains("active")) {
+            newData.list = newData.list.filter((el) => el !== value);
+            newOption.classList.remove("active");
+          } else {
+            newData.list.push(value);
+            newOption.classList.add("active");
+          }
+          mainInput.dataset.filter = JSON.stringify(newData);
+          refreshPlaceholder(mainInput);
+          statusCounter.innerHTML = "Выбрано: " + newData.list.length;
+          // sortOptions(); // пересортировать
+        });
+
+        detailContainer
+          .querySelector(".new-catalogForm__filter__select")
+          .appendChild(newOption);
+        optionList = detailContainer.querySelectorAll(
+          ".new-catalogForm__filter__select__option"
+        ); // обновить список
+      } else {
+        // Если опция есть, сделать её активной
+        existingOption.classList.add("active");
+      }
+
+      mainInput.value = "";
+      optionList.forEach((option) => {
+        option.style.display = "flex";
+      });
+      statusBlock.querySelector(".status_active").classList.remove("hidden");
+      searchStatus.style.display = "none";
+    }
+  });
+
+  // Выбор опции
+  optionList.forEach((option) => {
+    option.addEventListener("click", () => {
+      const newData = JSON.parse(mainInput.dataset.filter);
+      if (option.dataset.value === "Любая") {
+        handleResetOptions();
+        return;
+      }
+      if (option.classList.contains("active")) {
+        newData.list = newData.list.filter(
+          (element) => element !== option.dataset.value
+        );
+        option.classList.remove("active");
+      } else {
+        newData.list.push(option.dataset.value);
+        option.classList.add("active");
+      }
+
+      statusCounter.innerHTML = "Выбрано: " + newData.list.length;
+      mainInput.dataset.filter = JSON.stringify(newData);
+      refreshPlaceholder(mainInput);
+      mainInput.value = "";
+      optionList.forEach((option) => {
+        option.style.display = "flex";
+      });
+      statusBlock.querySelector(".status_active").classList.remove("hidden");
+      searchStatus.style.display = "none";
+      if (!newData.list.length) {
+        statusBlock.querySelector(".status_active").classList.add("hidden");
+        searchStatus.style.display = "block";
+      }
+    });
+  });
+
+  function applyInput() {
+    const formated = mainInput.value.toLowerCase().trim().replaceAll(".", ",");
+    optionList.forEach((option) => {
+      !option.dataset.value.toLowerCase().includes(formated) &&
+        (option.style.display = "none");
+    });
+  }
+
+  mainInput.addEventListener("input", (event) => {
+    if (mainInput.value) {
+      searchStatus.innerText = "Найдено";
+      searchStatus.classList.add("black");
+    } else {
+      searchStatus.innerText = "Часто ищут";
+      searchStatus.classList.remove("black");
+    }
+    optionList.forEach((option) => {
+      option.style.display = "flex";
+    });
+
+    applyInput();
+  });
+});
+
+document.querySelectorAll(".mobile-clear").forEach((clearBtn) => {
+  const input = clearBtn.parentElement.querySelector(
+    ".new-catalogForm__filter__input"
+  );
+  function toggleVision() {
+    input.value === ""
+      ? clearBtn.classList.remove("visible")
+      : clearBtn.classList.add("visible");
+  }
+  input.addEventListener("input", toggleVision);
+  input.addEventListener("blur", toggleVision);
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+
+    clearBtn.parentElement
+      .querySelectorAll(".new-catalogForm__filter__select__option")
+      .forEach((option) => {
+        option.style.display = "flex";
+      });
+    clearBtn.classList.remove("visible");
+  });
 });

@@ -2245,7 +2245,6 @@ body {
 
    .ai-search {
 
-
       padding: 90px 32px 32px;
       text-align: center;
 
@@ -2300,6 +2299,23 @@ body {
 
       h3 {
          margin-bottom: 12px;
+      }
+   }
+
+   .modal-body.steel-hint {
+      // display: none;
+      max-width: none;
+      padding: 12px 24px 50px 16px;
+
+      .title {
+         font-weight: 600;
+         font-size: 20px;
+         margin-bottom: 13px;
+      }
+
+      .subtitle {
+         color: $gray;
+         margin-bottom: 8px;
       }
    }
 
@@ -2537,12 +2553,26 @@ $star-size: 20px;
 
    .hint-text.onhover-modal.steel-hint {
       // z-index: 10;
-      bottom: 0;
       // left: 0 !important;
       // right: 0 !important;
       // width: 100vw;
+      top: 0;
+      bottom: 0;
       max-width: none;
       position: fixed;
+      left: -2px;
+      right: -2px;
+      z-index: 10;
+      background: rgba($color: #000000, $alpha: .4);
+
+      p {
+         background: #fff;
+         position: absolute;
+         bottom: -2px;
+         left: 0;
+         right: 0;
+         color: $text-color;
+      }
    }
 
 
@@ -2721,13 +2751,11 @@ $star-size: 20px;
 
 
 
-                     .new-catalogForm__filter {
+                     .new-catalogForm__filter:has(.wrapper1:not(.open)) {
                         padding: 16px 24px 20px;
                         background: #fff;
                         border-radius: 12px;
                         margin-bottom: 8px;
-
-
                      }
 
 
@@ -3421,7 +3449,37 @@ $star-size: 20px;
    //    }
    // }
 
-   .new-catalogForm__filter:has(.wrapper1.open) {
+
+   .new-catalogForm__generated-filters,
+   .mobile-filter-bottom-wrapper {
+      .new-catalogForm__filter .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__select .new-catalogForm__filter__select__option {
+
+
+         &::after {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            outline: 1px solid #ddd;
+            position: relative;
+            right: 0;
+         }
+
+         &.active {
+            &::after {
+               background-color: $blue;
+               background-image: url('../img/form-option-success-white.svg');
+               background-repeat: no-repeat;
+               background-position: center 8px;
+               outline: none;
+
+            }
+         }
+      }
+   }
+
+   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) {
       position: fixed;
       top: 0;
       right: 0;
@@ -3482,11 +3540,14 @@ $star-size: 20px;
          padding: 0;
 
          .mobile-clear {
-            display: block;
             position: absolute;
             right: 36px;
             top: 9px;
             cursor: pointer;
+
+            &.visible {
+               display: block;
+            }
          }
 
          .new-catalogForm__filter__input {
@@ -3556,31 +3617,12 @@ $star-size: 20px;
                      left: 32px;
                   }
 
-                  &::after {
-                     content: '';
-                     display: block;
-                     width: 24px;
-                     height: 24px;
-                     border-radius: 50%;
-                     outline: 1px solid #ddd;
-                     position: relative;
-                     right: 0;
-                  }
+
 
                   &.active {
-                     display: block;
 
                      &::before {
                         display: none;
-                     }
-
-                     &::after {
-                        background-color: $blue;
-                        background-image: url('../img/form-option-success-white.svg');
-                        background-repeat: no-repeat;
-                        background-position: center 8px;
-                        outline: none;
-
                      }
                   }
                }
