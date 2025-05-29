@@ -69,7 +69,7 @@
                                     stroke-linecap="round" stroke-linejoin="round"></path>
                               </svg>
                            </div>
-                           <div class="wrapper1">
+                           <div class="select_wrapper">
                               <div class="new-catalogForm__filter__select">
                                  <a href="" class="new-catalogForm__filter__select__option">Труба</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Арматура</a>
@@ -141,7 +141,7 @@
                                     stroke-linecap="round" stroke-linejoin="round"></path>
                               </svg>
                            </div>
-                           <div class="wrapper1">
+                           <div class="select_wrapper">
                               <div class="new-catalogForm__filter__select">
                                  <a href="" class="new-catalogForm__filter__select__option">Труба</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Арматура</a>
@@ -216,7 +216,7 @@
                               <p class="mobile-filter-header__text">Выбрано:</p>
                               <span class="mobile-filter-header__selected-option">Екатеринбург</span>
                            </div>
-                           <div class="wrapper1">
+                           <div class="select_wrapper">
                               <ul class="buttons-list" id="btns-list">
                                  <a href="" class="buttons-list__el active-btn">Все города</a>
                                  <a href="" class="buttons-list__el">Москва</a>
@@ -357,7 +357,7 @@
                                  <path d="M14 6.48535L6.48541 13.9999" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
                               </svg>
                            </div>
-                           <div class="wrapper1">
+                           <div class="select_wrapper">
                               <div class="new-catalogForm__filter__select">
                                  <div class="new-catalogForm__filter__select__status">
                                     <div class="status_placeholder" style="display: block;">Часто ищут</div>
@@ -508,30 +508,6 @@
                </div>
             </form>
             <div class="new-catalog__banners">
-               <a href="" class="new-catalog__banner">
-                  <img src="./img/banner-small.png" alt="">
-                  <div class="new-catalog__banner-info">Реклама
-                     <div class="new-catalog__banner-popup onhover-modal">
-                        Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF
-                     </div>
-                  </div>
-               </a>
-               <a href="" class="new-catalog__banner">
-                  <img src="./img/banner-small.png" alt="">
-                  <div class="new-catalog__banner-info">Реклама
-                     <div class="new-catalog__banner-popup onhover-modal">
-                        Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF
-                     </div>
-                  </div>
-               </a>
-               <a href="" class="new-catalog__banner">
-                  <img src="./img/banner-small.png" alt="">
-                  <div class="new-catalog__banner-info">Реклама
-                     <div class="new-catalog__banner-popup onhover-modal">
-                        Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF
-                     </div>
-                  </div>
-               </a>
             </div>
          </div>
       </section>
@@ -544,7 +520,7 @@
                <div class="new-catalogForm__filter">
                   <div class="new-catalogForm__filter__ui">
                      <input type="text" class="new-catalogForm__filter__input" value="Екатеринбург">
-                     <div class="wrapper1">
+                     <div class="select_wrapper">
                         <div class="new-catalogForm__filter__select">
                            <a href="" class="new-catalogForm__filter__select__option">Труба</a>
                            <a href="" class="new-catalogForm__filter__select__option">Арматура</a>
@@ -606,7 +582,7 @@
                человека
             </div>
          </div>
-         <div class="table1">
+         <div class="catalog_table">
             <ul class="thead">
                <li class="theader">Диаметр</li>
                <li class="theader">Стенка</li>
@@ -620,7 +596,7 @@
                <li class="theader">Город</li>
                <li class="theader"></li>
             </ul>
-            <div class="temp">
+            <div class="tbody_wrapper">
                <ul class="tbody special">
                   <div class="special-tag">
                      Спецпредложение
@@ -1622,12 +1598,26 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>
                <div class="promo">
-                  <a href="" class="banner">
-                     <img src="./img/banner.png" alt="">
+                  <a href="" class="catalog-banner">
+                     <img src="./img/banner.png" alt="" class="banner-desktop">
+                     <img src="./img/banner-small.png" alt="" class="banner-mobile">
                      <div class="banner-info">Реклама
                         <div class="banner-popup onhover-modal">
                            Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF
@@ -1959,6 +1949,19 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>
@@ -2618,6 +2621,19 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>
@@ -2953,6 +2969,19 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>
@@ -3592,6 +3621,19 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>

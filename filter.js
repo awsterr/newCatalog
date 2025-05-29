@@ -2572,7 +2572,7 @@ filterData.data.filters.forEach((filter) => {
   //                   <p class="new-catalogForm__filter__title">${filter.filter_name}</p>
   //                   <div class="new-catalogForm__filter__ui">
   //                      <input type="text" class="new-catalogForm__filter__input active" value="Екатеринбург">
-  //                      <div class="wrapper1">
+  //                      <div class="select_wrapper">
   //                         <div class="new-catalogForm__filter__select">
   //                            <a href="" class="new-catalogForm__filter__select__option">20</a>
   //                            <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
@@ -2633,7 +2633,7 @@ filterData.data.filters.forEach((filter) => {
   uiDiv.append(mobileClear);
 
   const wrapper = document.createElement("div");
-  wrapper.classList.add("wrapper1");
+  wrapper.classList.add("select_wrapper");
   uiDiv.append(wrapper);
 
   const applyBtn = document.createElement("div");
@@ -3020,7 +3020,7 @@ document.querySelectorAll(".tdmobile__cart.gradient-btn").forEach((btn) => {
 
 // Открытие деталки на фильтрах
 function closeAllWrappers() {
-  document.querySelectorAll(".wrapper1.open").forEach((wrapper) => {
+  document.querySelectorAll(".select_wrapper.open").forEach((wrapper) => {
     const input = wrapper
       .closest(".new-catalogForm__filter__ui")
       .querySelector(".new-catalogForm__filter__input");
@@ -3041,7 +3041,7 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
     .querySelector(".new-catalogForm__filter__input")
     .addEventListener("click", () => {
       closeAllWrappers();
-      filter.querySelector(".wrapper1").classList.add("open");
+      filter.querySelector(".select_wrapper").classList.add("open");
       document.addEventListener("click", handleDocumentClick);
     });
 
@@ -3143,7 +3143,7 @@ const containerList = document.querySelectorAll(
 );
 containerList.forEach((container) => {
   const mainInput = container.querySelector(".new-catalogForm__filter__input");
-  const detailContainer = container.querySelector(".wrapper1");
+  const detailContainer = container.querySelector(".select_wrapper");
   let optionList = detailContainer.querySelectorAll(
     ".new-catalogForm__filter__select__option"
   );
@@ -3453,7 +3453,7 @@ document
       event.preventDefault();
       modal.style.display = "none";
       document.removeEventListener("click", handleDocumentClick);
-      const cartBtn = modal.closest(".btns").querySelector(".cart-btn");
+      const cartBtn = modal.parentElement.querySelector(".primary-btn");
       cartBtn.classList.remove("inactive");
       cartBtn.innerText = "В корзину";
       // Удалить из корзины
@@ -3572,7 +3572,7 @@ saveBtn.addEventListener("click", (event) => {
   ),
 ].forEach((container) => {
   const mainInput = container.querySelector(".new-catalogForm__filter__input");
-  const detailContainer = container.querySelector(".wrapper1");
+  const detailContainer = container.querySelector(".select_wrapper");
   let optionList = detailContainer.querySelectorAll(
     ".new-catalogForm__filter__select__option"
   );
@@ -3781,7 +3781,9 @@ document
 
 document.querySelectorAll(".mobile-apply").forEach((btn) => {
   btn.addEventListener("click", () => {
-    btn.parentElement.querySelector(".wrapper1.open").classList.remove("open");
+    btn.parentElement
+      .querySelector(".select_wrapper.open")
+      .classList.remove("open");
     const input = btn.parentElement.querySelector(
       ".new-catalogForm__filter__input"
     );
@@ -3808,7 +3810,7 @@ document
   .forEach((btn) => {
     btn.addEventListener("click", (event) => {
       btn.parentElement.parentElement
-        .querySelector(".wrapper1.open")
+        .querySelector(".select_wrapper.open")
         .classList.remove("open");
 
       const input = btn.parentElement.parentElement.querySelector(
@@ -3909,3 +3911,164 @@ document
       });
     });
   });
+
+// Баннеры
+
+function createBanner(
+  { href, popupText, imgDesktop, imgMobile, imgSrc },
+  className
+) {
+  const a = document.createElement("a");
+  a.href = href;
+  a.className = `${className} fade-in`;
+
+  if (imgDesktop && imgMobile) {
+    const img1 = document.createElement("img");
+    img1.src = imgDesktop;
+    img1.alt = "";
+    img1.className = "banner-desktop";
+
+    const img2 = document.createElement("img");
+    img2.src = imgMobile;
+    img2.alt = "";
+    img2.className = "banner-mobile";
+
+    a.appendChild(img1);
+    a.appendChild(img2);
+  } else if (imgSrc) {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = "";
+    a.appendChild(img);
+  }
+
+  const info = document.createElement("div");
+  info.className = className.includes("catalog")
+    ? "banner-info"
+    : "new-catalog__banner-info";
+  info.textContent = "Реклама";
+
+  const popup = document.createElement("div");
+  popup.className = className.includes("catalog")
+    ? "banner-popup onhover-modal"
+    : "new-catalog__banner-popup onhover-modal";
+  popup.textContent = popupText;
+
+  info.appendChild(popup);
+  a.appendChild(info);
+
+  return a;
+}
+
+function setupBannerRotation(container, banners, maxVisible = 1, className) {
+  let index = 0;
+  let intervalId = null;
+
+  function showBanners() {
+    const currentBanners = container.querySelectorAll(`.${className}`);
+    currentBanners.forEach((banner) => {
+      banner.classList.add("fade-out");
+      banner.classList.remove("fade-in");
+      setTimeout(() => banner.remove(), 500);
+    });
+
+    const slice = [];
+    for (let i = 0; i < maxVisible; i++) {
+      const idx = (index + i) % banners.length;
+      slice.push(banners[idx]);
+    }
+
+    setTimeout(() => {
+      slice.forEach((data) => {
+        const banner = createBanner(data, className);
+        banner.addEventListener("mouseenter", stopRotation);
+        banner.addEventListener("mouseleave", startRotation);
+        container.appendChild(banner);
+      });
+    }, 500);
+
+    index = (index + maxVisible) % banners.length;
+  }
+
+  function startRotation() {
+    if (!intervalId && banners.length > maxVisible) {
+      intervalId = setInterval(showBanners, 5000);
+    }
+  }
+
+  function stopRotation() {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+
+  showBanners();
+  startRotation();
+}
+
+// Для блока .new-catalog__banners
+const catalogBannersData = [
+  {
+    href: "#",
+    imgSrc: "./img/banner-small.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+  {
+    href: "#",
+    imgSrc: "./img/banner-small2.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+  {
+    href: "#",
+    imgSrc: "./img/banner-small1.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+  {
+    href: "#",
+    imgSrc: "./img/banner-small2.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+];
+
+const bannerContainer = document.querySelector(".new-catalog__banners");
+if (bannerContainer) {
+  setupBannerRotation(
+    bannerContainer,
+    catalogBannersData,
+    3,
+    "new-catalog__banner"
+  );
+}
+
+// Для блоков .promo
+const promoBannersData = [
+  {
+    href: "#1",
+    imgDesktop: "./img/banner1.png",
+    imgMobile: "./img/banner-small1.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+  {
+    href: "#2",
+    imgDesktop: "./img/banner2.png",
+    imgMobile: "./img/banner-small2.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+  {
+    href: "#3",
+    imgDesktop: "./img/banner.png",
+    imgMobile: "./img/banner-small.png",
+    popupText:
+      "Металл.Кредит, ИНН 9712771890, erid: nWR26TK8SawRQk2nZWW21drBvbYeoQiFF",
+  },
+];
+
+const promoContainers = document.querySelectorAll(".promo");
+promoContainers.forEach((container) => {
+  setupBannerRotation(container, promoBannersData, 1, "catalog-banner");
+});
