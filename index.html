@@ -199,6 +199,7 @@
                            <p class="new-catalogForm__filter__mobile-header__title">Город</p>
                         </div>
                         <p class="new-catalogForm__filter__title">Город</p>
+
                         <div class="new-catalogForm__filter__ui">
                            <input type="text" class="new-catalogForm__filter__input active" placeholder="Екатеринбург">
                            <div class="mobile-clear">
@@ -211,44 +212,114 @@
                                     stroke-linecap="round" stroke-linejoin="round"></path>
                               </svg>
                            </div>
+                           <div class="mobile-filter-header">
+                              <p class="mobile-filter-header__text">Выбрано:</p>
+                              <span class="mobile-filter-header__selected-option">Екатеринбург</span>
+                           </div>
                            <div class="wrapper1">
+                              <ul class="buttons-list" id="btns-list">
+                                 <a href="" class="buttons-list__el active-btn">Все города</a>
+                                 <a href="" class="buttons-list__el">Москва</a>
+                                 <a href="" class="buttons-list__el">Санкт-Петербург</a>
+                                 <a href="" class="buttons-list__el">Казань</a>
+                                 <a href="" class="buttons-list__el">Уфа</a>
+                                 <a href="" class="buttons-list__el">Екатеринбург</a>
+                                 <a href="" class="buttons-list__el">Тюмень</a>
+                              </ul>
                               <div class="new-catalogForm__filter__select">
-                                 <a href="" class="new-catalogForm__filter__select__option">Труба</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">Арматура</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">Аноды</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">Балка</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">Баллоны</a>
-
-                                 <a href="" class="new-catalogForm__filter__select__option">20</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">1-3</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">20</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">1-3</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">20</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">1-3</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">20</a>
-                                 <a href="" class="new-catalogForm__filter__select__option">1-3
-                                    <svg class="hint-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                       viewBox="0 0 18 18" fill="none">
-                                       <circle cx="9" cy="9" r="8.5" stroke="#212529" />
-                                       <path
-                                          d="M8.76141 11.3807H8.76764C9.14714 11.3807 9.45669 11.075 9.45946 10.6938L9.46223 10.3811C9.51487 9.93823 9.82546 9.63145 10.3223 9.17266C10.5218 8.98879 10.7278 8.79835 10.9207 8.5809C11.6149 7.79766 11.7468 6.76408 11.2652 5.8832C10.6866 4.82538 9.36874 4.29665 8.06023 4.59547C7.08794 4.81811 6.37188 5.5366 6.09591 6.56741C5.99723 6.93687 6.21641 7.31671 6.58587 7.41574C6.95533 7.51442 7.33517 7.29524 7.4342 6.92579C7.51592 6.62108 7.74583 6.08819 8.36979 5.94553C8.96709 5.80876 9.73578 5.97185 10.0505 6.54802C10.3237 7.04698 10.064 7.46041 9.88502 7.66228C9.74006 7.82604 9.57013 7.98304 9.39054 8.14896L9.38363 8.15535C8.84589 8.65154 8.17727 9.26892 8.08136 10.2762C8.07928 10.2959 8.07824 10.316 8.07824 10.3357L8.07512 10.682C8.07166 11.0646 8.37914 11.3773 8.76141 11.3807Z"
-                                          fill="#212529" />
-                                       <path
-                                          d="M8.27949 13.2561C8.4076 13.3842 8.58766 13.4569 8.76771 13.4569C8.95123 13.4569 9.12782 13.3842 9.2594 13.2561C9.38751 13.1245 9.46023 12.9479 9.46023 12.7644C9.46023 12.5843 9.38751 12.4043 9.25594 12.2762C8.9997 12.0199 8.53572 12.0199 8.27949 12.2762C8.14791 12.4043 8.0752 12.5843 8.0752 12.7644C8.0752 12.9479 8.14791 13.128 8.27949 13.2561Z"
-                                          fill="#212529" />
-
-                                    </svg>
-                                    <p class="hint-text onhover-modal">
-                                       В данную выборку включены самые распространенные марки конструкционной
-                                       углеродистой
-                                       стали обыкновенного качества, например: Ст1, Ст1ПС, Ст2ПС, Ст2ПС5, Ст2СП, Ст3,
-                                       Ст3ПС, Ст3ПС5, Ст3СП5 и др."
-                                    </p>
-                                 </a>
-                                 <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
+                                 <div class="letter-header">А</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Анапа</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Аргун</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Альметьевск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Ачинск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Амурск</a>
+                                 <div class="letter-header">Б</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Бердск</a>
+                                 <div class="letter-header">В</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Вышний Волочёк</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Выборг</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Владивосток</a>
+                                 <div class="letter-header">Г</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Гатчина</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Грозный</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Гудермес</a>
+                                 <div class="letter-header">Е</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Екатеринбург</a>
+                                 <div class="letter-header">З</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Златоуст</a>
+                                 <div class="letter-header">И</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Искитим</a>
+                                 <div class="letter-header">К</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Королёв</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Калининград</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Краснодар</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Кисловодск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Казань</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Каменск-Уральский</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Красноярск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Канск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Комсомольск-на-Амуре</a>
+                                 <div class="letter-header">М</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Москва</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Мытищи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Магнитогорск</a>
+                                 <div class="letter-header">Н</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Набережные Челны</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Нижний Тагил</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Новосибирск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Находка</a>
+                                 <div class="letter-header">П</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Подольск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Пятигорск</a>
+                                 <div class="letter-header">Р</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Ржев</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Ростов-на-Дону</a>
+                                 <div class="letter-header">С</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Санкт-Петербург</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Советск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Сочи</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Ставрополь</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Самара</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Сызрань</a>
+                                 <div class="letter-header">Т</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Тверь</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Таганрог</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Тольятти</a>
+                                 <div class="letter-header">У</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Уссурийск</a>
+                                 <div class="letter-header">Х</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Химки</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Хабаровск</a>
+                                 <div class="letter-header">Ч</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Черняховск</a>
+                                 <a href="" class="new-catalogForm__filter__select__option">Челябинск</a>
+                                 <div class="letter-header">Ш</div>
+                                 <a href="" class="new-catalogForm__filter__select__option">Шахты</a>
                               </div>
                            </div>
                         </div>
@@ -876,6 +947,19 @@
                         <div class="tdmobile__metallbase"><span class="score">10</span><a href="">Металлторг</a>
                         </div>
                         <a class="tdmobile__cart primary-btn" href="">В корзину</a>
+                        <div class="amount-modal">
+                           <div class="btn-group__wrapper">
+                              <div class="btn-group__option active">Тонны</div>
+                              <div class="btn-group__option">Метры</div>
+                           </div>
+                           <!-- <input type="text" class=""> -->
+                           <div class="amount-modal__input">
+                              <span class="amount-modal__minus"></span>
+                              <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
+                              <span class="amount-modal__plus"></span>
+                           </div>
+                           <a href="" class="amount-modal__delete">Убрать из корзины</a>
+                        </div>
                      </div>
                   </li>
                </ul>
