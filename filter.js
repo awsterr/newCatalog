@@ -2636,6 +2636,11 @@ filterData.data.filters.forEach((filter) => {
   wrapper.classList.add("wrapper1");
   uiDiv.append(wrapper);
 
+  const applyBtn = document.createElement("div");
+  applyBtn.classList.add("primary-btn", "mobile-apply");
+  applyBtn.innerText = "Готово";
+  uiDiv.append(applyBtn);
+
   if (filter.range[0] === "yes") {
     wrapper.classList.add("ranged");
     const range = document.createElement("div");
@@ -3039,22 +3044,33 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   // Обработчик клика по документу (закрытие при клике вне)
   function handleDocumentClick(e) {
     e.stopPropagation();
+
+    const target = e.target;
+
+    // Если клик по .mobile-apply — это внешнее нажатие
+    if (target.closest(".mobile-apply")) {
+      closeAllWrappers();
+      document.removeEventListener("click", handleDocumentClick);
+      return;
+    }
+
     const isClickInside = Array.from(
-      document.querySelectorAll(".new-catalogForm__filter__ui")
-    ).some((wrapper) => {
-      return wrapper.contains(e.target);
-    });
+      document.querySelectorAll(
+        ".new-catalogForm__filter__ui, .modal-backdrop, .new-catalogForm__filter__mobile-header"
+      )
+    ).some((wrapper) => wrapper.contains(target));
 
     if (!isClickInside) {
       const input = filter.querySelector(
         ".new-catalogForm__generated-filters .new-catalogForm__filter__input"
       );
-      if (input && input.value !== "" && input.value !== " ") {
+      if (input && input.value.trim() !== "") {
         const newData = JSON.parse(input.dataset.filter);
         newData.list.push(input.value);
         input.dataset.filter = JSON.stringify(newData);
         refreshPlaceholder(input);
         input.value = "";
+
         filter.querySelector(".status_active__counter").innerHTML =
           "Выбрано: " + newData.list.length;
       }
@@ -3124,7 +3140,7 @@ const containerList = document.querySelectorAll(
 containerList.forEach((container) => {
   const mainInput = container.querySelector(".new-catalogForm__filter__input");
   const detailContainer = container.querySelector(".wrapper1");
-  const optionList = detailContainer.querySelectorAll(
+  let optionList = detailContainer.querySelectorAll(
     ".new-catalogForm__filter__select__option"
   );
   const [rangeMin, rangeMax] = detailContainer.querySelectorAll(
@@ -3250,6 +3266,7 @@ containerList.forEach((container) => {
       // sortOptions();
       optionList.forEach((option) => {
         option.style.display = "flex";
+        option.classList.remove("semibold");
       });
       statusBlock.querySelector(".status_active").classList.remove("hidden");
       searchStatus.style.display = "none";
@@ -3259,28 +3276,6 @@ containerList.forEach((container) => {
       }
     });
   });
-  // function sortOptions() {
-  //   const optionsArray = Array.from(optionList);
-
-  //   optionsArray.sort((a, b) => {
-  //     const aIsActive = a.classList.contains("active");
-  //     const bIsActive = b.classList.contains("active");
-
-  //     // Сначала активные
-  //     if (aIsActive && !bIsActive) return -1;
-  //     if (!aIsActive && bIsActive) return 1;
-
-  //     // Если оба активны или оба неактивны — сортировать по customSort
-  //     return customSort(a.dataset.value, b.dataset.value);
-  //   });
-
-  //   const container = detailContainer.querySelector(
-  //     ".new-catalogForm__filter__select"
-  //   );
-  //   optionsArray.forEach((option) => {
-  //     container.appendChild(option); // меняем порядок в DOM
-  //   });
-  // }
 
   // Выбор диапазона
   // Оптимизировать
@@ -3380,8 +3375,14 @@ containerList.forEach((container) => {
   function applyInput() {
     const formated = mainInput.value.toLowerCase().trim().replaceAll(".", ",");
     optionList.forEach((option) => {
-      !option.dataset.value.toLowerCase().includes(formated) &&
-        (option.style.display = "none");
+      option.style.display = "none";
+      option.classList.remove("semibold");
+    });
+    optionList.forEach((option) => {
+      if (option.dataset.value.toLowerCase().includes(formated)) {
+        option.style.display = "flex";
+        formated && option.classList.add("semibold");
+      }
     });
   }
 
@@ -3412,50 +3413,6 @@ document.querySelector(".new-catalogForm").addEventListener("submit", (e) => {
   }
 });
 
-// Функция умной сортировки
-function customSort(a, b) {
-  // Извлекаем числовую часть (для всех типов значений)
-  const getNumberPart = (val) => {
-    const num =
-      parseFloat(val) || parseFloat(val.toString().match(/^\d+/)?.[0]);
-    return isNaN(num) ? -Infinity : num; // Возвращаем -Infinity если нет числовой части
-  };
-
-  // Извлекаем "дробную" часть для значений типа 15Х1М1Ф
-  const getFractionalPart = (val) => {
-    if (typeof val !== "string") return 0;
-    const match = val.match(/^\d+([^\d]+.*)?$/);
-    return match && match[1] ? match[1].length : 0;
-  };
-
-  const numA = getNumberPart(a);
-  const numB = getNumberPart(b);
-
-  // Сначала сравниваем числовые части
-  if (numA !== numB) {
-    return numA - numB;
-  }
-
-  // Если числовые части равны, применяем специальную логику
-  const isPureNumberA = !isNaN(a);
-  const isPureNumberB = !isNaN(b);
-
-  // Чистые числа идут перед смешанными значениями
-  if (isPureNumberA && !isPureNumberB) return -1;
-  if (!isPureNumberA && isPureNumberB) return 1;
-
-  // Для смешанных значений с одинаковым числом
-  const fracA = getFractionalPart(a.toString());
-  const fracB = getFractionalPart(b.toString());
-
-  if (fracA !== fracB) {
-    return fracA - fracB;
-  }
-
-  // Если все равно не определили порядок - лексикографическое сравнение
-  return a.toString().localeCompare(b.toString());
-}
-
 const handleDocumentClick = (e, modal, btn) => {
   if (!modal.contains(e.target) && e.target !== btn) {
     modal.style.display = "none";
@@ -3464,7 +3421,7 @@ const handleDocumentClick = (e, modal, btn) => {
   }
 };
 
-const cartBtnList = document.querySelectorAll(".btns .cart");
+const cartBtnList = document.querySelectorAll(".btns .cart-btn");
 // Оптимизировать
 cartBtnList.forEach((btn) => {
   btn.addEventListener("click", (event) => {
@@ -3488,7 +3445,7 @@ document.querySelectorAll(".btns .amount-modal").forEach((modal) => {
     event.preventDefault();
     modal.style.display = "none";
     document.removeEventListener("click", handleDocumentClick);
-    const cartBtn = modal.closest(".btns").querySelector(".cart");
+    const cartBtn = modal.closest(".btns").querySelector(".cart-btn");
     cartBtn.classList.remove("inactive");
     cartBtn.innerText = "В корзину";
     // Удалить из корзины
@@ -3608,7 +3565,7 @@ saveBtn.addEventListener("click", (event) => {
 ].forEach((container) => {
   const mainInput = container.querySelector(".new-catalogForm__filter__input");
   const detailContainer = container.querySelector(".wrapper1");
-  const optionList = detailContainer.querySelectorAll(
+  let optionList = detailContainer.querySelectorAll(
     ".new-catalogForm__filter__select__option"
   );
 
@@ -3743,8 +3700,14 @@ saveBtn.addEventListener("click", (event) => {
   function applyInput() {
     const formated = mainInput.value.toLowerCase().trim().replaceAll(".", ",");
     optionList.forEach((option) => {
-      !option.dataset.value.toLowerCase().includes(formated) &&
-        (option.style.display = "none");
+      option.style.display = "none";
+      option.classList.remove("semibold");
+    });
+    optionList.forEach((option) => {
+      if (option.dataset.value.toLowerCase().includes(formated)) {
+        option.style.display = "flex";
+        option.classList.add("semibold");
+      }
     });
   }
 
@@ -3786,3 +3749,116 @@ document.querySelectorAll(".mobile-clear").forEach((clearBtn) => {
     clearBtn.classList.remove("visible");
   });
 });
+
+document
+  .querySelector(
+    ".new-catalogForm__mobile-header .new-catalogForm__mobile-header__reset"
+  )
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+    [
+      ...document.querySelectorAll(
+        ".new-catalogForm__generated-filters .new-catalogForm__filter__input"
+      ),
+      document.querySelector(
+        ".new-catalogForm__sub-filters .new-catalogForm__filter__input"
+      ),
+    ].forEach((input) => {
+      input.dataset.filter = JSON.stringify({ range: "", list: [] });
+      input.classList.remove("active");
+      input.placeholder = input.dataset.placeholder;
+    });
+  });
+
+document.querySelectorAll(".mobile-apply").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.parentElement.querySelector(".wrapper1.open").classList.remove("open");
+    const input = btn.parentElement.querySelector(
+      ".new-catalogForm__filter__input"
+    );
+    const enterEvent = new KeyboardEvent("keydown", {
+      key: "Enter",
+      code: "Enter",
+      keyCode: 13, // Устаревшее, но иногда требуется
+      which: 13, // Устаревшее
+      bubbles: true,
+      cancelable: true,
+    });
+
+    // Отправляем событие
+    input.dispatchEvent(enterEvent);
+
+    input.dataset.filter !== '{"range":"","list":[]}'
+      ? input.classList.add("active")
+      : input.classList.remove("active");
+  });
+});
+
+document
+  .querySelectorAll(".new-catalogForm__filter__mobile-header__close")
+  .forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      btn.parentElement.parentElement
+        .querySelector(".wrapper1.open")
+        .classList.remove("open");
+
+      const input = btn.parentElement.parentElement.querySelector(
+        ".new-catalogForm__filter__input"
+      );
+      const enterEvent = new KeyboardEvent("keydown", {
+        key: "Enter",
+        code: "Enter",
+        keyCode: 13, // Устаревшее, но иногда требуется
+        which: 13, // Устаревшее
+        bubbles: true,
+        cancelable: true,
+      });
+
+      // Отправляем событие
+      input.dispatchEvent(enterEvent);
+
+      input.dataset.filter !== '{"range":"","list":[]}'
+        ? input.classList.add("active")
+        : input.classList.remove("active");
+    });
+  });
+
+document
+  .querySelectorAll(".new-catalogForm__filter__mobile-header__reset")
+  .forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const detailContainer = btn
+        .closest(".new-catalogForm__filter")
+        .querySelector(".new-catalogForm__filter__ui");
+      let optionList = detailContainer.querySelectorAll(
+        ".new-catalogForm__filter__select .new-catalogForm__filter__select__option"
+      );
+      const mainInput = detailContainer.querySelector(
+        ".new-catalogForm__filter__input"
+      );
+
+      const statusBlock = detailContainer.querySelector(
+        ".new-catalogForm__filter__select__status"
+      );
+
+      const statusCounter = statusBlock.querySelector(
+        ".status_active__counter"
+      );
+      const searchStatus = statusBlock.querySelector(".status_placeholder");
+
+      optionList.forEach((option) => {
+        option.classList.remove("active");
+        option.style.display = "flex";
+      });
+      // sortOptions();
+      mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
+      refreshPlaceholder(mainInput);
+      mainInput.value = "";
+      statusCounter.innerHTML = "Выбрано: ";
+      searchStatus.innerText = "Часто ищут";
+      searchStatus.classList.remove("black");
+      statusBlock.querySelector(".status_active").classList.add("hidden");
+      searchStatus.style.display = "block";
+    });
+  });

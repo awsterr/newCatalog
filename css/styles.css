@@ -5927,6 +5927,9 @@ body {
 .new-catalog .new-catalog__main .new-catalogForm__filter__mobile-header {
   display: none;
 }
+.new-catalog .new-catalog__main .new-catalogForm__filter .mobile-filter-header {
+  display: none;
+}
 .new-catalog .new-catalog__main .new-catalogForm__filter__title {
   font-weight: 600;
   margin-bottom: 8px;
@@ -6132,6 +6135,9 @@ body {
   right: -330px;
   top: 25px;
   z-index: 10;
+  display: none;
+}
+.new-catalog .new-catalog__main .new-catalogForm__filter__ui .mobile-apply {
   display: none;
 }
 .new-catalog .new-catalog__main .new-catalogForm__main-filters {
@@ -6840,7 +6846,7 @@ body {
   background: #F2F2F4;
   border-radius: 8px;
   display: flex;
-  padding: 6px 10px;
+  padding: 6px 14px;
 }
 .table1 .tbody .tdata:has(.tdvalue:hover) .tdvalue .tdata__distance {
   display: inline-block;
@@ -6992,7 +6998,7 @@ body {
   padding: 8px;
   justify-content: flex-end;
 }
-.table1 .tbody .tdata.btns .cart.inactive {
+.table1 .tbody .tdata.btns .cart-btn.inactive {
   background: #fff;
   border: 1px solid #2764E0;
   color: #2764E0;
@@ -7550,6 +7556,7 @@ body {
 .modal-backdrop .modal-body.steel-hint .subtitle {
   color: #6C757D;
   margin-bottom: 8px;
+  display: block;
 }
 .modal-backdrop > div {
   display: none;
@@ -7710,6 +7717,12 @@ body {
   }
   .table1 .tbody .tdata {
     padding: 8px 10px;
+  }
+  .table1 .tbody .tdata:has(.tdvalue:hover) {
+    padding: 6px 0 6px;
+  }
+  .table1 .tbody .tdata:has(.tdvalue:hover) .tdvalue {
+    padding: 6px 10px;
   }
   .table1 .tbody .tdata.btns {
     gap: 6px;
@@ -8377,6 +8390,24 @@ body {
     gap: 24px;
     margin-top: 20px;
   }
+  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.wrapper1.open) .mobile-apply,
+  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.wrapper1.open) .mobile-apply {
+    display: block;
+    width: calc(100% - 48px);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 32px;
+    margin: 0 24px;
+    z-index: 10;
+    font-weight: 600;
+  }
+  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold,
+  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold {
+    font-weight: 600;
+  }
   .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after,
   .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after {
     content: "";
@@ -8396,6 +8427,24 @@ body {
     background-position: center 8px;
     outline: none;
   }
+  .new-catalogForm__filter:has(.wrapper1.open):has(.no-search) .new-catalogForm__filter__title {
+    display: none;
+  }
+  .new-catalogForm__filter:has(.wrapper1.open) .no-search .new-catalogForm__filter__input {
+    display: none;
+  }
+  .new-catalogForm__filter:has(.wrapper1.open) .mobile-filter-header {
+    display: block;
+    padding-left: 24px;
+  }
+  .new-catalogForm__filter:has(.wrapper1.open) .mobile-filter-header__text {
+    font-weight: 600;
+  }
+  .new-catalogForm__filter:has(.wrapper1.open) .mobile-filter-header__selected-option {
+    color: #2764E0;
+    font-size: 16px;
+    line-height: 24px;
+  }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) {
     position: fixed;
     top: 0;
@@ -8406,6 +8455,9 @@ body {
     background: #fff;
     padding-top: 84px;
     z-index: 2;
+  }
+  .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open):has(.new-catalogForm__filter__select__option.active) .new-catalogForm__filter__mobile-header__reset {
+    display: block;
   }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__mobile-header {
     display: flex;
@@ -8436,6 +8488,7 @@ body {
     font-size: 14px;
     line-height: 20px;
     color: #2764E0;
+    display: none;
   }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__mobile-header__reset:visited {
     color: #2764E0;
@@ -8462,10 +8515,28 @@ body {
     width: calc(100% - 48px);
   }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1 {
-    position: static;
     box-shadow: none;
-    padding: 20px 0 0;
+    padding: 9.3px 0 0;
     height: calc(100% - 38px);
+    position: relative;
+    overflow: hidden;
+  }
+  .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    box-shadow: 0 2px 4px rgba(47, 61, 84, 0.15);
+    pointer-events: none;
+  }
+  .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1.ranged {
+    padding: 20px 0 0;
+  }
+  .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1.ranged::before {
+    display: none;
   }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1.ranged .new-catalogForm__filter__select {
     height: calc(100% - 86px);
@@ -8473,8 +8544,10 @@ body {
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__range {
     padding: 0 0 20px;
     border: 0;
-    box-shadow: 0px 1px 3px 0px rgba(47, 61, 84, 0.1490196078);
+    box-shadow: 0px 2px 3px 0px rgba(47, 61, 84, 0.1490196078);
     margin: 0;
+    z-index: 1;
+    position: relative;
   }
   .new-catalog__main .new-catalogForm__filter:has(.wrapper1.open) .new-catalogForm__filter__ui .wrapper1 .new-catalogForm__filter__range .new-catalogForm__filter__range__text {
     color: #b4b4b4;

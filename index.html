@@ -51,10 +51,13 @@
                               </svg>
                            </div>
                            <p class="new-catalogForm__filter__mobile-header__title">Раздел</p>
-                           <a href="" class="new-catalogForm__filter__mobile-header__reset">Сбросить</a>
                         </div>
                         <p class="new-catalogForm__filter__title">Раздел</p>
-                        <div class="new-catalogForm__filter__ui">
+                        <div class="mobile-filter-header">
+                           <p class="mobile-filter-header__text">Выбрано:</p>
+                           <span class="mobile-filter-header__selected-option">Труба</span>
+                        </div>
+                        <div class="new-catalogForm__filter__ui no-search">
                            <input type="text" class="new-catalogForm__filter__input active" placeholder="Труба">
                            <div class="mobile-clear">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -120,10 +123,13 @@
                               </svg>
                            </div>
                            <p class="new-catalogForm__filter__mobile-header__title">Подраздел</p>
-                           <a href="" class="new-catalogForm__filter__mobile-header__reset">Сбросить</a>
                         </div>
                         <p class="new-catalogForm__filter__title">Подраздел</p>
-                        <div class="new-catalogForm__filter__ui">
+                        <div class="mobile-filter-header">
+                           <p class="mobile-filter-header__text">Выбрано:</p>
+                           <span class="mobile-filter-header__selected-option">Профильная</span>
+                        </div>
+                        <div class="new-catalogForm__filter__ui no-search">
                            <input type="text" class="new-catalogForm__filter__input active" placeholder="Профильная">
                            <div class="mobile-clear">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
@@ -191,7 +197,6 @@
                               </svg>
                            </div>
                            <p class="new-catalogForm__filter__mobile-header__title">Город</p>
-                           <a href="" class="new-catalogForm__filter__mobile-header__reset">Сбросить</a>
                         </div>
                         <p class="new-catalogForm__filter__title">Город</p>
                         <div class="new-catalogForm__filter__ui">
@@ -313,6 +318,7 @@
                                  <span data-value="ЕВРАЗ Маркет г.Новосибирск" class="new-catalogForm__filter__select__option">ЕВРАЗ Маркет г.Новосибирск</span>
                               </div>
                            </div>
+                           <div class="mobile-apply primary-btn">Готово</div>
                         </div>
                         <p class="new-catalogForm__filter__hint">Введите название металлобазы</p>
                      </div>
@@ -629,7 +635,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -1289,7 +1295,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -1628,7 +1634,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -2285,7 +2291,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -2620,7 +2626,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -3259,7 +3265,7 @@
                      </span>
                   </li>
                   <li class="tdata btns">
-                     <a href="" class="primary-btn cart">В корзину</a>
+                     <a href="" class="primary-btn cart-btn">В корзину</a>
                      <div class="amount-modal">
                         <div class="btn-group__wrapper">
                            <div class="btn-group__option active">Тонны</div>
@@ -3840,7 +3846,7 @@
                fill="#6C757D" />
          </svg>
       </div>
-      <div class="modal-body cart">
+      <div class="modal-body cart-btn">
          <div class="cart__img">
             <a href="" class="gradient-btn">
                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="14" viewBox="0 0 17 14" fill="none">
