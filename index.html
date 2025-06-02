@@ -349,6 +349,7 @@
                         <div class="new-catalogForm__filter__ui">
                            <input class="new-catalogForm__filter__input" placeholder="Любое" data-placeholder="Любое"
                               data-filter='{"range":"","list":[]}'' data-unit=""
+                              autocomplete="off"
                               name="metallbase">
                            <div class="mobile-clear">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -3790,13 +3791,361 @@
             <h3 class="catalog-footer__popular__title">Популярное</h3>
             <div class="btn-group catalog-footer__popular__btns">
                <div class="btn-group__wrapper">
-                  <div class="btn-group__option active">Все</div>
-                  <div class="btn-group__option">Диаметр</div>
-                  <div class="btn-group__option">Толщина стенки</div>
-                  <div class="btn-group__option">Марка стали</div>
+                  <div class="btn-group__option active" data-type="all">Все</div>
+                  <div class="btn-group__option" data-type="item_diameter">Диаметр</div>
+                  <div class="btn-group__option" data-type="item_wall">Толщина стенки</div>
+                  <div class="btn-group__option" data-type="item_steel_mark">Марка стали</div>
                </div>
             </div>
-            <ul class="catalog-footer__popular__list">
+            <div class="catalog-footer__popular__list-wrapper">
+               <div class="catalog-footer__popular__list" data-type="all">
+                  <a href="/truba/4-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4 мм</a>
+                  <a href="/truba/30-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 30 мм</a>
+                  <a href="/truba/0-35-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,35 мм</a>
+                  <a href="/truba/36-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 36 мм</a>
+                  <a href="/truba/56-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 56 мм</a>
+                  <a href="/truba/65-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 65 мм</a>  
+                  <a href="/truba/st-09g2s/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Г2С</a>
+                  <a href="/truba/st-20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20</a>
+                  <a href="/truba/st-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3</a>  
+                  <a href="/truba/st-09g2s/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Г2С</a>
+                  <a href="/truba/st-20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20</a>
+                  <a href="/truba/st-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3</a>
+                  <a href="/truba/st-12h18n10t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х18Н10Т</a>
+                  <a href="/truba/st-40h/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 40Х</a>
+                  <a href="/truba/st-45/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 45</a>
+                  <a href="#" class="catalog-footer__popular__option show__more-popular">Показать еще</a>
+               </div>
+               <div class="catalog-footer__popular__list" data-type="item_diameter">
+                  <a href="/truba/du-219/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 219 мм</a>
+                  <a href="/truba/du-159/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 159 мм</a>
+                  <a href="/truba/du-530/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 530 мм</a>
+                  <a href="/truba/du-273/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 273 мм</a>
+                  <a href="/truba/du-325/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 325 мм</a>
+                  <a href="/truba/du-57/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 57 мм</a>
+                  <a href="/truba/du-426/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 426 мм</a>
+                  <a href="/truba/du-32/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 32 мм</a>
+                  <a href="/truba/du-89/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 89 мм</a>
+                  <a href="/truba/du-108/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 108 мм</a>
+                  <a href="/truba/du-20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 20 мм</a>
+                  <a href="/truba/du-76/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 76 мм</a>
+                  <a href="/truba/du-25/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 25 мм</a>
+                  <a href="/truba/du-60/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 60 мм</a>
+                  <a href="/truba/du-168/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 168 мм</a>
+                  <a href="/truba/du-114/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 114 мм</a>
+                  <a href="/truba/du-630/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 630 мм</a>
+                  <a href="/truba/du-377/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 377 мм</a>
+                  <a href="/truba/du-38/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 38 мм</a>
+                  <a href="/truba/du-40/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 40 мм</a>
+                  <a href="/truba/du-133/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 133 мм</a>
+                  <a href="/truba/du-50/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 50 мм</a>
+                  <a href="/truba/du-42/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 42 мм</a>
+                  <a href="/truba/du-820/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 820 мм</a>
+                  <a href="/truba/du-10/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 10 мм</a>
+                  <a href="/truba/du-45/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 45 мм</a>
+                  <a href="/truba/du-1420/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1420 мм</a>
+                  <a href="/truba/du-16/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 16 мм</a>
+                  <a href="/truba/du-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 8 мм</a>
+                  <a href="/truba/du-12/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 12 мм</a>
+                  <a href="/truba/du-245/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 245 мм</a>
+                  <a href="/truba/du-48/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 48 мм</a>
+                  <a href="/truba/du-720/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 720 мм</a>
+                  <a href="/truba/du-14/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 14 мм</a>
+                  <a href="/truba/du-102/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 102 мм</a>
+                  <a href="/truba/du-30/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 30 мм</a>
+                  <a href="/truba-aljuminievaja/du-70/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 70 мм</a>
+                  <a href="/truba/du-22/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 22 мм</a>
+                  <a href="/truba/du-180/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 180 мм</a>
+                  <a href="/truba/du-1020/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1020 мм</a>
+                  <a href="/truba/du-18/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 18 мм</a>
+                  <a href="/truba/du-194/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 194 мм</a>
+                  <a href="/truba/du-152/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 152 мм</a>
+                  <a href="/truba/du-4/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4 мм</a>
+                  <a href="/truba/du-28/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 28 мм</a>
+                  <a href="/truba/du-299/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 299 мм</a>
+                  <a href="/truba/du-127/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 127 мм</a>
+                  <a href="/truba/du-140/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 140 мм</a>
+                  <a href="/truba/du-1220/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1220 мм</a>
+                  <a href="/truba/du-83/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 83 мм</a>
+                  <a href="/truba/du-95/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 95 мм</a>
+                  <a href="/truba/du-80/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 80 мм</a>
+                  <a href="/truba/du-51/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 51 мм</a>
+                  <a href="/truba/du-34/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 34 мм</a>
+                  <a href="/truba/du-121/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 121 мм</a>
+                  <a href="/truba/du-68/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 68 мм</a>
+                  <a href="/truba/du-65/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 65 мм</a>
+                  <a href="/truba/du-36/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 36 мм</a>
+                  <a href="/truba/du-146/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 146 мм</a>
+                  <a href="/truba/du-351/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 351 мм</a>
+                  <a href="/truba/du-73/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 73 мм</a>
+                  <a href="/truba/du-15/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 15 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2-1/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2,1 мм</a>
+                  <a href="/truba/du-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 5 мм</a>
+                  <a href="/truba/du-100/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 100 мм</a>
+                  <a href="/truba/du-35/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 35 мм</a>
+                  <a href="/truba/du-508/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 508 мм</a>
+                  <a href="/truba/du-203/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 203 мм</a>
+                  <a href="/truba/du-63/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 63 мм</a>
+                  <a href="/truba/du-920/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 920 мм</a>
+                  <a href="/truba/du-19/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 19 мм</a>
+                  <a href="/truba/du-54/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 54 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1620/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1620 мм</a>
+                  <a href="/truba/du-27/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 27 мм</a>
+                  <a href="/truba/du-24/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 24 мм</a>
+                  <a href="/truba/du-402/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 402 мм</a>
+                  <a href="/truba/du-90/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 90 мм</a>
+                  <a href="/truba/truba-kruglaya/du-63-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 63,5 мм</a>
+                  <a href="/truba/du-75/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 75 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1820/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1820 мм</a>
+                  <a href="/truba/du-17/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 17 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1520/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1520 мм</a>
+                  <a href="/truba/du-53/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 53 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1720/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1720 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2220/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2220 мм</a>
+                  <a href="/truba/du-2020/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2020 мм</a>
+                  <a href="/truba/du-406/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 406 мм</a>
+                  <a href="/truba/du-457/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 457 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2420/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2420 мм</a>
+                  <a href="/truba/du-120/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 120 мм</a>
+                  <a href="/truba/du-1120/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1120 мм</a>
+                  <a href="/truba/du-7/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 7 мм</a>
+                  <a href="/truba/du-85/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 85 мм</a>
+                  <a href="/truba/du-9/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 9 мм</a>
+                  <a href="/truba/du-11/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 11 мм</a>
+                  <a href="/truba/truba-kruglaya/du-6-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 6,5 мм</a>
+                  <a href="/truba/du-465/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 465 мм</a>
+                  <a href="/truba/du-110/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 110 мм</a>
+                  <a href="/truba/du-356/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 356 мм</a>
+                  <a href="/truba/du-450/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 450 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2120/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2120 мм</a>
+                  <a href="/truba/du-130/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 130 мм</a>
+                  <a href="/truba/du-13/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 13 мм</a>
+                  <a href="/truba/du-23/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 23 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2520/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2520 мм</a>
+                  <a href="/truba/du-26/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 26 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2320/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2320 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2820/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2820 мм</a>
+                  <a href="/truba/du-250/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 250 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2720/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2720 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2620/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2620 мм</a>
+                  <a href="/truba/truba-kruglaya/du-3-4/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3,4 мм</a>
+                  <a href="/truba/du-160/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 160 мм</a>
+                  <a href="/truba/truba-kruglaya/du-300/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 300 мм</a>
+                  <a href="/truba/truba-kruglaya/du-5-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 5,5 мм</a>
+                  <a href="/truba/du-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3 мм</a>
+                  <a href="/truba/truba-kruglaya/du-72/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 72 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2920/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2920 мм</a>
+                  <a href="/truba/du-55/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 55 мм</a>
+                  <a href="/truba/du-0-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,3 мм</a>
+                  <a href="/truba/truba-kruglaya/du-79/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 79 мм</a>
+                  <a href="/truba/du-190/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 190 мм</a>
+                  <a href="/truba/du-480/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 480 мм</a>
+                  <a href="/truba/du-170/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 170 мм</a>
+                  <a href="/truba/truba-kruglaya/du-44/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 44 мм</a>
+                  <a href="/truba/truba-kruglaya/du-14-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 14,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-60-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 60,3 мм</a>
+                  <a href="/truba/du-478/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 478 мм</a>
+                  <a href="/truba/truba-kruglaya/du-240/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 240 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1,2 мм</a>
+                  <a href="/truba/du-78/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 78 мм</a>
+                  <a href="/truba/du-550/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 550 мм</a>
+                  <a href="/truba/du-62/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 62 мм</a>
+                  <a href="/truba/du-40x20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 40Х20 мм</a>
+                  <a href="/truba/truba-kruglaya/du-10-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 10,8 мм</a>
+                  <a href="/truba/du-52/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 52 мм</a>
+                  <a href="/truba/truba-kruglaya/du-0-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-19-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 19,5 мм</a>
+                  <a href="/truba/du-220/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 220 мм</a>
+                  <a href="/truba/truba-kruglaya/du-4-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4,5 мм</a>
+                  <a href="/truba/du-500/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 500 мм</a>
+                  <a href="/truba/truba-kruglaya/du-15-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 15,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-66/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 66 мм</a>
+                  <a href="/truba/truba-kruglaya/du-21-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 21,3 мм</a>
+                  <a href="/truba/truba-kruglaya/du-22-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 22,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-17-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 17,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-14-6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 14,6 мм</a>
+                  <a href="/truba/truba-kruglaya/du-39/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 39 мм</a>
+                  <a href="/truba/truba-kruglaya/du-24-6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 24,6 мм</a>
+                  <a href="/truba/truba-kruglaya/du-20-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 20,8 мм</a>
+                  <a href="/truba/truba-kruglaya/du-0-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,8 мм</a>
+                  <a href="/truba/truba-kruglaya/du-3020/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3020 мм</a>
+                  <a href="/truba/truba-kruglaya/du-42-4/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 42,4 мм</a>
+                  <a href="/truba/truba-kruglaya/du-340/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 340 мм</a>
+                  <a href="/truba/truba-kruglaya/du-18-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 18,8 мм</a>
+                  <a href="/truba/truba-kruglaya/du-24-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 24,2 мм</a>
+                  <a href="/truba/truba-kruglaya/du-60-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 60,2 мм</a>
+                  <a href="/truba/truba-kruglaya/du-40-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 40,2 мм</a>
+                  <a href="/truba/truba-kruglaya/du-37-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 37,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-73-6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 73,6 мм</a>
+                  <a href="/truba/truba-kruglaya/du-29-7/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 29,7 мм</a>
+                  <a href="/truba/truba-kruglaya/du-55-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 55,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-70-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 70,8 мм</a>
+                  <a href="/truba/truba-kruglaya/du-9-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 9,8 мм</a>
+                  <a href="/truba/du-160x120/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 160Х120 мм</a>
+                  <a href="/truba/truba-kruglaya/du-49-5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 49,5 мм</a>
+                  <a href="/truba/truba-kruglaya/du-2-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2,2 мм</a>
+                  <a href="/truba/truba-kruglaya/du-4-4/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4,4 мм</a>
+                  <a href="/truba/truba-kruglaya/du-1-8/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1,8 мм</a>
+                  <a href="/truba/truba-kruglaya/du-12-4/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 12,4 мм</a>
+                  <a href="/truba/du-50x30/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 50Х30 мм</a>
+                  <a href="/truba/truba-kruglaya/du-11-6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 11,6 мм</a>
+                  <a href="/truba/du-306/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 306 мм</a>
+                  <a href="/truba/du-290/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 290 мм</a>
+                  <a href="/truba/du-0-45/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,45 мм</a>
+                  <a href="/truba-oval/du-60x30/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 60Х30 мм</a>
+                  <a href="/truba/du-360/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 360 мм</a>
+                  <a href="/truba/truba-kruglaya/du-0-9/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,9 мм</a>
+                  <a href="/truba/truba-kruglaya/du-3-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3,3 мм</a>
+                  <a href="/truba/du-100x40/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 100Х40 мм</a>
+                  <a href="/truba/du-650/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 650 мм</a>
+                  <a href="/truba/du-609-6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 609,6 мм</a>
+                  <a href="/truba/du-86/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 86 мм</a>
+                  <a href="/truba/du-12x10/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 12Х10 мм</a>
+                  <a href="/truba/du-585/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 585 мм</a>
+                  <a href="#" class="catalog-footer__popular__option  show__more-popular">Показать еще</a>
+               </div>
+               <div class="catalog-footer__popular__list" data-type="item_wall">
+                  <a href="/truba/4-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4 мм</a>
+                  <a href="/truba/8-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 8 мм</a>
+                  <a href="/truba/10-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 10 мм</a>
+                  <a href="/truba/3-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3 мм</a>
+                  <a href="/truba/6-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 6 мм</a>
+                  <a href="/truba/5-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 5 мм</a>
+                  <a href="/truba/1-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1 мм</a>
+                  <a href="/truba/2-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2 мм</a>
+                  <a href="/truba/12-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 12 мм</a>
+                  <a href="/truba/14-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 14 мм</a>
+                  <a href="/truba/16-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 16 мм</a>
+                  <a href="/truba/0-5-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,5 мм</a>
+                  <a href="/truba/7-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 7 мм</a>
+                  <a href="/truba/9-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 9 мм</a>
+                  <a href="/truba/3-5-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 3,5 мм</a>
+                  <a href="/truba/0-6-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,6 мм</a>
+                  <a href="/truba/0-3-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,3 мм</a>
+                  <a href="/truba/18-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 18 мм</a>
+                  <a href="/truba/30-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 30 мм</a>
+                  <a href="/truba/0-35-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,35 мм</a>
+                  <a href="/truba/36-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 36 мм</a>
+                  <a href="/truba/22-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 22 мм</a>
+                  <a href="/truba/1-5-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 1,5 мм</a>
+                  <a href="/truba/4-5-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 4,5 мм</a>
+                  <a href="/truba/28-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 28 мм</a>
+                  <a href="/truba/0-2-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 0,2 мм</a>
+                  <a href="/truba/2-8-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 2,8 мм</a>
+                  <a href="/truba/100-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 100 мм</a>
+                  <a href="/truba/56-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 56 мм</a>
+                  <a href="/truba/65-mm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба 65 мм</a>  
+                  <a href="#" class="catalog-footer__popular__option  show__more-popular">Показать еще</a>
+               </div>
+               <div class="catalog-footer__popular__list" data-type="item_steel_mark">
+                  <a href="/truba/st-09g2s/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Г2С</a>
+                  <a href="/truba/st-20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20</a>
+                  <a href="/truba/st-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3</a>
+                  <a href="/truba/st-12h18n10t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х18Н10Т</a>
+                  <a href="/truba/st-40h/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 40Х</a>
+                  <a href="/truba/st-45/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 45</a>
+                  <a href="/truba/st-12h1mf/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х1МФ</a>
+                  <a href="/truba/st-30hgsa/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 30ХГСА</a>
+                  <a href="/truba/st-08h18n10t-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х18Н10Т</a>
+                  <a href="/truba/st-aisi-321/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь AISI 321</a>
+                  <a href="/truba/st-10/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10</a>
+                  <a href="/truba/st-13hfa/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 13ХФА</a>
+                  <a href="/truba/st-06h18n10t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 06Х18Н10Т</a>
+                  <a href="/truba/st-15h5m/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15Х5М</a>
+                  <a href="/truba/st-09h18n10t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Х18Н10Т</a>
+                  <a href="/truba/st-35/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 35</a>
+                  <a href="/truba/st-17g1s/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 17Г1С</a>
+                  <a href="/truba/st-08ps/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08ПС</a>
+                  <a href="/truba/st-10g2fbyu/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10Г2ФБЮ</a>
+                  <a href="/truba/st-3sp/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3СП</a>
+                  <a href="/truba/st-10h17n13m2t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10Х17Н13М2Т</a>
+                  <a href="/truba/st-20h13/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20Х13</a>
+                  <a href="/truba/st-08h18n10t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х18Н10T</a>
+                  <a href="/truba/st-06hn28mdt/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 06ХН28МДТ</a>
+                  <a href="/truba/st-15gs/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15ГС</a>
+                  <a href="/truba/st-08h18n12t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х18Н12Т</a>
+                  <a href="/truba/st-20h23n18/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20Х23Н18</a>
+                  <a href="/truba/st-20h/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20Х</a>
+                  <a href="/truba/st-09g2s-15/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Г2С-15</a>
+                  <a href="/truba/st-10hsnd/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10ХСНД</a>
+                  <a href="/truba/st-aisi-304/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь AISI 304</a>
+                  <a href="/truba/st-k60/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь К60</a>
+                  <a href="/truba/st-08h13/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х13</a>
+                  <a href="/truba/st-d16t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь Д16Т</a>
+                  <a href="/truba/st-m1/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь М1</a>
+                  <a href="/truba/st-12hm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12ХМ</a>
+                  <a href="/truba/st-s355/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь С355</a>
+                  <a href="/truba/st-20yuch/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20ЮЧ</a>
+                  <a href="/truba/st-15h1m1f/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15Х1М1Ф</a>
+                  <a href="/truba/st-08h22n6t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х22Н6Т</a>
+                  <a href="/truba/st-2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 2</a>
+                  <a href="/truba/st-amg6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь АМГ6</a>
+                  <a href="/truba/st-03h17n14m3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 03Х17Н14М3</a>
+                  <a href="/truba/st-40hn2ma/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 40ХН2МА</a>
+                  <a href="/truba/st-3sp5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3СП5</a>
+                  <a href="/truba/st-08h17n13m2t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х17Н13М2Т</a>
+                  <a href="/truba/st-17g1s-u/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 17Г1С-У</a>
+                  <a href="/truba/st-07h16n6/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 07Х16Н6</a>
+                  <a href="/truba/st-08h21n6m2t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х21Н6М2Т</a>
+                  <a href="/truba/st-20a/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20А</a>
+                  <a href="/truba/st-15hm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15ХМ</a>
+                  <a href="/truba/st-l63/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь Л63</a>
+                  <a href="/truba/st-30hma/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 30ХМА</a>
+                  <a href="/truba/st-08h18n10/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х18Н10</a>
+                  <a href="/truba/st-1-3/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 1-3</a>
+                  <a href="/truba/st-12h1m1f/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х1М1Ф</a>
+                  <a href="/truba/st-08sp/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08СП</a>
+                  <a href="/truba/st-k52/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь К52</a>
+                  <a href="/truba/st-03h12n10mtr/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 03Х12Н10МТР</a>
+                  <a href="/truba/st-tp304/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь TP304</a>
+                  <a href="/truba/st-40hn/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 40ХН</a>
+                  <a href="/truba/st-09g2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09Г2</a>
+                  <a href="/truba/st-5hnm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 5ХНМ</a>
+                  <a href="/truba/st-st20/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь СТ20</a>
+                  <a href="/truba/st-09gsf/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 09ГСФ</a>
+                  <a href="/truba/st-08h17t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х17Т</a>
+                  <a href="/truba/st-shh15/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь ШХ15</a>
+                  <a href="/truba/st-12hn3a/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12ХН3А</a>
+                  <a href="/truba/st-15h25t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15Х25Т</a>
+                  <a href="/truba/st-s255/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь С255</a>
+                  <a href="/truba/st-k48/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь К48</a>
+                  <a href="/truba/st-20k/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 20К</a>
+                  <a href="/truba/st-17g1c/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 17Г1C</a>
+                  <a href="/truba/st-13gfa/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 13ГФА</a>
+                  <a href="/truba/st-12h13/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х13</a>
+                  <a href="/truba/st-95h18/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 95Х18</a>
+                  <a href="/truba/st-17gs/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 17ГС</a>
+                  <a href="/truba/st-12h18n12t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х18Н12Т</a>
+                  <a href="/truba/st-18hgt/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 18ХГТ</a>
+                  <a href="/truba/st-ls59-1/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь ЛС59-1</a>
+                  <a href="/truba/st-12h2n4a/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х2Н4А</a>
+                  <a href="/truba/st-904l/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 904L</a>
+                  <a href="/truba/st-v95t1/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь В95Т1</a>
+                  <a href="/truba/st-amg3m/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь АМГ3М</a>
+                  <a href="/truba/st-12h17/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 12Х17</a>
+                  <a href="/truba/st-ad31t1/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь АД31Т1</a>
+                  <a href="/truba/st-3ps5/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 3ПС5</a>
+                  <a href="/truba/st-tp321/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь TP321</a>
+                  <a href="/truba/st-amg/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь АМГ</a>
+                  <a href="/truba/st-10h17n13m3t/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10Х17Н13М3Т</a>
+                  <a href="/truba/st-m/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь М</a>
+                  <a href="/truba/st-38hs/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 38ХС</a>
+                  <a href="/truba/st-08h14mf/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х14МФ</a>
+                  <a href="/truba/st-15h1m1fsh/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15Х1М1ФШ</a>
+                  <a href="/truba/st-38hm/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 38ХМ</a>
+                  <a href="/truba/st-hn77tyur/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь ХН77ТЮР</a>
+                  <a href="/truba/st-5sp/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 5СП</a>
+                  <a href="/truba/st-03h17n13m2/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 03Х17Н13М2</a>
+                  <a href="/truba/st-15h1mf/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 15Х1МФ</a>
+                  <a href="/truba/st-38h2n2ma/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 38Х2Н2МА</a>
+                  <a href="/truba/st-6082/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 6082</a>
+                  <a href="/truba/st-e/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь Е</a>
+                  <a href="/truba/st-08h16n13m2b/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 08Х16Н13М2Б</a>
+                  <a href="/truba/st-10h2m/" class="catalog-footer__popular__option" data-wpel-link="internal">Труба сталь 10Х2М</a>  
+                  <a href="#" class="catalog-footer__popular__option  show__more-popular">Показать еще</a>
+               </div>
+            </div>
+            <!-- <ul class="catalog-footer__popular__list">
                <li class="catalog-footer__popular__option">8х1</li>
                <li class="catalog-footer__popular__option">8х2</li>
                <li class="catalog-footer__popular__option">ст. 20</li>
@@ -3810,26 +4159,39 @@
                <li class="catalog-footer__popular__option">09г2с</li>
                <li class="catalog-footer__popular__option">8х20</li>
                <li class="catalog-footer__popular__option">Показать еще</li>
-            </ul>
+            </ul> -->
          </div>
          <article class="catalog-footer__description">
             <h3 class="catalog-footer__description__title">Труба стальная 8 мм</h3>
             <div class="catalog-footer__description__wrapper">
-               <p class="catalog-footer__description__text">
-                  Вы можите отправить Заявку всем поставщикам трубы стально через наш Сервис! Огромный выбор
-                  электросварных
-                  труб размера 219х6 мм со складов в г. Москве и Московской области. Высокое качество стали,
-                  соответствие
-                  ГОСТу. Каталог поставщиков трубы d 219х6, а также информация о стоимости и наличии различных труб
-                  на
-                  нашем сайте. Ежедневное обновлениецен поставщиков трубы диаметром 219 с цено! В Москве и области!
+               <div class="catalog-footer__description__text_wrappper">
+                  <p class="catalog-footer__description__text">
+                     Вы можите отправить Заявку всем поставщикам трубы стально через наш Сервис! Огромный выбор
+                     электросварных
+                     труб размера 219х6 мм со складов в г. Москве и Московской области. Высокое качество стали,
+                     соответствие
+                     ГОСТу. Каталог поставщиков трубы d 219х6, а также информация о стоимости и наличии различных труб
+                     на
+                     нашем сайте. Ежедневное обновлениецен поставщиков трубы диаметром 219 с цено! В Москве и области!
 
-                  Прежде чем приступить к покупке электросварной трубы, необходимо выяснить, что же она из себя,
-                  собственно, представляет. Начнем с того, что труба электросварная 219 х 6 является обыкновенной
-                  стальной
-                  трубой с той лишь разницей.
-                  <a class="catalog-footer__description__link" href="">Подробнее</a>
-               </p>
+                     Прежде чем приступить к покупке электросварной трубы, необходимо выяснить, что же она из себя,
+                     собственно, представляет. Начнем с того, что труба электросварная 219 х 6 является обыкновенной
+                     стальной
+                     трубой с той лишь разницей. Вы можите отправить Заявку всем поставщикам трубы стально через наш Сервис! Огромный выбор
+                     электросварных
+                     труб размера 219х6 мм со складов в г. Москве и Московской области. Высокое качество стали,
+                     соответствие
+                     ГОСТу. Каталог поставщиков трубы d 219х6, а также информация о стоимости и наличии различных труб
+                     на
+                     нашем сайте. Ежедневное обновлениецен поставщиков трубы диаметром 219 с цено! В Москве и области!
+
+                     Прежде чем приступить к покупке электросварной трубы, необходимо выяснить, что же она из себя,
+                     собственно, представляет. Начнем с того, что труба электросварная 219 х 6 является обыкновенной
+                     стальной
+                     трубой с той лишь разницей.
+                  </p>
+                  <a class="catalog-footer__description__link" href="#">Подробнее</a>
+               </div>
                <div class="catalog-footer__description__img">
                   <img src="./img/pipe.png" alt="">
                </div>
@@ -3837,44 +4199,44 @@
          </article>
          <div class="catalog-footer__filters desktop">
             <h3 class="catalog-footer__filters__title">Наличие в других городах</h3>
-            <ul class="catalog-footer__filters__list">
-               <li class="catalog-footer__filters__option">Труба 8 мм в Челябинске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Омске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Новосибирске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Самаре</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Перми</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Омске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Новосибирске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Челябинске</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</li>
-               <li class="catalog-footer__filters__option">Труба 8 мм в Омске</li>
-            </ul>
+            <div class="catalog-footer__filters__list">
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Челябинске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Омске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Новосибирске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Самаре</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Перми</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Омске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Новосибирске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Челябинске</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Екатеринбурге</a>
+               <a href="/" class="catalog-footer__filters__option">Труба 8 мм в Омске</a>
+            </div>
          </div>
          <div class="catalog-footer__filters">
             <h3 class="catalog-footer__filters__title">Другие размеры</h3>
             <ul class="catalog-footer__filters__list">
-               <li class="catalog-footer__filters__option">10 мм.</li>
-               <li class="catalog-footer__filters__option">12 мм.</li>
-               <li class="catalog-footer__filters__option">14 мм.</li>
-               <li class="catalog-footer__filters__option">16 мм.</li>
-               <li class="catalog-footer__filters__option">17 мм.</li>
-               <li class="catalog-footer__filters__option">18 мм.</li>
-               <li class="catalog-footer__filters__option">19 мм.</li>
-               <li class="catalog-footer__filters__option">20 мм.</li>
-               <li class="catalog-footer__filters__option">21 мм.</li>
-               <li class="catalog-footer__filters__option">22 мм.</li>
-               <li class="catalog-footer__filters__option">23 мм.</li>
+               <a href="/" class="catalog-footer__filters__option">10 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">12 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">14 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">16 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">17 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">18 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">19 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">20 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">21 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">22 мм.</a>
+               <a href="/" class="catalog-footer__filters__option">23 мм.</a>
             </ul>
          </div>
          <div class="catalog-footer__filters">
             <h3 class="catalog-footer__filters__title">Смотрите также</h3>
             <ul class="catalog-footer__filters__list scrollx">
-               <li class="catalog-footer__filters__option">Трубы нержавеющие</li>
-               <li class="catalog-footer__filters__option">Трубы латунные</li>
-               <li class="catalog-footer__filters__option">Трубы бронзовые</li>
-               <li class="catalog-footer__filters__option">Трубы чугунные</li>
+               <a href="/" class="catalog-footer__filters__option">Трубы нержавеющие</a>
+               <a href="/" class="catalog-footer__filters__option">Трубы латунные</a>
+               <a href="/" class="catalog-footer__filters__option">Трубы бронзовые</a>
+               <a href="/" class="catalog-footer__filters__option">Трубы чугунные</a>
             </ul>
          </div>
          <div class="catalog-footer__rating">

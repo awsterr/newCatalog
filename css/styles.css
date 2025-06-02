@@ -7216,6 +7216,7 @@ body {
   visibility: visible;
   scale: 1;
 }
+
 .catalog-footer {
   background: #fff;
   max-width: 1456px;
@@ -7283,6 +7284,7 @@ body {
   padding: 9px 16px;
   cursor: pointer;
   transition: all 0.3s;
+  color: #212529;
 }
 .catalog-footer__popular__option:hover {
   background: #DDDDDE;
@@ -7290,6 +7292,9 @@ body {
 .catalog-footer__popular__option:active {
   background: #2764E0;
   color: #fff;
+}
+.catalog-footer__popular__option:visited {
+  color: #212529;
 }
 .catalog-footer__description {
   max-width: 992px;
@@ -7310,8 +7315,18 @@ body {
   font-size: 16px;
   line-height: 28px;
   max-width: 579px;
-  display: flex;
-  flex-direction: column;
+  display: -webkit-box;
+  -webkit-line-clamp: 11;
+  line-clamp: 11;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.catalog-footer__description__text.expanded {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
 }
 .catalog-footer__description__img {
   width: 340px;
@@ -7356,6 +7371,7 @@ body {
   font-size: 14px;
   line-height: 20px;
   cursor: pointer;
+  color: #212529;
   transition: all 0.3s;
 }
 .catalog-footer__filters__option:hover {
@@ -7410,7 +7426,6 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10;
-  display: none;
   display: none;
   opacity: 0;
   transition-duration: 0.3s;
@@ -7843,6 +7858,10 @@ body {
   }
   main {
     background: #F0F2F5;
+  }
+  main:has(.mobile_visible) {
+    height: 100vh;
+    overflow-y: hidden;
   }
   main .new-catalog {
     margin-bottom: 0;

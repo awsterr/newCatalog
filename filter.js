@@ -2564,23 +2564,9 @@ function getFilterData(params) {
   // }
 }
 const filterData = getFilterData();
-// console.dir(filterData)
 
 // Генерация фильтров
 filterData.data.filters.forEach((filter) => {
-  // generetingFilterContainer.innerHTML += `<div class="new-catalogForm__filter">
-  //                   <p class="new-catalogForm__filter__title">${filter.filter_name}</p>
-  //                   <div class="new-catalogForm__filter__ui">
-  //                      <input type="text" class="new-catalogForm__filter__input active" value="Екатеринбург">
-  //                      <div class="select_wrapper">
-  //                         <div class="new-catalogForm__filter__select">
-  //                            <a href="" class="new-catalogForm__filter__select__option">20</a>
-  //                            <a href="" class="new-catalogForm__filter__select__option">09Г2С</a>
-  //                         </div>
-  //                      </div>
-  //                   </div>
-  //                   <p class="new-catalogForm__filter__hint">${filter.filter_help}</p>
-  //                </div>`
   const filterDiv = document.createElement("div");
   filterDiv.classList.add("new-catalogForm__filter");
   generetingFilterContainer.append(filterDiv);
@@ -2610,12 +2596,12 @@ filterData.data.filters.forEach((filter) => {
 
   const inputEl = document.createElement("input");
   inputEl.classList.add("new-catalogForm__filter__input");
-  //  inputEl.type = 'text'
   inputEl.placeholder = filter.placeholder;
   inputEl.dataset.placeholder = filter.placeholder;
   inputEl.dataset.filter = JSON.stringify({ range: "", list: [] });
   inputEl.dataset.unit = filter.unit;
   inputEl.name = filter.filter_code;
+  inputEl.autocomplete = "off";
   uiDiv.append(inputEl);
 
   const mobileClear = document.createElement("div");
@@ -2865,19 +2851,15 @@ function toggleModals(options) {
       });
   }
 
-  // Находит модальное окно, связанное с триггером
   function findModal(trigger) {
-    // 1. Ищем внутри триггера
     const innerModal = trigger.querySelector(modalSelector);
     if (innerModal) return innerModal;
 
-    // 2. Ищем в родительской структуре через closest()
     const parentContainer = trigger.parentElement.closest("*");
     if (parentContainer) {
       return parentContainer.querySelector(modalSelector);
     }
 
-    // 3. Fallback: глобальный поиск (если не нашли выше)
     return document.querySelector(modalSelector);
   }
 
@@ -2910,7 +2892,6 @@ function toggleModals(options) {
     }
   }
 
-  // Инициализация
   triggers.forEach((trigger) => {
     trigger.addEventListener("click", handleTriggerClick);
   });
@@ -2928,16 +2909,16 @@ function toggleModals(options) {
   };
 }
 toggleModals({
-  triggerSelector: ".tdmobile__numbers .tdmobile__amount .hint-icon", // Клик по SVG внутри .position__amount
-  modalSelector: ".tdmobile__more__backdrop", // Открывает ближайшее .more-modal
+  triggerSelector: ".tdmobile__numbers .tdmobile__amount .hint-icon",
+  modalSelector: ".tdmobile__more__backdrop",
 });
 toggleModals({
-  triggerSelector: ".tdmobile__numbers .tdmobile__price .hint-icon", // Клик по SVG внутри .position__amount
-  modalSelector: ".tdmobile__more__backdrop", // Открывает ближайшее .more-modal
+  triggerSelector: ".tdmobile__numbers .tdmobile__price .hint-icon",
+  modalSelector: ".tdmobile__more__backdrop",
 });
 toggleModals({
-  triggerSelector: ".tdmobile__more", // Клик по SVG внутри .position__amount
-  modalSelector: ".tdmobile__more__backdrop", // Открывает ближайшее .more-modal
+  triggerSelector: ".tdmobile__more",
+  modalSelector: ".tdmobile__more__backdrop",
 });
 
 document
@@ -2951,7 +2932,6 @@ document
 const modalBackdrops = document.querySelectorAll(".tdmobile__more__backdrop");
 modalBackdrops.forEach((backdrop) => {
   backdrop.addEventListener("click", (event) => {
-    // Проверяем, был ли клик непосредственно по фону (а не по потомкам)
     if (event.target === backdrop) {
       backdrop.classList.remove("opened");
     }
@@ -2970,7 +2950,6 @@ document
 const backdrop = document.querySelector(".modal-backdrop");
 
 backdrop.addEventListener("click", (event) => {
-  // Проверяем, был ли клик непосредственно по фону (а не по потомкам)
   if (event.target === backdrop) {
     backdrop.classList.remove("opened");
     backdrop.querySelectorAll(".modal-body").forEach((modal) => {
@@ -3018,7 +2997,6 @@ document.querySelectorAll(".tdmobile__cart.gradient-btn").forEach((btn) => {
   });
 });
 
-// Открытие деталки на фильтрах
 function closeAllWrappers() {
   document.querySelectorAll(".select_wrapper.open").forEach((wrapper) => {
     const input = wrapper
@@ -3036,7 +3014,6 @@ function closeAllWrappers() {
 document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   document.removeEventListener("click", handleDocumentClick);
 
-  // Открытие деталки
   filter
     .querySelector(".new-catalogForm__filter__input")
     .addEventListener("click", () => {
@@ -3045,7 +3022,6 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
       document.addEventListener("click", handleDocumentClick);
     });
 
-  // Обработчик клика по документу (закрытие при клике вне)
   function handleDocumentClick(e) {
     e.stopPropagation();
 
@@ -3078,7 +3054,6 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
         filter.querySelector(".status_active__counter").innerHTML =
           "Выбрано: " + newData.list.length;
       }
-
       closeAllWrappers();
       document.removeEventListener("click", handleDocumentClick);
     }
@@ -3088,7 +3063,6 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
 function refreshPlaceholder(mainInput, onlyRange = false) {
   const filterData = JSON.parse(mainInput.dataset.filter);
   const unit = mainInput.dataset.unit || "";
-  const separator = unit ? ` ${unit}, ` : ", ";
 
   // Удаляем дубликаты
   const uniqueList = [...new Set(filterData.list)];
@@ -3168,7 +3142,6 @@ containerList.forEach((container) => {
       option.classList.remove("active");
       option.style.display = "flex";
     });
-    // sortOptions();
     mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
     refreshPlaceholder(mainInput);
     mainInput.value = "";
@@ -3179,8 +3152,6 @@ containerList.forEach((container) => {
     searchStatus.style.display = "block";
   });
 
-  const filterData = JSON.parse(mainInput.dataset.filter);
-
   mainInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -3189,22 +3160,18 @@ containerList.forEach((container) => {
 
       const filterData = JSON.parse(mainInput.dataset.filter);
 
-      // Добавить в список, если ещё не было
       if (!filterData.list.includes(value)) {
         filterData.list.push(value);
       }
 
-      // Обновить dataset и плейсхолдер
       mainInput.dataset.filter = JSON.stringify(filterData);
       statusCounter.innerHTML = "Выбрано: " + filterData.list.length;
       refreshPlaceholder(mainInput);
 
-      // Проверить, существует ли уже такая опция
       let existingOption = Array.from(optionList).find(
         (opt) => opt.dataset.value === value
       );
 
-      // Если нет — создать новую
       if (!existingOption) {
         const newOption = document.createElement("div");
         newOption.className = "new-catalogForm__filter__select__option active";
@@ -3212,7 +3179,6 @@ containerList.forEach((container) => {
         newOption.textContent = value;
         newOption.style.display = "flex";
 
-        // Повесить обработчик клика
         newOption.addEventListener("click", () => {
           const newData = JSON.parse(mainInput.dataset.filter);
           if (newOption.classList.contains("active")) {
@@ -3225,7 +3191,6 @@ containerList.forEach((container) => {
           mainInput.dataset.filter = JSON.stringify(newData);
           refreshPlaceholder(mainInput);
           statusCounter.innerHTML = "Выбрано: " + newData.list.length;
-          // sortOptions(); // пересортировать
         });
 
         detailContainer
@@ -3233,9 +3198,8 @@ containerList.forEach((container) => {
           .appendChild(newOption);
         optionList = detailContainer.querySelectorAll(
           ".new-catalogForm__filter__select__option"
-        ); // обновить список
+        );
       } else {
-        // Если опция есть, сделать её активной
         existingOption.classList.add("active");
       }
 
@@ -3243,7 +3207,6 @@ containerList.forEach((container) => {
       optionList.forEach((option) => {
         option.style.display = "flex";
       });
-      // sortOptions(); // сортировка после добавления
       statusBlock.querySelector(".status_active").classList.remove("hidden");
       searchStatus.style.display = "none";
     }
@@ -3267,7 +3230,6 @@ containerList.forEach((container) => {
       mainInput.dataset.filter = JSON.stringify(newData);
       refreshPlaceholder(mainInput);
       mainInput.value = "";
-      // sortOptions();
       optionList.forEach((option) => {
         option.style.display = "flex";
         option.classList.remove("semibold");
@@ -3281,8 +3243,6 @@ containerList.forEach((container) => {
     });
   });
 
-  // Выбор диапазона
-  // Оптимизировать
   function applyRange() {
     if (rangeMin && rangeMax) {
       [rangeMin, rangeMax].forEach((rangeInput) => {
@@ -3428,7 +3388,6 @@ const handleDocumentClick = (e, modal, btn) => {
 const cartBtnList = document.querySelectorAll(
   ".btns .cart-btn, .tdmobile__cart"
 );
-// Оптимизировать
 cartBtnList.forEach((btn) => {
   btn.addEventListener("click", (event) => {
     event.preventDefault();
@@ -3471,12 +3430,6 @@ document
       let value = getCartModalValue();
       updateCartModalValue(Math.max(0, value - 1));
     });
-    // cartModalAmount.addEventListener("input", () => {
-    //   let value = cartModalAmount.value.replace(",", ".");
-    //   if (!/^\d+(\.\d{0,2})?$/.test(value)) {
-    //     // cartModalAmount.value = getCartModalValue().toFixed(2).replace(".", ",");
-    //   }
-    // });
 
     function getCartModalValue() {
       let rawValue = cartModalAmount.value.replace(",", ".");
@@ -3513,11 +3466,10 @@ document
               ".hint-text.onhover-modal.steel-hint"
             );
             svg.addEventListener("mouseenter", () => {
-              // Позиционирование hint относительно SVG
               if (!isDesktop()) return;
               const svgRect = svg.getBoundingClientRect();
-              hint.style.left = `${svgRect.right + 8}px`; // 8px справа от SVG
-              hint.style.top = `${svgRect.top}px`; // Top как у SVG
+              hint.style.left = `${svgRect.right + 8}px`;
+              hint.style.top = `${svgRect.top}px`;
 
               hint.style.display = "block";
             });
@@ -3525,11 +3477,9 @@ document
               if (isDesktop()) return;
               event.preventDefault();
               event.stopPropagation();
-              // hint.style.display = "block";
               const backdrop = document.querySelector(".modal-backdrop");
               backdrop.classList.add("opened");
               backdrop.querySelector(".steel-hint").classList.add("opened");
-              // document.addEventListener()
             });
 
             svg.addEventListener("mouseleave", () => {
@@ -3591,7 +3541,6 @@ saveBtn.addEventListener("click", (event) => {
       option.classList.remove("active");
       option.style.display = "flex";
     });
-    // sortOptions();
     mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
     refreshPlaceholder(mainInput);
     mainInput.value = "";
@@ -3612,22 +3561,18 @@ saveBtn.addEventListener("click", (event) => {
 
       const filterData = JSON.parse(mainInput.dataset.filter);
 
-      // Добавить в список, если ещё не было
       if (!filterData.list.includes(value)) {
         filterData.list.push(value);
       }
 
-      // Обновить dataset и плейсхолдер
       mainInput.dataset.filter = JSON.stringify(filterData);
       statusCounter.innerHTML = "Выбрано: " + filterData.list.length;
       refreshPlaceholder(mainInput);
 
-      // Проверить, существует ли уже такая опция
       let existingOption = Array.from(optionList).find(
         (opt) => opt.dataset.value === value
       );
 
-      // Если нет — создать новую
       if (!existingOption) {
         const newOption = document.createElement("div");
         newOption.className = "new-catalogForm__filter__select__option active";
@@ -3635,7 +3580,6 @@ saveBtn.addEventListener("click", (event) => {
         newOption.textContent = value;
         newOption.style.display = "flex";
 
-        // Повесить обработчик клика
         newOption.addEventListener("click", () => {
           const newData = JSON.parse(mainInput.dataset.filter);
           if (newOption.classList.contains("active")) {
@@ -3648,7 +3592,6 @@ saveBtn.addEventListener("click", (event) => {
           mainInput.dataset.filter = JSON.stringify(newData);
           refreshPlaceholder(mainInput);
           statusCounter.innerHTML = "Выбрано: " + newData.list.length;
-          // sortOptions(); // пересортировать
         });
 
         detailContainer
@@ -3656,9 +3599,8 @@ saveBtn.addEventListener("click", (event) => {
           .appendChild(newOption);
         optionList = detailContainer.querySelectorAll(
           ".new-catalogForm__filter__select__option"
-        ); // обновить список
+        );
       } else {
-        // Если опция есть, сделать её активной
         existingOption.classList.add("active");
       }
 
@@ -3671,7 +3613,6 @@ saveBtn.addEventListener("click", (event) => {
     }
   });
 
-  // Выбор опции
   optionList.forEach((option) => {
     option.addEventListener("click", () => {
       const newData = JSON.parse(mainInput.dataset.filter);
@@ -3790,13 +3731,12 @@ document.querySelectorAll(".mobile-apply").forEach((btn) => {
     const enterEvent = new KeyboardEvent("keydown", {
       key: "Enter",
       code: "Enter",
-      keyCode: 13, // Устаревшее, но иногда требуется
-      which: 13, // Устаревшее
+      keyCode: 13,
+      which: 13,
       bubbles: true,
       cancelable: true,
     });
 
-    // Отправляем событие
     input.dispatchEvent(enterEvent);
 
     input.dataset.filter !== '{"range":"","list":[]}'
@@ -3819,13 +3759,12 @@ document
       const enterEvent = new KeyboardEvent("keydown", {
         key: "Enter",
         code: "Enter",
-        keyCode: 13, // Устаревшее, но иногда требуется
-        which: 13, // Устаревшее
+        keyCode: 13,
+        which: 13,
         bubbles: true,
         cancelable: true,
       });
 
-      // Отправляем событие
       input.dispatchEvent(enterEvent);
 
       input.dataset.filter !== '{"range":"","list":[]}'
@@ -3873,7 +3812,6 @@ document
         option.classList.remove("active");
         option.style.display = "flex";
       });
-      // sortOptions();
       mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
       refreshPlaceholder(mainInput);
       mainInput.value = "";
@@ -4005,7 +3943,6 @@ function setupBannerRotation(container, banners, maxVisible = 1, className) {
   startRotation();
 }
 
-// Для блока .new-catalog__banners
 const catalogBannersData = [
   {
     href: "#",
@@ -4043,7 +3980,6 @@ if (bannerContainer) {
   );
 }
 
-// Для блоков .promo
 const promoBannersData = [
   {
     href: "#1",
@@ -4072,3 +4008,89 @@ const promoContainers = document.querySelectorAll(".promo");
 promoContainers.forEach((container) => {
   setupBannerRotation(container, promoBannersData, 1, "catalog-banner");
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const options = document.querySelectorAll(
+    ".catalog-footer__popular__btns .btn-group__option"
+  );
+  const lists = document.querySelectorAll(
+    ".catalog-footer__popular__list-wrapper .catalog-footer__popular__list"
+  );
+
+  options.forEach((option) => {
+    option.addEventListener("click", () => {
+      const selectedType = option.dataset.type;
+
+      lists.forEach((list) => {
+        const listType = list.dataset.type;
+        if (listType === selectedType) {
+          list.style.display = "";
+          showLimitedOptions(list);
+        } else {
+          list.style.display = "none";
+        }
+      });
+    });
+  });
+
+  function showLimitedOptions(list) {
+    const options = list.querySelectorAll(
+      ".catalog-footer__popular__option:not(.show__more-popular)"
+    );
+    const showMoreBtn = list.querySelector(".show__more-popular");
+
+    options.forEach((el, idx) => {
+      el.style.display = idx < 11 ? "" : "none";
+    });
+
+    if (options.length > 11 && showMoreBtn) {
+      showMoreBtn.style.display = "";
+      showMoreBtn.onclick = (event) => {
+        event.preventDefault();
+        options.forEach((el) => (el.style.display = ""));
+        showMoreBtn.style.display = "none";
+      };
+    } else if (showMoreBtn) {
+      showMoreBtn.style.display = "none";
+    }
+  }
+
+  document
+    .querySelector(".catalog-footer__popular__btns .btn-group__option.active")
+    ?.click();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const textBlock = document.querySelector(
+    ".catalog-footer__description__text"
+  );
+  const toggleLink = document.querySelector(
+    ".catalog-footer__description__link"
+  );
+
+  toggleLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    textBlock.classList.toggle("expanded");
+    toggleLink.textContent = textBlock.classList.contains("expanded")
+      ? "Скрыть"
+      : "Подробнее";
+  });
+});
+
+document
+  .querySelector(".new-catalogForm__controls__search__reset")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+    [
+      ...document.querySelectorAll(
+        ".new-catalogForm__generated-filters .new-catalogForm__filter__input"
+      ),
+      document.querySelector(
+        ".new-catalogForm__sub-filters .new-catalogForm__filter__input"
+      ),
+    ].forEach((input) => {
+      input.dataset.filter = JSON.stringify({ range: "", list: [] });
+      input.classList.remove("active");
+      input.placeholder = input.dataset.placeholder;
+    });
+  });
