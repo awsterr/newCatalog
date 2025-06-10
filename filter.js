@@ -2772,7 +2772,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (block) {
       block.style.display = "none";
     }
-  }, 0);
+  }, 30);
 });
 
 function moreBtnsLogic() {
@@ -3061,6 +3061,7 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
 });
 
 function refreshPlaceholder(mainInput, onlyRange = false) {
+  btnLoaderStart();
   const filterData = JSON.parse(mainInput.dataset.filter);
   const unit = mainInput.dataset.unit || "";
 
@@ -3109,6 +3110,7 @@ function refreshPlaceholder(mainInput, onlyRange = false) {
   }
 
   mainInput.placeholder = result;
+  setTimeout(btnLoaderEnd, 500);
 }
 
 // Выбор фильтров
@@ -3138,6 +3140,7 @@ containerList.forEach((container) => {
   const resetOptions = statusBlock.querySelector(".status_active__reset");
 
   resetOptions.addEventListener("click", () => {
+    btnLoaderStart();
     optionList.forEach((option) => {
       option.classList.remove("active");
       option.style.display = "flex";
@@ -3150,6 +3153,7 @@ containerList.forEach((container) => {
     searchStatus.classList.remove("black");
     statusBlock.querySelector(".status_active").classList.add("hidden");
     searchStatus.style.display = "block";
+    setTimeout(btnLoaderEnd, 500);
   });
 
   mainInput.addEventListener("keydown", (e) => {
@@ -3215,6 +3219,7 @@ containerList.forEach((container) => {
   // Выбор опции
   optionList.forEach((option) => {
     option.addEventListener("click", () => {
+      btnLoaderStart();
       const newData = JSON.parse(mainInput.dataset.filter);
       if (option.classList.contains("active")) {
         newData.list = newData.list.filter(
@@ -3240,6 +3245,7 @@ containerList.forEach((container) => {
         statusBlock.querySelector(".status_active").classList.add("hidden");
         searchStatus.style.display = "block";
       }
+      setTimeout(btnLoaderEnd, 500);
     });
   });
 
@@ -3247,6 +3253,7 @@ containerList.forEach((container) => {
     if (rangeMin && rangeMax) {
       [rangeMin, rangeMax].forEach((rangeInput) => {
         rangeInput.addEventListener("keydown", (e) => {
+          btnLoaderStart();
           if (e.key === "Enter") {
             e.preventDefault();
 
@@ -3261,6 +3268,7 @@ containerList.forEach((container) => {
 
             rangeMin.value && rangeMax.value && closeAllWrappers();
           }
+          setTimeout(btnLoaderEnd, 500);
         });
       });
 
@@ -3321,6 +3329,7 @@ containerList.forEach((container) => {
       });
 
       resetRange.addEventListener("click", () => {
+        btnLoaderStart();
         const newData = JSON.parse(mainInput.dataset.filter);
         newData.range = "";
         mainInput.dataset.filter = JSON.stringify(newData);
@@ -3330,6 +3339,7 @@ containerList.forEach((container) => {
         refreshPlaceholder(mainInput);
         applyFilters();
         applyInput();
+        setTimeout(btnLoaderEnd, 500);
       });
     }
   }
@@ -3807,6 +3817,7 @@ document
             input.value = "";
           });
       }
+      // btnLoader();
 
       optionList.forEach((option) => {
         option.classList.remove("active");
@@ -3820,6 +3831,7 @@ document
       searchStatus.classList.remove("black");
       statusBlock.querySelector(".status_active").classList.add("hidden");
       searchStatus.style.display = "block";
+      // btnLoader();
     });
   });
 
@@ -4094,3 +4106,17 @@ document
       input.placeholder = input.dataset.placeholder;
     });
   });
+
+// лоадер на кнопку "Показать предложения"
+const btn = document.querySelector(".primary-btn.submit");
+const content = btn.querySelector(".content");
+const loader = btn.querySelector(".loader");
+
+function btnLoaderStart() {
+  content.classList.add("hidden");
+  loader.classList.remove("hidden");
+}
+function btnLoaderEnd() {
+  content.classList.remove("hidden");
+  loader.classList.add("hidden");
+}

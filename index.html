@@ -143,6 +143,7 @@
                            </div>
                            <div class="select_wrapper">
                               <div class="new-catalogForm__filter__select">
+                                 <a href="" class="new-catalogForm__filter__select__option active">Все подразделы</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Труба</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Арматура</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Аноды</a>
@@ -227,6 +228,7 @@
                                  <a href="" class="buttons-list__el">Тюмень</a>
                               </ul>
                               <div class="new-catalogForm__filter__select">
+                                 <a href="" class="new-catalogForm__filter__select__option active">Все города</a>
                                  <div class="letter-header">А</div>
                                  <a href="" class="new-catalogForm__filter__select__option">Анапа</a>
                                  <a href="" class="new-catalogForm__filter__select__option">Аргун</a>
@@ -329,7 +331,7 @@
 
                </div>
                <div class="new-catalogForm__generated-filters"></div>
-               <hr>
+               <div class="hr"></div>
                <div class="mobile-filter-bottom-wrapper">
                   <div class="new-catalogForm__sub-filters">
                      <div class="new-catalogForm__filter">
@@ -467,7 +469,10 @@
                            Обновить до
                            <div class="pro">Pro</div>
                         </a>
-                        <button type="submit" class="primary-btn">Показать предложения</a>
+                        <button type="submit" class="primary-btn submit">
+                           <div class="content">Показать предложения</div>
+                           <div class="loader hidden"></div>
+                        </a>
                      </div>
                   </div>
                </div>
@@ -484,7 +489,7 @@
                      <span></span>
                      <span></span>
                   </div>
-                  <hr>
+                  <div class="hr"></div>
                   <div>
                      <div><span></span></div>
                      <div>
@@ -578,8 +583,7 @@
                   <path
                      d="M6.29505 0.683315C6.49105 0.173315 5.84605 -0.236685 5.46805 0.157315L0.139052 5.70731C0.0712985 5.778 0.0257874 5.86701 0.00816534 5.96332C-0.00945673 6.05964 0.0015858 6.159 0.0399229 6.24909C0.0782601 6.33919 0.142205 6.41604 0.223823 6.47012C0.305442 6.5242 0.401143 6.55313 0.499052 6.55331H2.52805C2.60908 6.55345 2.68886 6.57328 2.76053 6.6111C2.83219 6.64891 2.89359 6.70358 2.93944 6.77038C2.98529 6.83719 3.01422 6.91414 3.02373 6.99461C3.03325 7.07508 3.02306 7.15666 2.99405 7.23231L1.52405 11.0593C1.32905 11.5693 1.97405 11.9793 2.35205 11.5853L7.68005 6.03531C7.74781 5.96463 7.79332 5.87562 7.81094 5.7793C7.82856 5.68299 7.81752 5.58363 7.77918 5.49354C7.74085 5.40344 7.6769 5.32659 7.59528 5.27251C7.51366 5.21843 7.41796 5.1895 7.32005 5.18931H5.29205C5.21094 5.18934 5.13104 5.16963 5.05924 5.13188C4.98745 5.09413 4.92591 5.03949 4.87995 4.97266C4.83398 4.90582 4.80496 4.82881 4.7954 4.74826C4.78584 4.66772 4.79601 4.58605 4.82505 4.51031L6.29505 0.683315Z"
                      fill="#2764E0" />
-               </svg>
-               Эту позицию искали сегодня <span class="fw_600">3</span>
+               </svg>Эту позицию искали сегодня <span class="fw_600">3</span>
                человека
             </div>
          </div>
@@ -691,9 +695,18 @@
                         </div>
                         <!-- <input type="text" class=""> -->
                         <div class="amount-modal__input">
-                           <span class="amount-modal__minus"></span>
+                           <span class="amount-modal__minus">
+                              <svg width="16" height="2" viewBox="0 0 16 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <rect x="16" width="2" height="16" rx="1" transform="rotate(90 16 0)" fill="currentColor"/>
+                              </svg>
+                           </span>
                            <input class="amount-modal__amount-value" type="text" step="0.01" value="1.00">
-                           <span class="amount-modal__plus"></span>
+                           <span class="amount-modal__plus">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <rect x="7" width="2" height="16" rx="1" fill="currentColor"/>
+                                 <rect x="16" y="7" width="2" height="16" rx="1" transform="rotate(90 16 7)" fill="currentColor"/>
+                              </svg>
+                           </span>
                         </div>
                         <a href="" class="amount-modal__delete">Убрать из корзины</a>
                      </div>
@@ -4409,6 +4422,42 @@
                fill="#6C757D" />
          </svg>
       </div>
+      <div class="modal-body city" id="modal">
+         <img class="close-btn" id="close-btn" src="img/close.svg"/>
+         <div class="modal__header">
+            <h2 class="modal__head">Выберите город</h2>
+            <p class="modal__text">В каталоге металлопроката будет включена сортировка металлобаз по удаленности от выбранного города. </p>
+         </div>
+         <div class="city-search mobile-search" id="city-search__container">
+            <input type="text" autocomplete="off" class="modal__input catalog__search__input" placeholder="Найти город" id="city-search__input">
+            <img src="img/close-search.svg" alt="" class="close-search" id="close-search">
+            <div id="dropdown" class="dropdown hidden"></div>
+            <div class="city-search__wrong-name hidden" id="city-search__wrong-name">Возможно вы ввели название города неправильно</div>
+         </div>
+         <div class="modal__choosed">
+            Выбрано:
+            <div id="choosed-city">Все города</div>
+         </div>
+         <div class="modal__container">
+            <ul class="buttons-list" id="btns-list">
+            </ul>
+            <div class="modal__table">
+               <div class="table__column">
+                  <h5 class="table__header">Округ</h5>
+                  <div class="table__list" id="regions"></div>
+               </div>
+               <div class="table__column">
+                  <h5 class="table__header">Регион</h5>
+                  <div class="table__list" id="areas"></div>
+               </div>
+               <div class="table__column">
+                  <h5 class="table__header">Город</h5>
+                  <div class="table__list" id="cities"></div>
+               </div>
+               <div class="table__mobile" id="table__modal"></div>
+            </div>
+         </div>
+      </div>
    </div>
 </body>
 <script src="./filter.js"></script>
@@ -4417,8 +4466,11 @@
       btn.addEventListener('click', (event) => {
          btn.parentElement.querySelectorAll('.btn-group__option').forEach((el) => {
             el.classList.remove('active')
+            el.classList.remove('left')
          })
          btn.classList.add('active')
+
+         btn.previousElementSibling && btn.previousElementSibling.classList.add('left')
       })
    })
 </script>
