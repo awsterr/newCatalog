@@ -8943,7 +8943,7 @@ a {
     right: 0;
     bottom: 0;
     left: 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
     background: #fff;
     padding-top: 84px;
     z-index: 2;

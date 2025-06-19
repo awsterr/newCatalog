@@ -4271,10 +4271,11 @@ document.querySelectorAll(".tdata").forEach((cell) => {
 });
 
 document.addEventListener("focusin", function (event) {
-  if (event.target.matches("input, textarea, select")) {
-    window.requestAnimationFrame(() => {
-      window.scrollTo(0, 0); // Сброс прокрутки
-      document.body.style.transform = "scale(1)"; // Сброс масштаба
-    });
-  }
+  console.log("focusin");
+  // if (event.target.matches("input, textarea, select")) {
+  //   window.requestAnimationFrame(() => {
+  //     window.scrollTo(0, 0); // Сброс прокрутки
+  //     document.body.style.transform = "scale(1)"; // Сброс масштаба
+  //   });
+  // }
 });
