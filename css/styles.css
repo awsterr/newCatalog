@@ -8277,7 +8277,7 @@ a {
   }
   main .new-catalog .new-catalog__main .new-catalogForm .mobile-filter-bottom-wrapper .new-catalogForm__controls {
     background: #fff;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
     padding: 0 24px 32px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
@@ -8852,8 +8852,8 @@ a {
     gap: 24px;
     margin-top: 20px;
   }
-  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply,
-  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply {
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply {
     display: block;
     width: calc(100% - 48px);
     height: 50px;
@@ -8866,16 +8866,20 @@ a {
     z-index: 10;
     font-weight: 600;
   }
-  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold,
-  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold {
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__select,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__select {
+    padding-bottom: 100px;
+  }
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold {
     font-weight: 600;
   }
-  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold.active,
-  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold.active {
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold.active,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.semibold.active {
     font-weight: normal;
   }
-  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after,
-  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after {
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option::after {
     content: "";
     display: block;
     width: 24px;
@@ -8885,8 +8889,8 @@ a {
     position: relative;
     right: 0;
   }
-  .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::after,
-  .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::after {
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::after,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::after {
     background-color: #2764E0;
     background-image: url("../img/form-option-success-white.svg");
     background-repeat: no-repeat;
@@ -9173,7 +9177,7 @@ a {
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select {
     background: #f2f2f4;
-    padding: 24px;
+    padding: 24px 24px 100px;
     gap: 0;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__status {

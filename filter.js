@@ -3109,6 +3109,7 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
       }
       closeAllWrappers();
       filter.querySelector(".select_wrapper").classList.add("open");
+      filter.querySelector(".new-catalogForm__filter__select").scrollTop = 0;
       document.addEventListener("click", handleDocumentClick);
     });
 
