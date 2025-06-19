@@ -7693,7 +7693,7 @@ a {
   max-width: 960px;
   max-height: 688px;
   border-radius: 15px;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 24px;
   overflow: hidden;

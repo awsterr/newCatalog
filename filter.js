@@ -2773,7 +2773,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (block) {
       block.style.display = "none";
     }
-  }, 30);
+  }, 600);
 });
 
 function moreBtnsLogic() {
@@ -3575,9 +3575,13 @@ document
             );
             svg.addEventListener("mouseenter", () => {
               if (!isDesktop()) return;
+
               const svgRect = svg.getBoundingClientRect();
-              hint.style.left = `${svgRect.right + 8}px`;
-              hint.style.top = `${svgRect.top}px`;
+              const scrollTop = window.scrollY;
+              const scrollLeft = window.scrollX;
+
+              hint.style.left = `${svgRect.right + 8 + scrollLeft}px`;
+              hint.style.top = `${svgRect.top + scrollTop}px`;
 
               hint.style.display = "block";
             });
@@ -4268,14 +4272,4 @@ document.querySelectorAll(".tdata").forEach((cell) => {
   cell.addEventListener("mouseleave", () => {
     cell.classList.remove("hover-visible");
   });
-});
-
-document.addEventListener("focusin", function (event) {
-  console.log("focusin");
-  // if (event.target.matches("input, textarea, select")) {
-  //   window.requestAnimationFrame(() => {
-  //     window.scrollTo(0, 0); // Сброс прокрутки
-  //     document.body.style.transform = "scale(1)"; // Сброс масштаба
-  //   });
-  // }
 });
