@@ -6123,6 +6123,7 @@ a {
   align-items: center;
   padding: 15px;
   position: relative;
+  border-radius: 0;
 }
 .new-catalog .new-catalog__main .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__range__input:first-child {
   border-top-left-radius: 6px;
