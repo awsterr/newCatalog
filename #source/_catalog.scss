@@ -3783,6 +3783,10 @@ $star-size: 20px;
       overflow: hidden;
    }
 
+   body:has(.select_wrapper.open) {
+      overflow: hidden;
+   }
+
    .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) {
       position: fixed;
       top: 0;

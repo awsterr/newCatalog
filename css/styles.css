@@ -8940,6 +8940,9 @@ a {
   .new-catalog__main .new-catalogForm.mobile_visible:has(.select_wrapper.open) {
     overflow: hidden;
   }
+  body:has(.select_wrapper.open) {
+    overflow: hidden;
+  }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) {
     position: fixed;
     top: 0;
