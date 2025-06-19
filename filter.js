@@ -2564,6 +2564,7 @@ function getFilterData(params) {
   // }
 }
 const filterData = getFilterData();
+const isDesktop = () => window.innerWidth > 768;
 
 // Генерация фильтров
 filterData.data.filters.forEach((filter) => {
@@ -2997,6 +2998,11 @@ document.querySelectorAll(".tdmobile__cart.gradient-btn").forEach((btn) => {
   });
 });
 
+document.querySelector(".city-btn").addEventListener("click", (event) => {
+  event.preventDefault();
+  openModal("city");
+});
+
 function closeAllWrappers() {
   document.querySelectorAll(".select_wrapper.open").forEach((wrapper) => {
     const input = wrapper
@@ -3011,12 +3017,96 @@ function closeAllWrappers() {
   });
 }
 
+// Обновление url
+function updateQueryParams() {
+  const filterElements = document.querySelectorAll("[data-filter]");
+  const url = new URL(window.location.href);
+  const existingParams = new URLSearchParams(url.search);
+
+  const paramsObj = {};
+  for (const [key, value] of existingParams.entries()) {
+    paramsObj[key] = value;
+  }
+
+  filterElements.forEach((element) => {
+    try {
+      const filterData = JSON.parse(element.getAttribute("data-filter"));
+      const name = element.name;
+
+      if (filterData.range && filterData.range !== "") {
+        const [min, max] = filterData.range.split("-");
+        if (min || max) {
+          const rangeString = `${min || ""}-${max || ""}`;
+          paramsObj[name] = rangeString;
+        } else {
+          delete paramsObj[name];
+        }
+      } else {
+        delete paramsObj[name];
+      }
+
+      if (filterData.list && filterData.list.length > 0) {
+        const rawValue = filterData.list.join("|");
+        paramsObj[name] = rawValue;
+      } else if (!filterData.range) {
+        delete paramsObj[name];
+      }
+
+      if (
+        !filterData.range &&
+        (!filterData.list || filterData.list.length === 0) &&
+        element.value
+      ) {
+        paramsObj[name] = element.value;
+      }
+    } catch (e) {
+      console.error("Ошибка парсинга data-filter:", e);
+    }
+  });
+
+  const queryString = Object.entries(paramsObj)
+    .map(
+      ([key, value]) =>
+        `${key}=${encodeURIComponent(value)
+          .replace(/%2C/g, ",")
+          .replace(/%7C/g, "|")
+          .replace(/%2D/g, "-")}`
+    )
+    .join("&");
+
+  const newUrl = `${window.location.pathname}?${queryString}`;
+  window.history.pushState({}, "", newUrl);
+}
 document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   document.removeEventListener("click", handleDocumentClick);
 
   filter
     .querySelector(".new-catalogForm__filter__input")
-    .addEventListener("click", () => {
+    .addEventListener("click", (event) => {
+      if (!isDesktop()) {
+        // console.dir(true);
+        // console.dir();
+        if (
+          !event.target.parentElement
+            .querySelector(".select_wrapper")
+            .classList.contains("open")
+        ) {
+          event.target.blur();
+          if (event.target.name === "city") {
+            event.target.placeholder = "Найти город";
+          }
+        } else {
+          if (event.target.name === "city") {
+            console.log(1213);
+            modal = document.querySelector(".modal-backdrop");
+            modal.classList.add("opened");
+            modal
+              .querySelector(".city")
+              .classList.add("opened", "opened-from-filter");
+            modal.querySelector(".modal__input.catalog__search__input").focus();
+          }
+        }
+      }
       closeAllWrappers();
       filter.querySelector(".select_wrapper").classList.add("open");
       document.addEventListener("click", handleDocumentClick);
@@ -3050,6 +3140,9 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
         input.dataset.filter = JSON.stringify(newData);
         refreshPlaceholder(input);
         input.value = "";
+        console.log(1);
+        filter.querySelector(".status_active").classList.remove("hidden");
+        filter.querySelector(".status_placeholder").style.display = "none";
 
         filter.querySelector(".status_active__counter").innerHTML =
           "Выбрано: " + newData.list.length;
@@ -3111,6 +3204,7 @@ function refreshPlaceholder(mainInput, onlyRange = false) {
 
   mainInput.placeholder = result;
   setTimeout(btnLoaderEnd, 500);
+  updateQueryParams();
 }
 
 // Выбор фильтров
@@ -3154,6 +3248,7 @@ containerList.forEach((container) => {
     statusBlock.querySelector(".status_active").classList.add("hidden");
     searchStatus.style.display = "block";
     setTimeout(btnLoaderEnd, 500);
+    updateQueryParams();
   });
 
   mainInput.addEventListener("keydown", (e) => {
@@ -3300,6 +3395,7 @@ containerList.forEach((container) => {
         newData.range
           ? resetRange.classList.add("visible")
           : resetRange.classList.remove("visible");
+        updateQueryParams();
       });
       rangeMax.addEventListener("input", (event) => {
         applyFilters();
@@ -3326,6 +3422,7 @@ containerList.forEach((container) => {
         newData.range
           ? resetRange.classList.add("visible")
           : resetRange.classList.remove("visible");
+        updateQueryParams();
       });
 
       resetRange.addEventListener("click", () => {
@@ -3339,6 +3436,7 @@ containerList.forEach((container) => {
         refreshPlaceholder(mainInput);
         applyFilters();
         applyInput();
+        updateQueryParams();
         setTimeout(btnLoaderEnd, 500);
       });
     }
@@ -3451,7 +3549,6 @@ document
       cartModalAmount.value = value.toFixed(2).replace(".", ",");
     }
   });
-const isDesktop = () => window.innerWidth > 768;
 
 // 1-3
 document
@@ -3504,7 +3601,9 @@ document
 const showFiltersMobile = document.querySelector(".open-filters");
 showFiltersMobile.addEventListener("click", (event) => {
   event.preventDefault();
-  document.querySelector(".new-catalogForm").classList.add("mobile_visible");
+  const form = document.querySelector(".new-catalogForm");
+  form.classList.add("mobile_visible");
+  form.scrollTop = 0;
 });
 
 document
@@ -3776,6 +3875,10 @@ document
       });
 
       input.dispatchEvent(enterEvent);
+
+      if (input.name === "city") {
+        input.placeholder = input.dataset.placeholder;
+      }
 
       input.dataset.filter !== '{"range":"","list":[]}'
         ? input.classList.add("active")
@@ -4120,3 +4223,48 @@ function btnLoaderEnd() {
   content.classList.remove("hidden");
   loader.classList.add("hidden");
 }
+
+// Плашка сверху
+
+const filterForm = document.querySelector(".new-catalogForm");
+const stickyMenu = document.querySelector(".filter-sticky-menu");
+
+function updateStickyWidth() {
+  const rect = filterForm.getBoundingClientRect();
+  stickyMenu.style.width = `${rect.width}px`;
+  stickyMenu.style.left = `${rect.left}px`;
+}
+
+function toggleStickyMenu() {
+  const rect = filterForm.getBoundingClientRect();
+
+  if (rect.bottom < 0) {
+    stickyMenu.classList.add("visible");
+    updateStickyWidth();
+  } else {
+    stickyMenu.classList.remove("visible");
+  }
+}
+
+window.addEventListener("scroll", toggleStickyMenu);
+window.addEventListener("resize", updateStickyWidth);
+
+stickyMenu
+  .querySelector(".filter-sticky-menu__btn")
+  .addEventListener("click", () => {
+    filterForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+document.querySelectorAll(".tdata").forEach((cell) => {
+  const content = cell.querySelector(".tdvalue") || cell;
+
+  cell.addEventListener("mouseenter", () => {
+    if (content.scrollWidth > content.clientWidth) {
+      cell.classList.add("hover-visible");
+    }
+  });
+
+  cell.addEventListener("mouseleave", () => {
+    cell.classList.remove("hover-visible");
+  });
+});
