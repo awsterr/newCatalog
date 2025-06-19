@@ -4269,3 +4269,12 @@ document.querySelectorAll(".tdata").forEach((cell) => {
     cell.classList.remove("hover-visible");
   });
 });
+
+document.addEventListener("focusin", function (event) {
+  if (event.target.matches("input, textarea, select")) {
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, 0); // Сброс прокрутки
+      document.body.style.transform = "scale(1)"; // Сброс масштаба
+    });
+  }
+});
