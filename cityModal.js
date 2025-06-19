@@ -407,6 +407,12 @@ async function init() {
     "Уфа",
     "Екатеринбург",
     "Тюмень",
+    "Москва",
+    "Санкт-Петербург",
+    "Казань",
+    "Уфа",
+    "Екатеринбург",
+    "Тюмень",
   ];
   renderButtonsList(citiesBtns);
   renderGroupedCities(cities);

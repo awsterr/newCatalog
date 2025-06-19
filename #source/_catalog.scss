@@ -2375,13 +2375,25 @@
 
          .modal__buttons-list {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             gap: 1px 12px;
-            overflow: hidden;
+            overflow: scroll hidden;
             max-height: 37px;
             min-height: 37px;
             font-size: 14px;
+
+            padding-bottom: 8px;
+            min-height: 49px;
+            margin-bottom: 6px;
+
+            &::-webkit-scrollbar {
+               height: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+               background-color: #b7b7b7;
+               border-radius: 4px;
+            }
 
             .buttons-list__el {
                display: block;
@@ -3836,6 +3848,16 @@ $star-size: 20px;
          }
       }
 
+      &:has(.new-catalogForm__filter__input:focus) {
+         .new-catalogForm__filter__range {
+            display: none;
+         }
+
+         .new-catalogForm__filter__ui .select_wrapper.ranged .new-catalogForm__filter__select {
+            height: 100%;
+         }
+      }
+
       &:has(.new-catalogForm__filter__range__input:focus),
       &:has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) {
 
@@ -4018,6 +4040,10 @@ $star-size: 20px;
 
                .new-catalogForm__filter__range__inputs {
                   padding: 0 24px;
+
+                  input {
+                     font-size: 14px;
+                  }
                }
 
                .new-catalogForm__filter__range__reset {
@@ -4306,6 +4332,7 @@ $star-size: 20px;
 
          &.city {
             min-height: 100%;
+            height: 100%;
             padding: 0;
             border-radius: 0;
             gap: 0;
@@ -4423,11 +4450,11 @@ $star-size: 20px;
             .modal__container {
                background: #f2f2f4;
                padding: 24px 10px 24px 24px;
+               height: calc(100% - 200px);
 
                .modal__buttons-list {
                   gap: 2px 8px;
-                  max-height: 36px;
-                  min-height: 36px;
+                  margin: 0;
 
                   .buttons-list__el {
                      background: #fff;
@@ -4446,6 +4473,7 @@ $star-size: 20px;
 
                .modal__table {
                   padding-right: 14px;
+                  height: calc(100% - 50px);
 
                   .table__column {
                      display: none;
@@ -4493,5 +4521,11 @@ $star-size: 20px;
             }
          }
       }
+   }
+}
+
+body {
+   &:has(.modal-body.opened) {
+      overflow: hidden;
    }
 }
