@@ -100,6 +100,10 @@
       gap: 20px;
       justify-content: space-between;
 
+      &.new-catalogForm__filter:has(.select_wrapper.open) {
+         overflow: hidden;
+      }
+
       .filter-sticky-menu {
          position: fixed;
          top: 0;
@@ -233,7 +237,7 @@
             font-size: 14px;
             line-height: 20px;
             width: 100%;
-            max-width: 286px;
+            // max-width: 286px;
 
             &__mobile-header {
                display: none;
@@ -532,7 +536,8 @@
 
          &__main-filters {
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
+            flex-wrap: wrap;
             gap: 32px;
             padding: 32px 34px 24px 36px;
 
@@ -606,6 +611,8 @@
 
             .new-catalogForm__filter {
                min-width: 210px;
+               flex: 1 1 0;
+               box-sizing: border-box;
 
                .new-catalogForm__filter__select__option.active {
                   background: $blue;
@@ -841,6 +848,7 @@
    background-color: rgba($color: #000000, $alpha: 0.8);
    border-radius: 6px;
    position: absolute;
+   z-index: 2;
 }
 
 .new-catalogResults__header {
@@ -3076,7 +3084,7 @@ $star-size: 20px;
 
                .new-catalogForm__filter {
                   width: 100%;
-                  max-width: 286px;
+                  // max-width: 286px;
 
                   &__title {
                      font-size: 14px;
