@@ -5869,9 +5869,6 @@ a {
   gap: 20px;
   justify-content: space-between;
 }
-.new-catalog .new-catalog__main.new-catalogForm__filter:has(.select_wrapper.open) {
-  overflow: hidden;
-}
 .new-catalog .new-catalog__main .filter-sticky-menu {
   position: fixed;
   top: 0;
@@ -8137,6 +8134,9 @@ a {
   main .new-catalog .breadcrumbs .breadcrumbs__list::-webkit-scrollbar-thumb {
     background: #ddd;
     border-radius: 1px;
+  }
+  main .new-catalog .new-catalog__main:has(.mobile_visible) {
+    overflow: hidden;
   }
   main .new-catalog .new-catalog__main .new-catalog__banners {
     display: none;
