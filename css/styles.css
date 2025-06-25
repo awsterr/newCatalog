@@ -8118,6 +8118,10 @@ a {
   main:has(.mobile_visible) {
     height: 100vh;
     overflow-y: hidden;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
   }
   main .new-catalog {
     margin-bottom: 0;
@@ -8152,7 +8156,8 @@ a {
     background: #f2f2f4;
     height: 100vh;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: auto;
     padding-top: 60px;
     flex-direction: column;
     gap: 8px;
