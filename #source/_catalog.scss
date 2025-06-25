@@ -2757,10 +2757,11 @@ $star-size: 20px;
    main {
       background: #f0f2f5;
 
-      &:has(.mobile_visible) {
-         height: 100vh;
-         overflow-y: hidden;
-      }
+      // Убираем блокировку скролла у main - это вызывает проблемы на iOS
+      // &:has(.mobile_visible) {
+      //    height: 100vh;
+      //    overflow-y: hidden;
+      // }
 
       .new-catalog {
          margin-bottom: 0;
@@ -2782,9 +2783,10 @@ $star-size: 20px;
          }
 
          .new-catalog__main {
-            &:has(.mobile_visible) {
-               overflow: hidden;
-            }
+            // Убираем блокировку скролла у .new-catalog__main - это вызывает проблемы на iOS
+            // &:has(.mobile_visible) {
+            //    overflow: hidden;
+            // }
 
             .new-catalog__banners {
                display: none;
@@ -2797,14 +2799,26 @@ $star-size: 20px;
                bottom: 0;
                left: 0;
                right: 0;
-               z-index: 4;
+               z-index: 9999; // Увеличиваем z-index для гарантии поверх всех элементов
                background: #f2f2f4;
                height: 100vh;
+               height: 100dvh; // Используем dynamic viewport height для мобильных
                overflow-y: auto;
                -webkit-overflow-scrolling: touch;
+               -webkit-transform: translateZ(0); // Включаем hardware acceleration
+               transform: translateZ(0);
+               will-change: scroll-position; // Оптимизация для скролла
+               overscroll-behavior: contain; // Предотвращает pull-to-refresh
+               pointer-events: auto; // Явно включаем события
                padding-top: 60px;
                flex-direction: column;
                gap: 8px;
+
+               // Специально для iOS
+               @supports (-webkit-touch-callout: none) {
+                  overflow-y: scroll;
+                  -webkit-overflow-scrolling: touch;
+               }
 
                &.mobile_visible {
                   display: flex;
@@ -3803,13 +3817,15 @@ $star-size: 20px;
       display: none;
    }
 
-   .new-catalog__main .new-catalogForm.mobile_visible:has(.select_wrapper.open) {
-      overflow: hidden;
-   }
+   // Убираем блокировку скролла - это вызывает проблемы на iOS
+   // .new-catalog__main .new-catalogForm.mobile_visible:has(.select_wrapper.open) {
+   //    overflow: hidden;
+   // }
 
-   body:has(.select_wrapper.open) {
-      overflow: hidden;
-   }
+   // Убираем блокировку скролла у body - это вызывает проблемы на iOS
+   // body:has(.select_wrapper.open) {
+   //    overflow: hidden;
+   // }
 
    .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) {
       position: fixed;

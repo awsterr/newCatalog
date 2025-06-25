@@ -8115,10 +8115,6 @@ a {
   main {
     background: #f0f2f5;
   }
-  main:has(.mobile_visible) {
-    height: 100vh;
-    overflow-y: hidden;
-  }
   main .new-catalog {
     margin-bottom: 0;
     width: 100%;
@@ -8135,9 +8131,6 @@ a {
     background: #ddd;
     border-radius: 1px;
   }
-  main .new-catalog .new-catalog__main:has(.mobile_visible) {
-    overflow: hidden;
-  }
   main .new-catalog .new-catalog__main .new-catalog__banners {
     display: none;
   }
@@ -8148,14 +8141,25 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 4;
+    z-index: 9999;
     background: #f2f2f4;
     height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    will-change: scroll-position;
+    overscroll-behavior: contain;
+    pointer-events: auto;
     padding-top: 60px;
     flex-direction: column;
     gap: 8px;
+  }
+  @supports (-webkit-touch-callout: none) {
+    main .new-catalog .new-catalog__main .new-catalogForm {
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
   }
   main .new-catalog .new-catalog__main .new-catalogForm.mobile_visible {
     display: flex;
@@ -8951,12 +8955,6 @@ a {
   }
   .mobile-status {
     display: none;
-  }
-  .new-catalog__main .new-catalogForm.mobile_visible:has(.select_wrapper.open) {
-    overflow: hidden;
-  }
-  body:has(.select_wrapper.open) {
-    overflow: hidden;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) {
     position: fixed;
