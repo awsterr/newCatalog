@@ -4281,11 +4281,11 @@ const viewport = window.visualViewport;
 function updateButtonPosition() {
   const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
   
-  // Проверяем, что это iOS устройство
-  const isIOS = /iPhone|iPad|iPod/.test(window.navigator.userAgent);
+  // Проверяем, что это мобильное устройство
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
   
-  if (!isIOS) {
-    // На Android и других устройствах оставляем стандартное положение
+  if (!isMobile) {
+    // На десктопе оставляем стандартное положение
     buttons.forEach(btn => {
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
@@ -4293,17 +4293,17 @@ function updateButtonPosition() {
     return;
   }
   
-  // Только для iOS: используем VisualViewport для определения высоты клавиатуры
+  // Для всех мобильных устройств: используем VisualViewport
   const currentViewportHeight = viewport.height;
   const keyboardHeight = initialViewportHeight - currentViewportHeight;
   
   buttons.forEach(btn => {
     if (keyboardHeight > 100) {
-      // Клавиатура открыта на iOS - поднимаем кнопку
+      // Клавиатура открыта - поднимаем кнопку
       btn.style.position = 'fixed';
       btn.style.bottom = `${keyboardHeight + 16}px`;
     } else {
-      // Клавиатура закрыта на iOS
+      // Клавиатура закрыта
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
     }
@@ -4319,12 +4319,12 @@ document.addEventListener('DOMContentLoaded', () => {
 // Отслеживание изменений VisualViewport
 window.visualViewport.addEventListener('resize', updateButtonPosition);
 
-// Отслеживание скролла (только для iOS)
+// Отслеживание скролла
 window.addEventListener('scroll', updateButtonPosition);
 
-// Обработка фокуса (только для iOS)
+// Обработка фокуса
 document.addEventListener('focusout', (e) => {
-  if (/iPhone|iPad|iPod/.test(window.navigator.userAgent) && 
+  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent) && 
       (e.target.tagName === 'INPUT' || 
        e.target.tagName === 'TEXTAREA' ||
        e.target.contentEditable === 'true')) {
@@ -4333,7 +4333,7 @@ document.addEventListener('focusout', (e) => {
 });
 
 document.addEventListener('focusin', (e) => {
-  if (/iPhone|iPad|iPod/.test(window.navigator.userAgent) && 
+  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent) && 
       (e.target.tagName === 'INPUT' || 
        e.target.tagName === 'TEXTAREA' ||
        e.target.contentEditable === 'true')) {
