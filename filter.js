@@ -4301,7 +4301,12 @@ function updateButtonPosition() {
     if (keyboardHeight > 100) {
       // Клавиатура открыта - поднимаем кнопку
       btn.style.position = 'fixed';
-      btn.style.bottom = `${keyboardHeight + 16}px`;
+      
+      // Ограничиваем максимальную высоту подъема кнопки
+      const maxKeyboardHeight = Math.min(keyboardHeight, 300); // максимум 300px
+      const bottomPosition = Math.max(16, maxKeyboardHeight + 16); // минимум 16px от клавиатуры
+      
+      btn.style.bottom = `${bottomPosition}px`;
     } else {
       // Клавиатура закрыта
       btn.style.position = 'fixed';
