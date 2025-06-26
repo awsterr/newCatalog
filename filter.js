@@ -3009,9 +3009,15 @@ function closeAllWrappers() {
       .closest(".new-catalogForm__filter__ui")
       .querySelector(".new-catalogForm__filter__input");
 
-    input.dataset.filter !== '{"range":"","list":[]}'
-      ? input.classList.add("active")
-      : input.classList.remove("active");
+    // Проверяем, что у инпута есть атрибут data-filter
+    if (input && input.hasAttribute('data-filter')) {
+      input.dataset.filter !== '{"range":"","list":[]}'
+        ? input.classList.add("active")
+        : input.classList.remove("active");
+
+      // Закрываем select_wrapper
+      refreshPlaceholder(input);
+    }
 
     wrapper.classList.remove("open");
   });
@@ -3079,39 +3085,38 @@ function updateQueryParams() {
 }
 document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   document.removeEventListener("click", handleDocumentClick);
+  const filterInput = filter.querySelector(".new-catalogForm__filter__input");
 
-  filter
-    .querySelector(".new-catalogForm__filter__input")
-    .addEventListener("click", (event) => {
-      if (!isDesktop()) {
-        // console.dir(true);
-        // console.dir();
-        if (
-          !event.target.parentElement
-            .querySelector(".select_wrapper")
-            .classList.contains("open")
-        ) {
-          event.target.blur();
-          if (event.target.name === "city") {
-            event.target.placeholder = "Найти город";
-          }
-        } else {
-          if (event.target.name === "city") {
-            console.log(1213);
-            modal = document.querySelector(".modal-backdrop");
-            modal.classList.add("opened");
-            modal
-              .querySelector(".city")
-              .classList.add("opened", "opened-from-filter");
-            modal.querySelector(".modal__input.catalog__search__input").focus();
-          }
+  filterInput.addEventListener("click", (event) => {
+    if (!isDesktop()) {
+      if (
+        !event.target.parentElement
+          .querySelector(".select_wrapper")
+          .classList.contains("open")
+      ) {
+        event.target.blur();
+        if (event.target.name === "city") {
+          event.target.placeholder = "Найти город";
+        }
+      } else {
+        if (event.target.name === "city") {
+          console.log(1213);
+          modal = document.querySelector(".modal-backdrop");
+          modal.classList.add("opened");
+          modal
+            .querySelector(".city")
+            .classList.add("opened", "opened-from-filter");
+          modal.querySelector(".modal__input.catalog__search__input").focus();
         }
       }
-      closeAllWrappers();
-      filter.querySelector(".select_wrapper").classList.add("open");
-      filter.querySelector(".new-catalogForm__filter__select").scrollTop = 0;
-      document.addEventListener("click", handleDocumentClick);
-    });
+    }
+    closeAllWrappers();
+    filter.querySelector(".select_wrapper").classList.add("open");
+    !isDesktop() && (filterInput.placeholder = "Поиск");
+
+    filter.querySelector(".new-catalogForm__filter__select").scrollTop = 0;
+    document.addEventListener("click", handleDocumentClick);
+  });
 
   function handleDocumentClick(e) {
     e.stopPropagation();
@@ -3135,8 +3140,8 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
       const input = filter.querySelector(
         ".new-catalogForm__generated-filters .new-catalogForm__filter__input"
       );
-      if (input && input.value.trim() !== "") {
-        const newData = JSON.parse(input.dataset.filter);
+      if (input && input.value.trim() !== "" && input.hasAttribute('data-filter')) {
+        const newData = safeJsonParse(input.dataset.filter);
         newData.list.push(input.value);
         input.dataset.filter = JSON.stringify(newData);
         refreshPlaceholder(input);
@@ -3154,58 +3159,76 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
   }
 });
 
-function refreshPlaceholder(mainInput, onlyRange = false) {
+function refreshPlaceholder(mainInput) {
+  // Проверяем, что у инпута есть атрибут data-filter
+  if (!mainInput || !mainInput.hasAttribute('data-filter')) {
+    return;
+  }
+
   btnLoaderStart();
-  const filterData = JSON.parse(mainInput.dataset.filter);
-  const unit = mainInput.dataset.unit || "";
 
-  // Удаляем дубликаты
-  const uniqueList = [...new Set(filterData.list)];
-  filterData.list = uniqueList;
-  mainInput.dataset.filter = JSON.stringify(filterData);
+  try {
+    const filterData = safeJsonParse(mainInput.dataset.filter);
+    const unit = mainInput.dataset.unit || "";
 
-  if (onlyRange && filterData.range) {
-    mainInput.placeholder = filterData.range + (unit ? ` ${unit}` : "");
-    return;
-  }
+    // Удаляем дубликаты
+    const uniqueList = [...new Set(filterData.list)];
+    filterData.list = uniqueList;
+    mainInput.dataset.filter = JSON.stringify(filterData);
 
-  if (uniqueList.length === 0) {
-    mainInput.placeholder = mainInput.dataset.placeholder;
-    return;
-  }
-
-  // Получаем ширину поля и вычитаем padding
-  const styles = window.getComputedStyle(mainInput);
-  const inputWidth = mainInput.getBoundingClientRect().width;
-  const paddingLeft = parseFloat(styles.paddingLeft) || 0;
-  const paddingRight = parseFloat(styles.paddingRight) || 0;
-  const usableWidth = inputWidth - paddingLeft - paddingRight;
-
-  // Средняя ширина одного символа (настроить при необходимости)
-  const avgCharWidth = 7;
-  const maxChars = Math.floor(usableWidth / avgCharWidth);
-
-  let result = "";
-  let count = 0;
-
-  for (let i = 0; i < uniqueList.length; i++) {
-    const value = unit ? `${uniqueList[i]} ${unit}` : uniqueList[i];
-    const nextPart = (count === 0 ? "" : ", ") + value;
-
-    const suffix =
-      i < uniqueList.length - 1 ? `... (${uniqueList.length})` : "";
-    if ((result + nextPart + suffix).length > maxChars) {
-      result += `... (${uniqueList.length})`;
-      break;
+    const wrapper = mainInput.parentElement.querySelector(".select_wrapper");
+    if (!isDesktop() && wrapper.classList.contains("open")) {
+      updateQueryParams();
+      return
     }
 
-    result += nextPart;
-    count++;
-  }
+    if (filterData.range) {
+      mainInput.placeholder = filterData.range + (unit ? ` ${unit}` : "");
+      return;
+    }
 
-  mainInput.placeholder = result;
-  setTimeout(btnLoaderEnd, 500);
-  updateQueryParams();
+    if (uniqueList.length === 0) {
+      mainInput.placeholder = mainInput.dataset.placeholder;
+      return;
+    }
+
+    // Получаем ширину поля и вычитаем padding
+    const styles = window.getComputedStyle(mainInput);
+    const inputWidth = mainInput.getBoundingClientRect().width;
+    const paddingLeft = parseFloat(styles.paddingLeft) || 0;
+    const paddingRight = parseFloat(styles.paddingRight) || 0;
+    const usableWidth = inputWidth - paddingLeft - paddingRight;
+
+    // Средняя ширина одного символа (настроить при необходимости)
+    const avgCharWidth = 7;
+    const maxChars = Math.floor(usableWidth / avgCharWidth);
+
+    let result = "";
+    let count = 0;
+
+    for (let i = 0; i < uniqueList.length; i++) {
+      const value = unit ? `${uniqueList[i]} ${unit}` : uniqueList[i];
+      const nextPart = (count === 0 ? "" : ", ") + value;
+
+      const suffix =
+        i < uniqueList.length - 1 ? `... (${uniqueList.length})` : "";
+      if ((result + nextPart + suffix).length > maxChars) {
+        result += `... (${uniqueList.length})`;
+        break;
+      }
+
+      result += nextPart;
+      count++;
+    }
+
+    mainInput.placeholder = result;
+    updateQueryParams();
+  } catch (error) {
+    console.error('Error in refreshPlaceholder:', error);
+  } finally {
+    // Гарантированно останавливаем лоадер через 500мс
+    setTimeout(btnLoaderEnd, 500);
+  }
 }
 
 // Выбор фильтров
@@ -3236,20 +3259,25 @@ containerList.forEach((container) => {
 
   resetOptions.addEventListener("click", () => {
     btnLoaderStart();
-    optionList.forEach((option) => {
-      option.classList.remove("active");
-      option.style.display = "flex";
-    });
-    mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
-    refreshPlaceholder(mainInput);
-    mainInput.value = "";
-    statusCounter.innerHTML = "Выбрано: ";
-    searchStatus.innerText = "Часто ищут";
-    searchStatus.classList.remove("black");
-    statusBlock.querySelector(".status_active").classList.add("hidden");
-    searchStatus.style.display = "block";
-    setTimeout(btnLoaderEnd, 500);
-    updateQueryParams();
+    try {
+      optionList.forEach((option) => {
+        option.classList.remove("active");
+        option.style.display = "flex";
+      });
+      mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
+      refreshPlaceholder(mainInput);
+      mainInput.value = "";
+      statusCounter.innerHTML = "Выбрано: ";
+      searchStatus.innerText = "Часто ищут";
+      searchStatus.classList.remove("black");
+      statusBlock.querySelector(".status_active").classList.add("hidden");
+      searchStatus.style.display = "block";
+      updateQueryParams();
+    } catch (error) {
+      console.error('Error in reset options:', error);
+    } finally {
+      setTimeout(btnLoaderEnd, 500);
+    }
   });
 
   mainInput.addEventListener("keydown", (e) => {
@@ -3258,7 +3286,7 @@ containerList.forEach((container) => {
       const value = mainInput.value.trim();
       if (!value) return;
 
-      const filterData = JSON.parse(mainInput.dataset.filter);
+      const filterData = safeJsonParse(mainInput.dataset.filter);
 
       if (!filterData.list.includes(value)) {
         filterData.list.push(value);
@@ -3280,7 +3308,7 @@ containerList.forEach((container) => {
         newOption.style.display = "flex";
 
         newOption.addEventListener("click", () => {
-          const newData = JSON.parse(mainInput.dataset.filter);
+          const newData = safeJsonParse(mainInput.dataset.filter);
           if (newOption.classList.contains("active")) {
             newData.list = newData.list.filter((el) => el !== value);
             newOption.classList.remove("active");
@@ -3316,32 +3344,37 @@ containerList.forEach((container) => {
   optionList.forEach((option) => {
     option.addEventListener("click", () => {
       btnLoaderStart();
-      const newData = JSON.parse(mainInput.dataset.filter);
-      if (option.classList.contains("active")) {
-        newData.list = newData.list.filter(
-          (element) => element !== option.dataset.value
-        );
-        option.classList.remove("active");
-      } else {
-        newData.list.push(option.dataset.value);
-        option.classList.add("active");
-      }
+      try {
+        const newData = safeJsonParse(mainInput.dataset.filter);
+        if (option.classList.contains("active")) {
+          newData.list = newData.list.filter(
+            (element) => element !== option.dataset.value
+          );
+          option.classList.remove("active");
+        } else {
+          newData.list.push(option.dataset.value);
+          option.classList.add("active");
+        }
 
-      statusCounter.innerHTML = "Выбрано: " + newData.list.length;
-      mainInput.dataset.filter = JSON.stringify(newData);
-      refreshPlaceholder(mainInput);
-      mainInput.value = "";
-      optionList.forEach((option) => {
-        option.style.display = "flex";
-        option.classList.remove("semibold");
-      });
-      statusBlock.querySelector(".status_active").classList.remove("hidden");
-      searchStatus.style.display = "none";
-      if (!newData.list.length) {
-        statusBlock.querySelector(".status_active").classList.add("hidden");
-        searchStatus.style.display = "block";
+        statusCounter.innerHTML = "Выбрано: " + newData.list.length;
+        mainInput.dataset.filter = JSON.stringify(newData);
+        refreshPlaceholder(mainInput);
+        mainInput.value = "";
+        optionList.forEach((option) => {
+          option.style.display = "flex";
+          option.classList.remove("semibold");
+        });
+        statusBlock.querySelector(".status_active").classList.remove("hidden");
+        searchStatus.style.display = "none";
+        if (!newData.list.length) {
+          statusBlock.querySelector(".status_active").classList.add("hidden");
+          searchStatus.style.display = "block";
+        }
+      } catch (error) {
+        console.error('Error in option selection:', error);
+      } finally {
+        setTimeout(btnLoaderEnd, 500);
       }
-      setTimeout(btnLoaderEnd, 500);
     });
   });
 
@@ -3353,7 +3386,7 @@ containerList.forEach((container) => {
           if (e.key === "Enter") {
             e.preventDefault();
 
-            const newData = JSON.parse(mainInput.dataset.filter);
+            const newData = safeJsonParse(mainInput.dataset.filter);
             newData.range =
               !rangeMin.value && !rangeMax.value
                 ? ""
@@ -3385,7 +3418,7 @@ containerList.forEach((container) => {
           });
         }
 
-        const newData = JSON.parse(mainInput.dataset.filter);
+        const newData = safeJsonParse(mainInput.dataset.filter);
         newData.range =
           !rangeMin.value && !rangeMax.value
             ? ""
@@ -3428,17 +3461,22 @@ containerList.forEach((container) => {
 
       resetRange.addEventListener("click", () => {
         btnLoaderStart();
-        const newData = JSON.parse(mainInput.dataset.filter);
-        newData.range = "";
-        mainInput.dataset.filter = JSON.stringify(newData);
-        resetRange.classList.remove("visible");
-        rangeMax.value = "";
-        rangeMin.value = "";
-        refreshPlaceholder(mainInput);
-        applyFilters();
-        applyInput();
-        updateQueryParams();
-        setTimeout(btnLoaderEnd, 500);
+        try {
+          const newData = JSON.parse(mainInput.dataset.filter);
+          newData.range = "";
+          mainInput.dataset.filter = JSON.stringify(newData);
+          resetRange.classList.remove("visible");
+          rangeMax.value = "";
+          rangeMin.value = "";
+          refreshPlaceholder(mainInput);
+          applyFilters();
+          applyInput();
+          updateQueryParams();
+        } catch (error) {
+          console.error('Error in range reset:', error);
+        } finally {
+          setTimeout(btnLoaderEnd, 500);
+        }
       });
     }
   }
@@ -3673,7 +3711,7 @@ saveBtn.addEventListener("click", (event) => {
       const value = mainInput.value.trim();
       if (!value) return;
 
-      const filterData = JSON.parse(mainInput.dataset.filter);
+      const filterData = safeJsonParse(mainInput.dataset.filter);
 
       if (!filterData.list.includes(value)) {
         filterData.list.push(value);
@@ -3695,7 +3733,7 @@ saveBtn.addEventListener("click", (event) => {
         newOption.style.display = "flex";
 
         newOption.addEventListener("click", () => {
-          const newData = JSON.parse(mainInput.dataset.filter);
+          const newData = safeJsonParse(mainInput.dataset.filter);
           if (newOption.classList.contains("active")) {
             newData.list = newData.list.filter((el) => el !== value);
             newOption.classList.remove("active");
@@ -3729,7 +3767,7 @@ saveBtn.addEventListener("click", (event) => {
 
   optionList.forEach((option) => {
     option.addEventListener("click", () => {
-      const newData = JSON.parse(mainInput.dataset.filter);
+      const newData = safeJsonParse(mainInput.dataset.filter);
       if (option.dataset.value === "Любая") {
         handleResetOptions();
         return;
@@ -3828,9 +3866,11 @@ document
         ".new-catalogForm__sub-filters .new-catalogForm__filter__input"
       ),
     ].forEach((input) => {
-      input.dataset.filter = JSON.stringify({ range: "", list: [] });
-      input.classList.remove("active");
-      input.placeholder = input.dataset.placeholder;
+      if (input && input.hasAttribute('data-filter')) {
+        input.dataset.filter = JSON.stringify({ range: "", list: [] });
+        input.classList.remove("active");
+        input.placeholder = input.dataset.placeholder;
+      }
     });
   });
 
@@ -3839,6 +3879,7 @@ document.querySelectorAll(".mobile-apply").forEach((btn) => {
     btn.parentElement
       .querySelector(".select_wrapper.open")
       .classList.remove("open");
+    // Закрываем select_wrapper
     const input = btn.parentElement.querySelector(
       ".new-catalogForm__filter__input"
     );
@@ -3853,9 +3894,13 @@ document.querySelectorAll(".mobile-apply").forEach((btn) => {
 
     input.dispatchEvent(enterEvent);
 
-    input.dataset.filter !== '{"range":"","list":[]}'
-      ? input.classList.add("active")
-      : input.classList.remove("active");
+    if (input.hasAttribute('data-filter')) {
+      input.dataset.filter !== '{"range":"","list":[]}'
+        ? input.classList.add("active")
+        : input.classList.remove("active");
+
+      refreshPlaceholder(input);
+    }
   });
 });
 
@@ -3867,6 +3912,7 @@ document
         .querySelector(".select_wrapper.open")
         .classList.remove("open");
 
+      // Закрываем select_wrapper
       const input = btn.parentElement.parentElement.querySelector(
         ".new-catalogForm__filter__input"
       );
@@ -3885,9 +3931,13 @@ document
         input.placeholder = input.dataset.placeholder;
       }
 
-      input.dataset.filter !== '{"range":"","list":[]}'
-        ? input.classList.add("active")
-        : input.classList.remove("active");
+      if (input.hasAttribute('data-filter')) {
+        input.dataset.filter !== '{"range":"","list":[]}'
+          ? input.classList.add("active")
+          : input.classList.remove("active");
+
+        refreshPlaceholder(input);
+      }
     });
   });
 
@@ -3896,50 +3946,55 @@ document
   .forEach((btn) => {
     btn.addEventListener("click", (event) => {
       event.preventDefault();
-      const detailContainer = btn
-        .closest(".new-catalogForm__filter")
-        .querySelector(".new-catalogForm__filter__ui");
-      let optionList = detailContainer.querySelectorAll(
-        ".new-catalogForm__filter__select .new-catalogForm__filter__select__option"
-      );
-      const mainInput = detailContainer.querySelector(
-        ".new-catalogForm__filter__input"
-      );
+      btnLoaderStart();
+      try {
+        const detailContainer = btn
+          .closest(".new-catalogForm__filter")
+          .querySelector(".new-catalogForm__filter__ui");
+        let optionList = detailContainer.querySelectorAll(
+          ".new-catalogForm__filter__select .new-catalogForm__filter__select__option"
+        );
+        const mainInput = detailContainer.querySelector(
+          ".new-catalogForm__filter__input"
+        );
 
-      const statusBlock = detailContainer.querySelector(
-        ".new-catalogForm__filter__select__status"
-      );
+        const statusBlock = detailContainer.querySelector(
+          ".new-catalogForm__filter__select__status"
+        );
 
-      const statusCounter = statusBlock.querySelector(
-        ".status_active__counter"
-      );
-      const searchStatus = statusBlock.querySelector(".status_placeholder");
+        const statusCounter = statusBlock.querySelector(
+          ".status_active__counter"
+        );
+        const searchStatus = statusBlock.querySelector(".status_placeholder");
 
-      const range = detailContainer.querySelector(
-        ".new-catalogForm__filter__range__inputs"
-      );
-      if (range) {
-        range
-          .querySelectorAll(".new-catalogForm__filter__range__input")
-          .forEach((input) => {
-            input.value = "";
-          });
+        const range = detailContainer.querySelector(
+          ".new-catalogForm__filter__range__inputs"
+        );
+        if (range) {
+          range
+            .querySelectorAll(".new-catalogForm__filter__range__input")
+            .forEach((input) => {
+              input.value = "";
+            });
+        }
+
+        optionList.forEach((option) => {
+          option.classList.remove("active");
+          option.style.display = "flex";
+        });
+        mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
+        refreshPlaceholder(mainInput);
+        mainInput.value = "";
+        statusCounter.innerHTML = "Выбрано: ";
+        searchStatus.innerText = "Часто ищут";
+        searchStatus.classList.remove("black");
+        statusBlock.querySelector(".status_active").classList.add("hidden");
+        searchStatus.style.display = "block";
+      } catch (error) {
+        console.error('Error in mobile filter reset:', error);
+      } finally {
+        setTimeout(btnLoaderEnd, 500);
       }
-      // btnLoader();
-
-      optionList.forEach((option) => {
-        option.classList.remove("active");
-        option.style.display = "flex";
-      });
-      mainInput.dataset.filter = JSON.stringify({ range: "", list: [] });
-      refreshPlaceholder(mainInput);
-      mainInput.value = "";
-      statusCounter.innerHTML = "Выбрано: ";
-      searchStatus.innerText = "Часто ищут";
-      searchStatus.classList.remove("black");
-      statusBlock.querySelector(".status_active").classList.add("hidden");
-      searchStatus.style.display = "block";
-      // btnLoader();
     });
   });
 
@@ -4209,9 +4264,11 @@ document
         ".new-catalogForm__sub-filters .new-catalogForm__filter__input"
       ),
     ].forEach((input) => {
-      input.dataset.filter = JSON.stringify({ range: "", list: [] });
-      input.classList.remove("active");
-      input.placeholder = input.dataset.placeholder;
+      if (input && input.hasAttribute('data-filter')) {
+        input.dataset.filter = JSON.stringify({ range: "", list: [] });
+        input.classList.remove("active");
+        input.placeholder = input.dataset.placeholder;
+      }
     });
   });
 
@@ -4220,14 +4277,45 @@ const btn = document.querySelector(".primary-btn.submit");
 const content = btn.querySelector(".content");
 const loader = btn.querySelector(".loader");
 
+let loaderTimeout = null;
+let isLoaderActive = false;
+
 function btnLoaderStart() {
+  if (isLoaderActive) return; // Предотвращаем множественные запуски
+
+  isLoaderActive = true;
   content.classList.add("hidden");
   loader.classList.remove("hidden");
+
+  // Защитный таймаут - если btnLoaderEnd не вызвался через 10 секунд, принудительно останавливаем
+  loaderTimeout = setTimeout(() => {
+    console.warn('Loader timeout - forcing end');
+    btnLoaderEnd();
+  }, 10000);
 }
+
 function btnLoaderEnd() {
+  if (!isLoaderActive) return; // Предотвращаем множественные остановки
+
+  isLoaderActive = false;
   content.classList.remove("hidden");
   loader.classList.add("hidden");
+
+  if (loaderTimeout) {
+    clearTimeout(loaderTimeout);
+    loaderTimeout = null;
+  }
 }
+
+// Принудительная остановка лоадера при ошибках
+window.addEventListener('error', () => {
+  btnLoaderEnd();
+});
+
+// Принудительная остановка лоадера при уходе со страницы
+window.addEventListener('beforeunload', () => {
+  btnLoaderEnd();
+});
 
 // Плашка сверху
 
@@ -4280,13 +4368,13 @@ const viewport = window.visualViewport;
 
 function updateButtonPosition() {
   const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
-  
+
   // Проверяем, что это мобильное устройство
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
-  
+
   // Проверяем, что это НЕ Яндекс.Браузер
   const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
-  
+
   if (!isMobile || isYandex) {
     // На десктопе или в Яндекс.Браузере оставляем стандартное положение
     buttons.forEach(btn => {
@@ -4295,11 +4383,11 @@ function updateButtonPosition() {
     });
     return;
   }
-  
+
   // Для всех остальных мобильных браузеров: используем VisualViewport
   const currentViewportHeight = viewport.height;
   const keyboardHeight = initialViewportHeight - currentViewportHeight;
-  
+
   buttons.forEach(btn => {
     if (keyboardHeight > 100) {
       // Клавиатура открыта - поднимаем кнопку
@@ -4329,11 +4417,11 @@ window.addEventListener('scroll', updateButtonPosition);
 document.addEventListener('focusout', (e) => {
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
   const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
-  
-  if (isMobile && !isYandex && 
-      (e.target.tagName === 'INPUT' || 
-       e.target.tagName === 'TEXTAREA' ||
-       e.target.contentEditable === 'true')) {
+
+  if (isMobile && !isYandex &&
+    (e.target.tagName === 'INPUT' ||
+      e.target.tagName === 'TEXTAREA' ||
+      e.target.contentEditable === 'true')) {
     setTimeout(updateButtonPosition, 100);
   }
 });
@@ -4341,11 +4429,27 @@ document.addEventListener('focusout', (e) => {
 document.addEventListener('focusin', (e) => {
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
   const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
-  
-  if (isMobile && !isYandex && 
-      (e.target.tagName === 'INPUT' || 
-       e.target.tagName === 'TEXTAREA' ||
-       e.target.contentEditable === 'true')) {
+
+  if (isMobile && !isYandex &&
+    (e.target.tagName === 'INPUT' ||
+      e.target.tagName === 'TEXTAREA' ||
+      e.target.contentEditable === 'true')) {
     setTimeout(updateButtonPosition, 100);
   }
 });
+
+// Безопасный парсинг JSON
+function safeJsonParse(str, defaultValue = { range: "", list: [] }) {
+  if (!str || str === "undefined" || str === "null") {
+    return defaultValue;
+  }
+
+  try {
+    return JSON.parse(str);
+  } catch (error) {
+    console.error('JSON parse error:', error, 'for string:', str);
+    return defaultValue;
+  }
+}
+
+// Обновление url

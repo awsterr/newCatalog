@@ -8896,6 +8896,18 @@ a {
     gap: 24px;
     margin-top: 20px;
   }
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active {
+    border-color: #ddd;
+    background-color: #fff;
+  }
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active::-moz-placeholder, .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active::-moz-placeholder {
+    color: #6C757D;
+  }
+  .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active::placeholder,
+  .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .new-catalogForm__filter__input.active::placeholder {
+    color: #6C757D;
+  }
   .new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply,
   .new-catalog__main .mobile-filter-bottom-wrapper .new-catalogForm__filter .new-catalogForm__filter__ui:has(.select_wrapper.open) .mobile-apply {
     display: block;
@@ -9033,15 +9045,17 @@ a {
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__input:focus) .new-catalogForm__filter__ui .select_wrapper.ranged .new-catalogForm__filter__select {
     height: 100%;
   }
-  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__input, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__title, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__mobile-header__reset {
-    display: none;
+  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__input, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__title, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__mobile-header__reset, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__select__option {
+    display: none !important;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .new-catalogForm__filter__input,
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .new-catalogForm__filter__title,
-  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .new-catalogForm__filter__mobile-header__reset, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__input,
+  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .new-catalogForm__filter__mobile-header__reset,
+  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .new-catalogForm__filter__select__option, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__input,
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__title,
-  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__mobile-header__reset {
-    display: none;
+  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__mobile-header__reset,
+  .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .new-catalogForm__filter__select__option {
+    display: none !important;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .new-catalogForm__filter__range__title {
     color: #212529;
@@ -9051,9 +9065,11 @@ a {
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:-moz-placeholder-shown)) .select_wrapper {
     height: calc(100% + 28px);
+    padding: 0 !important;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:focus) .select_wrapper, .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__range__input:not(:placeholder-shown)) .select_wrapper {
     height: calc(100% + 28px);
+    padding: 0 !important;
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) .mobile-status__back {
     display: none;
