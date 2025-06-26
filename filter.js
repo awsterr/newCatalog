@@ -4285,21 +4285,25 @@ function updateButtonPosition() {
   const isIOS = /iPhone|iPad|iPod/.test(window.navigator.userAgent);
   
   if (!isIOS) {
-    // На не-iOS устройствах не меняем позицию
+    // На Android и других устройствах оставляем стандартное положение
+    buttons.forEach(btn => {
+      btn.style.position = 'fixed';
+      btn.style.bottom = '24px';
+    });
     return;
   }
   
-  // Используем VisualViewport для точного определения высоты клавиатуры
+  // Только для iOS: используем VisualViewport для определения высоты клавиатуры
   const currentViewportHeight = viewport.height;
   const keyboardHeight = initialViewportHeight - currentViewportHeight;
   
   buttons.forEach(btn => {
     if (keyboardHeight > 100) {
-      // Клавиатура открыта
+      // Клавиатура открыта на iOS - поднимаем кнопку
       btn.style.position = 'fixed';
-      btn.style.bottom = `${keyboardHeight + 16}px`; // 16px отступ над клавиатурой
+      btn.style.bottom = `${keyboardHeight + 16}px`;
     } else {
-      // Клавиатура закрыта
+      // Клавиатура закрыта на iOS
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
     }
@@ -4315,23 +4319,24 @@ document.addEventListener('DOMContentLoaded', () => {
 // Отслеживание изменений VisualViewport
 window.visualViewport.addEventListener('resize', updateButtonPosition);
 
-// Отслеживание скролла (для iOS)
+// Отслеживание скролла (только для iOS)
 window.addEventListener('scroll', updateButtonPosition);
 
-// Обработка потери фокуса
+// Обработка фокуса (только для iOS)
 document.addEventListener('focusout', (e) => {
-  if (e.target.tagName === 'INPUT' || 
-      e.target.tagName === 'TEXTAREA' ||
-      e.target.contentEditable === 'true') {
+  if (/iPhone|iPad|iPod/.test(window.navigator.userAgent) && 
+      (e.target.tagName === 'INPUT' || 
+       e.target.tagName === 'TEXTAREA' ||
+       e.target.contentEditable === 'true')) {
     setTimeout(updateButtonPosition, 100);
   }
 });
 
-// Обработка получения фокуса
 document.addEventListener('focusin', (e) => {
-  if (e.target.tagName === 'INPUT' || 
-      e.target.tagName === 'TEXTAREA' ||
-      e.target.contentEditable === 'true') {
+  if (/iPhone|iPad|iPod/.test(window.navigator.userAgent) && 
+      (e.target.tagName === 'INPUT' || 
+       e.target.tagName === 'TEXTAREA' ||
+       e.target.contentEditable === 'true')) {
     setTimeout(updateButtonPosition, 100);
   }
 });
