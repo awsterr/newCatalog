@@ -4284,8 +4284,11 @@ function updateButtonPosition() {
   // Проверяем, что это мобильное устройство
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
   
-  if (!isMobile) {
-    // На десктопе оставляем стандартное положение
+  // Проверяем, что это НЕ Яндекс.Браузер
+  const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
+  
+  if (!isMobile || isYandex) {
+    // На десктопе или в Яндекс.Браузере оставляем стандартное положение
     buttons.forEach(btn => {
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
@@ -4293,7 +4296,7 @@ function updateButtonPosition() {
     return;
   }
   
-  // Для всех мобильных устройств: используем VisualViewport
+  // Для всех остальных мобильных браузеров: используем VisualViewport
   const currentViewportHeight = viewport.height;
   const keyboardHeight = initialViewportHeight - currentViewportHeight;
   
@@ -4301,12 +4304,7 @@ function updateButtonPosition() {
     if (keyboardHeight > 100) {
       // Клавиатура открыта - поднимаем кнопку
       btn.style.position = 'fixed';
-      
-      // Ограничиваем максимальную высоту подъема кнопки
-      const maxKeyboardHeight = Math.min(keyboardHeight, 300); // максимум 300px
-      const bottomPosition = Math.max(16, maxKeyboardHeight + 16); // минимум 16px от клавиатуры
-      
-      btn.style.bottom = `${bottomPosition}px`;
+      btn.style.bottom = `${keyboardHeight + 16}px`;
     } else {
       // Клавиатура закрыта
       btn.style.position = 'fixed';
@@ -4321,15 +4319,18 @@ document.addEventListener('DOMContentLoaded', () => {
   updateButtonPosition();
 });
 
-// Отслеживание изменений VisualViewport
+// Отслеживание изменений VisualViewport (только для не-Яндекс браузеров)
 window.visualViewport.addEventListener('resize', updateButtonPosition);
 
-// Отслеживание скролла
+// Отслеживание скролла (только для не-Яндекс браузеров)
 window.addEventListener('scroll', updateButtonPosition);
 
-// Обработка фокуса
+// Обработка фокуса (только для не-Яндекс браузеров)
 document.addEventListener('focusout', (e) => {
-  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent) && 
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+  const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
+  
+  if (isMobile && !isYandex && 
       (e.target.tagName === 'INPUT' || 
        e.target.tagName === 'TEXTAREA' ||
        e.target.contentEditable === 'true')) {
@@ -4338,7 +4339,10 @@ document.addEventListener('focusout', (e) => {
 });
 
 document.addEventListener('focusin', (e) => {
-  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent) && 
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+  const isYandex = /YaBrowser/i.test(window.navigator.userAgent);
+  
+  if (isMobile && !isYandex && 
       (e.target.tagName === 'INPUT' || 
        e.target.tagName === 'TEXTAREA' ||
        e.target.contentEditable === 'true')) {
