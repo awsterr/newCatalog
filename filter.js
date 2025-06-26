@@ -4276,23 +4276,37 @@ document.querySelectorAll(".tdata").forEach((cell) => {
 
 
 let initialHeight = window.innerHeight;
+let isKeyboardOpen = false;
 
 function updateButtonPosition() {
   const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
   
-  buttons.forEach(btn => {
-    // Если высота окна уменьшилась — вероятно, открыта клавиатура
-    if (window.innerHeight < initialHeight - 100) {
+  // Более точное определение открытия клавиатуры
+  const currentHeight = window.innerHeight;
+  const heightDifference = initialHeight - currentHeight;
+  
+  // Если высота уменьшилась значительно (больше 150px) или есть активный инпут
+  const hasActiveInput = document.activeElement && 
+    (document.activeElement.tagName === 'INPUT' || 
+     document.activeElement.tagName === 'TEXTAREA' ||
+     document.activeElement.contentEditable === 'true');
+  
+  if (heightDifference > 150 || hasActiveInput) {
+    isKeyboardOpen = true;
+    buttons.forEach(btn => {
       btn.style.position = 'absolute';
-      btn.style.bottom = (initialHeight - window.innerHeight + 16) + 'px';
-    } else {
+      btn.style.bottom = Math.max(16, heightDifference + 16) + 'px';
+    });
+  } else {
+    isKeyboardOpen = false;
+    buttons.forEach(btn => {
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
-    }
-  });
+    });
+  }
 }
 
-// Инициализация при загрузке страницы
+// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
   initialHeight = window.innerHeight;
   updateButtonPosition();
@@ -4305,16 +4319,35 @@ window.addEventListener('orientationchange', () => {
   updateButtonPosition();
 });
 
-// Дополнительно: отслеживание фокуса на инпутах (опционально)
+// Отслеживание фокуса на инпутах
 document.addEventListener('focusin', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-    // Небольшая задержка для корректного срабатывания на iOS
-    setTimeout(updateButtonPosition, 100);
+  if (e.target.tagName === 'INPUT' || 
+      e.target.tagName === 'TEXTAREA' ||
+      e.target.contentEditable === 'true') {
+    setTimeout(updateButtonPosition, 300); // Увеличиваем задержку
   }
 });
 
 document.addEventListener('focusout', (e) => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-    setTimeout(updateButtonPosition, 100);
+  if (e.target.tagName === 'INPUT' || 
+      e.target.tagName === 'TEXTAREA' ||
+      e.target.contentEditable === 'true') {
+    setTimeout(updateButtonPosition, 300);
+  }
+});
+
+// Дополнительно: отслеживание скролла (для iOS)
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(updateButtonPosition, 100);
+});
+
+// Принудительное обновление при тапе на инпут
+document.addEventListener('touchstart', (e) => {
+  if (e.target.tagName === 'INPUT' || 
+      e.target.tagName === 'TEXTAREA' ||
+      e.target.contentEditable === 'true') {
+    setTimeout(updateButtonPosition, 500);
   }
 });
