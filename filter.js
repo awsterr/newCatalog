@@ -4236,7 +4236,7 @@ const stickyMenu = document.querySelector(".filter-sticky-menu");
 
 function updateStickyWidth() {
   const rect = filterForm.getBoundingClientRect();
-  stickyMenu.style.width = `${rect.width}px`;
+  // stickyMenu.style.width = `${rect.width}px`;
   stickyMenu.style.left = `${rect.left}px`;
 }
 
@@ -4272,4 +4272,49 @@ document.querySelectorAll(".tdata").forEach((cell) => {
   cell.addEventListener("mouseleave", () => {
     cell.classList.remove("hover-visible");
   });
+});
+
+
+let initialHeight = window.innerHeight;
+
+function updateButtonPosition() {
+  const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
+  
+  buttons.forEach(btn => {
+    // Если высота окна уменьшилась — вероятно, открыта клавиатура
+    if (window.innerHeight < initialHeight - 100) {
+      btn.style.position = 'absolute';
+      btn.style.bottom = (initialHeight - window.innerHeight + 16) + 'px';
+    } else {
+      btn.style.position = 'fixed';
+      btn.style.bottom = '24px';
+    }
+  });
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+  initialHeight = window.innerHeight;
+  updateButtonPosition();
+});
+
+// Отслеживание изменений
+window.addEventListener('resize', updateButtonPosition);
+window.addEventListener('orientationchange', () => {
+  initialHeight = window.innerHeight;
+  updateButtonPosition();
+});
+
+// Дополнительно: отслеживание фокуса на инпутах (опционально)
+document.addEventListener('focusin', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+    // Небольшая задержка для корректного срабатывания на iOS
+    setTimeout(updateButtonPosition, 100);
+  }
+});
+
+document.addEventListener('focusout', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+    setTimeout(updateButtonPosition, 100);
+  }
 });
