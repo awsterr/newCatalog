@@ -4275,79 +4275,55 @@ document.querySelectorAll(".tdata").forEach((cell) => {
 });
 
 
-let initialHeight = window.innerHeight;
-let isKeyboardOpen = false;
+let initialViewportHeight = window.visualViewport.height;
+const viewport = window.visualViewport;
 
 function updateButtonPosition() {
   const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
   
-  // Более точное определение открытия клавиатуры
-  const currentHeight = window.innerHeight;
-  const heightDifference = initialHeight - currentHeight;
+  // Используем VisualViewport для точного определения высоты клавиатуры
+  const currentViewportHeight = viewport.height;
+  const keyboardHeight = initialViewportHeight - currentViewportHeight;
   
-  // Если высота уменьшилась значительно (больше 150px) или есть активный инпут
-  const hasActiveInput = document.activeElement && 
-    (document.activeElement.tagName === 'INPUT' || 
-     document.activeElement.tagName === 'TEXTAREA' ||
-     document.activeElement.contentEditable === 'true');
-  
-  if (heightDifference > 150 || hasActiveInput) {
-    isKeyboardOpen = true;
-    buttons.forEach(btn => {
-      btn.style.position = 'absolute';
-      btn.style.bottom = Math.max(16, heightDifference + 16) + 'px';
-    });
-  } else {
-    isKeyboardOpen = false;
-    buttons.forEach(btn => {
+  buttons.forEach(btn => {
+    if (keyboardHeight > 100) {
+      // Клавиатура открыта
+      btn.style.position = 'fixed';
+      btn.style.bottom = `${keyboardHeight + 16}px`; // 16px отступ над клавиатурой
+    } else {
+      // Клавиатура закрыта
       btn.style.position = 'fixed';
       btn.style.bottom = '24px';
-    });
-  }
+    }
+  });
 }
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', () => {
-  initialHeight = window.innerHeight;
+  initialViewportHeight = window.visualViewport.height;
   updateButtonPosition();
 });
 
-// Отслеживание изменений
-window.addEventListener('resize', updateButtonPosition);
-window.addEventListener('orientationchange', () => {
-  initialHeight = window.innerHeight;
-  updateButtonPosition();
-});
+// Отслеживание изменений VisualViewport
+window.visualViewport.addEventListener('resize', updateButtonPosition);
 
-// Отслеживание фокуса на инпутах
-document.addEventListener('focusin', (e) => {
-  if (e.target.tagName === 'INPUT' || 
-      e.target.tagName === 'TEXTAREA' ||
-      e.target.contentEditable === 'true') {
-    setTimeout(updateButtonPosition, 300); // Увеличиваем задержку
-  }
-});
+// Отслеживание скролла (для iOS)
+window.addEventListener('scroll', updateButtonPosition);
 
+// Обработка потери фокуса
 document.addEventListener('focusout', (e) => {
   if (e.target.tagName === 'INPUT' || 
       e.target.tagName === 'TEXTAREA' ||
       e.target.contentEditable === 'true') {
-    setTimeout(updateButtonPosition, 300);
+    setTimeout(updateButtonPosition, 100);
   }
 });
 
-// Дополнительно: отслеживание скролла (для iOS)
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(updateButtonPosition, 100);
-});
-
-// Принудительное обновление при тапе на инпут
-document.addEventListener('touchstart', (e) => {
+// Обработка получения фокуса
+document.addEventListener('focusin', (e) => {
   if (e.target.tagName === 'INPUT' || 
       e.target.tagName === 'TEXTAREA' ||
       e.target.contentEditable === 'true') {
-    setTimeout(updateButtonPosition, 500);
+    setTimeout(updateButtonPosition, 100);
   }
 });
