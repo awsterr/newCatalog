@@ -4281,6 +4281,14 @@ const viewport = window.visualViewport;
 function updateButtonPosition() {
   const buttons = document.querySelectorAll('.primary-btn.mobile-apply');
   
+  // Проверяем, что это iOS устройство
+  const isIOS = /iPhone|iPad|iPod/.test(window.navigator.userAgent);
+  
+  if (!isIOS) {
+    // На не-iOS устройствах не меняем позицию
+    return;
+  }
+  
   // Используем VisualViewport для точного определения высоты клавиатуры
   const currentViewportHeight = viewport.height;
   const keyboardHeight = initialViewportHeight - currentViewportHeight;
