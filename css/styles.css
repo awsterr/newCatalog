@@ -6292,6 +6292,7 @@ a {
   border-bottom: 1px solid #dddddd;
   color: #212529;
   text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 .new-catalog .new-catalog__main .new-catalogForm__main-filters .mobile-filter-wrapper.city .buttons-list .buttons-list__el:hover {
   background: #2764e0;
@@ -6316,6 +6317,14 @@ a {
 }
 .new-catalog .new-catalog__main .new-catalogForm__main-filters .new-catalogForm__filter .new-catalogForm__filter__select {
   padding-top: 16px;
+}
+.new-catalog .new-catalog__main .new-catalogForm__main-filters .new-catalogForm__filter .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active {
+  background: #2764E0;
+  color: #fff;
+}
+.new-catalog .new-catalog__main .new-catalogForm__main-filters .new-catalogForm__filter .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::before {
+  background-image: url("/img/form-option-success-white.svg");
+  background-repeat: no-repeat;
 }
 .new-catalog .new-catalog__main .new-catalogForm__generated-filters {
   display: flex;
@@ -6370,6 +6379,9 @@ a {
   align-items: center;
   gap: 12px;
 }
+.new-catalog .new-catalog__main .new-catalogForm__controls__search__save:hover, .new-catalog .new-catalog__main .new-catalogForm__controls__search__reset:hover {
+  color: #DD0858;
+}
 .new-catalog .new-catalog__main .new-catalogForm__controls__search__reset {
   color: inherit;
 }
@@ -6378,6 +6390,7 @@ a {
 }
 .new-catalog .new-catalog__main .new-catalogForm__controls__submit {
   display: flex;
+  align-items: center;
   gap: 48px;
 }
 .new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub {
@@ -6388,6 +6401,23 @@ a {
   gap: 8px;
   position: relative;
   white-space: nowrap;
+  height: 32px;
+  border-radius: 6px;
+  padding: 4px 4px 4px 8px;
+  transition: background-color 0.3s ease;
+}
+.new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub:hover {
+  background-color: #d2f1dd;
+}
+.new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub:hover .hint-icon {
+  color: #212529;
+}
+.new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub:active {
+  background-color: #a9d1b8;
+}
+.new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub .hint-icon {
+  color: #c0c4c7;
+  transition: color 0.3s ease;
 }
 .new-catalog .new-catalog__main .new-catalogForm__controls__submit__sub .hint-icon:hover + .hint-text {
   visibility: visible;
@@ -6535,10 +6565,15 @@ a {
 .new-catalogResults__header__title {
   font-size: 20px;
 }
-.new-catalogResults__header__title > a {
+.new-catalogResults__header__title .city-btn {
+  color: #2764E0;
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 6px;
+  transition: color 0.3s ease;
+}
+.new-catalogResults__header__title .city-btn:hover {
+  color: #DD0858;
 }
 .new-catalogResults__header__mobile-filters {
   display: none;
@@ -6856,6 +6891,8 @@ a {
 }
 .catalog_table .tbody.special::before {
   outline-color: #009861;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 .catalog_table .tbody.special .tdata:nth-child(2) {
   border-bottom-left-radius: 8px;
@@ -7035,9 +7072,13 @@ a {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  transition: color 0.3s ease;
 }
 .catalog_table .tbody .tdata.metallbase .tdvalue a:visited {
   color: inherit;
+}
+.catalog_table .tbody .tdata.metallbase .tdvalue a:hover {
+  color: #DD0858;
 }
 .catalog_table .tbody .tdata.price {
   position: relative;
@@ -7922,6 +7963,9 @@ a {
 .modal-backdrop .city .modal__container .modal__table .modal__table__mobile {
   display: none;
 }
+.modal-backdrop .city.opened-from-filter .modal__dropdown.hidden {
+  display: flex;
+}
 
 .btn-group__name {
   font-weight: 600;
@@ -8346,6 +8390,9 @@ a {
   main .new-catalog .new-catalog__main .new-catalogForm .mobile-filter-bottom-wrapper .new-catalogForm__controls .new-catalogForm__controls__search .new-catalogForm__controls__search__save.active .success {
     opacity: 1;
   }
+  main .new-catalog .new-catalog__main .new-catalogForm .mobile-filter-bottom-wrapper .new-catalogForm__controls .new-catalogForm__controls__search .new-catalogForm__controls__search__save:hover {
+    color: #2764E0;
+  }
   main .new-catalog .new-catalog__main .new-catalogForm .mobile-filter-bottom-wrapper .new-catalogForm__controls .new-catalogForm__controls__search .new-catalogForm__controls__search__save svg {
     position: absolute;
     left: 24px;
@@ -8392,10 +8439,12 @@ a {
     font-weight: normal;
     margin: 0 6px;
   }
-  main .new-catalogResults .new-catalogResults__header__title .blue {
+  main .new-catalogResults .new-catalogResults__header__title .city-btn {
     color: inherit;
     text-decoration: none;
     font-size: inherit;
+    pointer-events: none;
+    cursor: auto;
   }
   main .new-catalogResults .new-catalogResults__header__mobile-filters {
     display: flex;
@@ -8445,6 +8494,12 @@ a {
   main .new-catalogResults .new-catalogResults__header__mobile-filters .new-catalogForm__filter__ui .new-catalogForm__filter__input.active {
     border-color: #8eb1ed;
     background-color: #e9f0fc;
+  }
+  main .new-catalogResults .new-catalogResults__header__mobile-filters .new-catalogForm__filter__ui .new-catalogForm__filter__input::-moz-placeholder {
+    color: #212529;
+  }
+  main .new-catalogResults .new-catalogResults__header__mobile-filters .new-catalogForm__filter__ui .new-catalogForm__filter__input::placeholder {
+    color: #212529;
   }
   main .new-catalogResults .new-catalogResults__header__mobile-filters .new-catalogForm__filter__ui .select_wrapper {
     padding: 10px 0;
@@ -8510,7 +8565,6 @@ a {
   }
   main .new-catalogResults .new-catalogResults__header__mobile-filters .open-filters {
     font-size: 14px;
-    line-height: 20;
     font-weight: normal;
     height: 100%;
     gap: 9px;
@@ -9206,7 +9260,7 @@ a {
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper {
     box-shadow: none;
     border-radius: 0;
-    padding: 9.3px 0 0;
+    padding: 20px 0 0;
     height: calc(100% - 38px);
     position: relative;
     overflow: hidden;
@@ -9215,7 +9269,7 @@ a {
     content: "";
     position: absolute;
     z-index: 1;
-    top: 0;
+    top: 12px;
     left: 0;
     right: 0;
     height: 8px;
@@ -9282,6 +9336,21 @@ a {
   }
   .new-catalog__main .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper .new-catalogForm__filter__select .new-catalogForm__filter__select__option.active::before {
     display: none;
+  }
+  .new-catalog__main .new-catalogForm__generated-filters:has(.new-catalogForm__filter__input:focus) .new-catalogForm__filter__select__option:not(.active), .new-catalog__main .new-catalogForm__sub-filters .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__input:focus) .new-catalogForm__filter__select__option:not(.active) {
+    display: none !important;
+  }
+  .new-catalog__main .new-catalogForm__generated-filters:has(.new-catalogForm__filter__input:focus) .new-catalogForm__filter__select__option.semibold, .new-catalog__main .new-catalogForm__sub-filters .new-catalogForm__filter:has(.select_wrapper.open):has(.new-catalogForm__filter__input:focus) .new-catalogForm__filter__select__option.semibold {
+    display: flex !important;
+  }
+  .new-catalogForm__main-filters .new-catalogForm__filter:has(.select_wrapper.open) {
+    padding-top: 72px;
+  }
+  .new-catalogForm__main-filters .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper {
+    padding-top: 12px;
+  }
+  .new-catalogForm__main-filters .new-catalogForm__filter:has(.select_wrapper.open) .new-catalogForm__filter__ui .select_wrapper::before {
+    top: 4px;
   }
   .tdmobile__amount .tdmobile__more__backdrop .tdmobile__more__modal__title {
     margin-bottom: 8px;
@@ -9587,6 +9656,7 @@ a {
   }
   .modal-backdrop .modal-body.city .modal__container .modal__buttons-list .buttons-list__el {
     background: #fff;
+    transition: background 0.3s ease, color 0.3s ease;
   }
   .modal-backdrop .modal-body.city .modal__container .modal__buttons-list .buttons-list__el:hover {
     color: #fff;

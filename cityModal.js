@@ -1,4 +1,5 @@
 const API_URL = "url";
+const isDesktop = () => window.innerWidth > 768;
 
 const dataJSON = {
   regions: [
@@ -176,7 +177,16 @@ closeSearch.addEventListener("click", () => {
   errorName.classList.add("hidden");
   dropdown.classList.add("hidden");
 });
+
 function handleCityChoose(city) {
+  const url = new URL(window.location);
+  if (city === "Все города") {
+    url.searchParams.delete("city");
+  } else {
+    url.searchParams.set("city", city);
+  }
+  window.history.pushState({}, "", url);
+
   choosedCity.innerHTML = city;
   console.log("Выбран город", city);
 }
@@ -213,15 +223,14 @@ function renderDropdown(filteredCities, query) {
   dropdown.innerHTML = "";
   if (filteredCities.length === 0) {
     errorName.classList.remove("hidden");
-    dropdown.classList.add("hidden");
+    // dropdown.classList.add("hidden");
     return;
   }
   errorName.classList.add("hidden");
   dropdown.classList.remove("hidden");
   filteredCities.forEach((city, index) => {
-    const div = document.createElement("a");
+    const div = document.createElement("div");
     div.className = "modal__dropdown-item";
-    div.href = "/";
     const cityNameSpan = document.createElement("span");
     cityNameSpan.className = "modal__dropdown-item__city";
     cityNameSpan.innerHTML = highlightText(city.name, query) + ", ";
@@ -233,7 +242,22 @@ function renderDropdown(filteredCities, query) {
     div.appendChild(cityNameSpan);
     div.appendChild(areaNameSpan);
 
-    div.onclick = () => handleCitySelect(city);
+    div.onclick = () => {
+      handleCitySelect(city);
+      closeSearch.dispatchEvent(new Event("click"));
+      document.querySelector(
+        ".mobile-filter-wrapper.city .mobile-filter-header__selected-option"
+      ).innerHTML = city.name;
+      document
+        .querySelector(".mobile-filter-wrapper.city .select_wrapper.open")
+        .classList.remove("open");
+      document.querySelector(
+        ".mobile-filter-wrapper.city .new-catalogForm__filter__input"
+      ).placeholder = city.name;
+      document.querySelector(
+        ".new-catalogResults__header__mobile-filters .new-catalogForm__filter__input"
+      ).value = city.name;
+    };
     if (index === 0) div.classList.add("active");
     dropdown.appendChild(div);
   });
@@ -247,17 +271,18 @@ function handleCitySelect(city) {
 
 searchInput.addEventListener("focus", (event) => {
   event.stopPropagation();
-  if (window.innerWidth < 800) {
+
+  if (!isDesktop()) {
     searchContainer.classList.add("mobile-search");
-    dropdown.classList.remove("hidden");
   }
   const query = searchInput.value.trim();
-  if (query) {
-    dropdown.classList.remove("hidden");
-    return;
-  } else {
-    dropdown.classList.add("hidden");
-  }
+  // if (query) {
+  dropdown.classList.remove("hidden");
+
+  // return;
+  // } else {
+  // dropdown.classList.add("hidden");
+  // }
 });
 // document.addEventListener("click", (event) => {
 //   if (!event.target.closest(".modal_city-search")) {
@@ -265,6 +290,14 @@ searchInput.addEventListener("focus", (event) => {
 //     // dropdown.classList.add("hidden");
 //   }
 // });
+document.addEventListener("click", (event) => {
+  const isClickInsideDropdown = event.target.closest(".modal__dropdown");
+  const isClickInsideInput = event.target.closest(".modal__input");
+
+  if (!isClickInsideDropdown && !isClickInsideInput) {
+    dropdown.classList.add("hidden");
+  }
+});
 
 async function fetchData() {
   try {
@@ -318,6 +351,7 @@ function renderCities(cities) {
   cities.forEach((city) => {
     const div = document.createElement("div");
     div.className = "cities-item table__item";
+    div.dataset.value = city;
     div.textContent = city;
     div.onclick = () => {
       clearActiveClass(citiesContainer, "active-table-item");
@@ -390,10 +424,12 @@ async function init() {
       }))
     )
   );
+  renderDropdown(cities, "");
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim();
     if (query === "") {
-      dropdown.classList.add("hidden");
+      renderDropdown(cities, "");
+      // dropdown.classList.add("hidden");
       return;
     }
 
