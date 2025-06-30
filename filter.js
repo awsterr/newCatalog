@@ -124,6 +124,10 @@ filterData.data.filters.forEach((filter) => {
 
     select.append(option);
   });
+  console.log("Количество дочерних элементов в select:", select.children.length);
+  if (select.children.length < 10) {
+    uiDiv.classList.add("no-search");
+  }
   filterDiv.append(filterHelp);
 });
 

@@ -9712,6 +9712,10 @@ body:has(.modal-body.opened) {
   overflow: hidden;
 }
 
+.new-catalog__main .new-catalogForm__generated-filters .new-catalogForm__filter:has(.no-search):has(.select_wrapper.open) {
+  padding-top: 40px;
+}
+
 @media screen and (max-width: 1670px) {
   .providerSite__item {
     width: 460px;

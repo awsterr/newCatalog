@@ -3909,6 +3909,7 @@ $star-size: 20px;
       }
     }
   }
+  
 
   .mobile-status {
     display: none;
@@ -4260,6 +4261,7 @@ $star-size: 20px;
       }
     }
   }
+  
 
   .tdmobile__amount {
     .tdmobile__more__backdrop {
@@ -4696,12 +4698,8 @@ body {
     overflow: hidden;
   }
 }
-
-// main:has(.mobile_visible) {
-//    height: 100vh;
-//    overflow-y: hidden;
-// }
-
-// .new-catalog__main:has(.mobile_visible) {
-//    overflow: hidden;
-// }
+.new-catalog__main .new-catalogForm__generated-filters{
+   .new-catalogForm__filter:has(.no-search):has(.select_wrapper.open){
+      padding-top: 40px;
+   }
+  }
