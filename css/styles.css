@@ -8306,7 +8306,7 @@ a {
   main .new-catalog .new-catalog__main .new-catalogForm .new-catalogForm__main-filters {
     padding: 0;
     background: #f2f2f4;
-    gap: 8px;
+    gap: 8px !important;
   }
   main .new-catalog .new-catalog__main .new-catalogForm .new-catalogForm__main-filters .mobile-filter-wrapper {
     display: flex;
