@@ -546,8 +546,8 @@
         display: flex;
         // justify-content: space-between;
         flex-wrap: wrap;
-        gap: 32px;
-        padding: 32px 34px 24px 36px;
+        gap: 20px;
+        padding: 32px 34px 20px 36px;
 
         .mobile-filter-wrapper {
           display: contents;
@@ -641,7 +641,7 @@
         // grid-template-columns: repeat(auto-fit, minmax(180px, auto));
         display: flex;
         flex-wrap: wrap;
-        gap: 28px;
+        gap: 20px;
         padding: 0 32px 24px 36px;
 
         .new-catalogForm__filter {
@@ -659,8 +659,8 @@
 
       &__sub-filters {
         display: flex;
-        gap: 32px;
-        padding: 24px 34px 34px 36px;
+        gap: 20px;
+        padding: 24px 34px 16px 36px;
         justify-content: space-between;
         font-size: 14px;
         line-height: 20px;
@@ -2738,9 +2738,9 @@ $star-size: 20px;
   // .new-catalog .new-catalog__main .new-catalogForm__main-filters {
   //    flex-wrap: wrap;
   // }
-  .new-catalogForm__main-filters,.new-catalogForm__generated-filters,.new-catalogForm__sub-filters{
-   gap: 20px !important;
-  }
+//   .new-catalogForm__main-filters,.new-catalogForm__generated-filters,.new-catalogForm__sub-filters{
+//    gap: 20px !important;
+//   }
   .new-catalogForm__filter{
     min-width: 200px !important;
   }
