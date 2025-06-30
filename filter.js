@@ -124,7 +124,10 @@ filterData.data.filters.forEach((filter) => {
 
     select.append(option);
   });
-  console.log("Количество дочерних элементов в select:", select.children.length);
+  console.log(
+    "Количество дочерних элементов в select:",
+    select.children.length
+  );
   if (select.children.length < 10) {
     uiDiv.classList.add("no-search");
   }
@@ -551,9 +554,11 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
           modal
             .querySelector(".city")
             .classList.add("opened", "opened-from-filter");
-          const searchInput = modal.querySelector(".modal__input.catalog__search__input");
+          const searchInput = modal.querySelector(
+            ".modal__input.catalog__search__input"
+          );
           searchInput.focus();
-          searchInput.dispatchEvent(new Event('focus'));
+          searchInput.dispatchEvent(new Event("focus"));
         }
       }
     }
@@ -581,18 +586,17 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
 
     const target = e.target;
 
-    // Если клик по .mobile-apply — это внешнее нажатие
-    if (target.closest(".mobile-apply")) {
-      closeAllWrappers();
-      document.removeEventListener("click", handleDocumentClick);
-      return;
+    let isClickInside = false;
+    if (isDesktop()) {
+      isClickInside = !!target.closest(".new-catalogForm__filter__ui");
+    } else {
+      const insideFilter = !!target.closest(".new-catalogForm__filter");
+      const insideClose = !!target.closest(
+        ".new-catalogForm__filter__mobile-header__close"
+      );
+      const insideApply = !!target.closest(".mobile-apply");
+      isClickInside = insideFilter && !insideClose && !insideApply;
     }
-
-    const isClickInside = Array.from(
-      document.querySelectorAll(
-        ".new-catalogForm__filter, .modal-backdrop, .new-catalogForm__filter__mobile-header"
-      )
-    ).some((wrapper) => wrapper.contains(target));
 
     if (!isClickInside) {
       const input = filter.querySelector(
@@ -622,7 +626,6 @@ document.querySelectorAll(".new-catalogForm__filter__ui").forEach((filter) => {
 });
 
 function refreshPlaceholder(mainInput) {
-  // Проверяем, что у инпута есть атрибут data-filter
   if (!mainInput || !mainInput.hasAttribute("data-filter")) {
     return;
   }
@@ -2044,21 +2047,20 @@ function cityBtnsListFilterLogic() {
         ).innerHTML = btn.innerText.trim();
         uiWrapper.querySelector(".new-catalogForm__filter__input").placeholder =
           btn.innerText.trim();
-        document
-          .querySelector(
-            ".new-catalogResults__header__mobile-filters .new-catalogForm__filter__input"
-          ).placeholder = btn.innerText.trim();
+        document.querySelector(
+          ".new-catalogResults__header__mobile-filters .new-catalogForm__filter__input"
+        ).placeholder = btn.innerText.trim();
         const url = new URL(window.location);
         if (btn.dataset.value === "Все города") {
           url.searchParams.delete("city");
-          uiWrapper.querySelector(
-            ".new-catalogForm__filter__input"
-          ).classList.remove("active");
+          uiWrapper
+            .querySelector(".new-catalogForm__filter__input")
+            .classList.remove("active");
         } else {
           url.searchParams.set("city", btn.dataset.value);
-          uiWrapper.querySelector(
-            ".new-catalogForm__filter__input"
-          ).classList.add("active");
+          uiWrapper
+            .querySelector(".new-catalogForm__filter__input")
+            .classList.add("active");
         }
         window.history.pushState({}, "", url);
       }
@@ -2067,8 +2069,7 @@ function cityBtnsListFilterLogic() {
 }
 cityBtnsListFilterLogic();
 
-
-function cityFilterLogic(){
+function cityFilterLogic() {
   const cityFilter = document.querySelector(
     ".mobile-filter-wrapper.city .new-catalogForm__filter .new-catalogForm__filter__ui"
   );
@@ -2091,7 +2092,6 @@ function cityFilterLogic(){
         ".mobile-filter-header__selected-option"
       ).innerHTML = option.innerText.trim();
 
-
       const url = new URL(window.location);
       if (option.dataset.value === "Все города") {
         url.searchParams.delete("city");
@@ -2104,4 +2104,4 @@ function cityFilterLogic(){
     });
   });
 }
-cityFilterLogic()
+cityFilterLogic();
