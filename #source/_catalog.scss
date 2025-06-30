@@ -2738,6 +2738,9 @@ $star-size: 20px;
   // .new-catalog .new-catalog__main .new-catalogForm__main-filters {
   //    flex-wrap: wrap;
   // }
+  .new-catalogForm__filter{
+    min-width: 200px !important;
+  }
 
   .new-catalog .new-catalog__main .new-catalogForm__sub-filters {
     flex-wrap: wrap;
@@ -2774,6 +2777,11 @@ $star-size: 20px;
         gap: 6px;
       }
     }
+  }
+}
+@media screen and (max-width: 1300px) {
+  .new-catalogForm__filter{
+    min-width: 180px !important;
   }
 }
 
