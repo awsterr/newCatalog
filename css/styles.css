@@ -8102,6 +8102,9 @@ a {
 }
 
 @media screen and (max-width: 1439px) {
+  .new-catalogForm__main-filters, .new-catalogForm__generated-filters, .new-catalogForm__sub-filters {
+    gap: 20px !important;
+  }
   .new-catalogForm__filter {
     min-width: 200px !important;
   }
